@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateNewProductListActivity"
+    android:background="@drawable/linearlayout_background"
+    android:padding="@dimen/default_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:padding="@dimen/cnpl_tv_titulo_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ac_title_text_size"
+        android:typeface="serif"
+        android:textStyle="bold|italic"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="@string/create_new_list_title"
+        android:background="@drawable/rounded_corners_textviews"
+        android:elevation="@dimen/ac_tv_elevation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etListName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/cnpl_et_layout_margin"
+                    android:ems="10"
+                    android:hint="@string/insert_list_name_placeholder"
+                    android:inputType="text"
+                    android:textSize="@dimen/cnpl_et_name_text_size"
+                    android:importantForAutofill="no"  />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1" >
+
+                <EditText
+                    android:id="@+id/etCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/cnpl_et_layout_margin"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/insert_a_category_to_search_placeholder"
+                    android:inputType="text"
+                    android:textSize="@dimen/cnpl_et_name_text_size"
+                    android:importantForAutofill="no"
+                    tools:ignore="NestedWeights" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/search_btn"
+                    android:elevation="2dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:padding="@dimen/cnpl_ll_padding" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                tools:ignore="UselessLeaf">
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|start" >
+                <Button
+                    android:id="@+id/btnNewProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_product"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ac_btn_text_size"
+                    android:background="@drawable/btns_ripple_main_activity"
+                    android:padding="@dimen/cnpl_btn_padding"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnFinishList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finish_list"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ac_btn_text_size"
+                    android:background="@drawable/btns_ripple_main_activity"
+                    android:padding="@dimen/cnpl_btn_padding"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

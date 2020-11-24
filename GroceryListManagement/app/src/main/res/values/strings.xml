@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Grocery List Management</string>
+    <string name="manage_product_lists">Manage Product Lists</string>
+    <string name="manage_shopping_lists">Manage Shopping Lists</string>
+    <string name="menu_back_title">Back</string>
+    <string name="rc_view_details">View details</string>
+    <string name="plus_sign" translatable="false">+</string>
+    <string name="manage_product_list_title">Manage Product Lists</string>
+    <string name="create_new_product_list_title">Create New Product List</string>
+    <string name="edit_product_list_title">Edit Product List</string>
+    <string name="insert_list_name_placeholder">Insert list name</string>
+    <string name="new_product">New Product</string>
+    <string name="create_new_list_title">Create New List</string>
+    <string name="finish_list">Finish List</string>
+    <string name="add_new_product_title">Add New Product</string>
+    <string name="insert_a_category_to_search_placeholder">Insert a category to search</string>
+    <string name="insert_product_name_placeholder">Insert product name</string>
+    <string name="insert_product_category_prompt">Insert product category</string>
+    <string name="new_category_link"><u>New category</u></string>
+    <string name="insert_product_brand_placeholder">Insert product brand</string>
+    <string name="observations_placeholder">Observations</string>
+    <string name="quantity_placeholder">Quantity</string>
+    <string name="new_unit_link"><u>New unit</u></string>
+    <string name="product_image_label">Product image:</string>
+    <string name="btn_gallery_text">Gallery</string>
+    <string name="btn_camera_text">Camera</string>
+    <string name="check_icon" translatable="false">✔</string>
+    <string name="add_new_category_dialog_titlle">Add New Category</string>
+    <string name="insert_new_category_et_dialog_placeholder">Insert new category</string>
+    <string name="add_new_unit_dialog_title">Add New Unit</string>
+    <string name="insert_new_unit_placeholder">Insert new unit</string>
+    <string name="insert_a_unit_prompt">Insert a unit</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="save_text">Save</string>
+    <string name="what_do_you_wanna_do_dialog_title">What do you want to do?</string>
+    <string name="btn_delete_text">Delete</string>
+    <string name="btn_copy_list_text">Copy list</string>
+    <string name="create_list_from_existing_one_title">Create a new List from an existing one</string>
+    <string name="no_categories_created_spinner_info">No categories created</string>
+    <string name="no_units_created_spinner_info">No units created</string>
+    <string name="category_already_exists_error">That category already exists!</string>
+
+
+    <!-- Remover -->
+    <string-array name="category_arrays">
+        <item>Carne</item>
+        <item>Peixe</item>
+        <item>Fruta</item>
+        <item>Legumes</item>
+        <item>Produtos de limpeza </item>
+    </string-array>
+    <string-array name="country_arrays">
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
+</resources>

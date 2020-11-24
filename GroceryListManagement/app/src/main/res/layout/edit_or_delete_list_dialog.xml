@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/aud_ll_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/what_do_you_wanna_do_dialog_title"
+        android:textSize="@dimen/aud_tv_title_text_size"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/aud_ll_buttons_margin_top">
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:text="@string/btn_delete_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/aud_btns_text_size"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/aud_btns_margins" />
+
+        <Button
+            android:id="@+id/btnCopyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:text="@string/btn_copy_list_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/aud_btns_text_size"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/aud_btns_margins" />
+
+    </LinearLayout>
+
+</LinearLayout>
