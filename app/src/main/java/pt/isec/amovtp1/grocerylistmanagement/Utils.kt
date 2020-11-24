@@ -1,11 +1,15 @@
 package pt.isec.amovtp1.grocerylistmanagement
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMATE_TO_DB
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.min
 
 object Utils {
@@ -40,4 +44,8 @@ object Utils {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun convertDateToDatetime(date: Date) : String {
+        return SimpleDateFormat(DATE_FORMATE_TO_DB).format(Date(date.time))
+    }
 }

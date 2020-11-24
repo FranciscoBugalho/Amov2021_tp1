@@ -134,7 +134,7 @@ class ManageProductListsActivity : AppCompatActivity() {
 
         // Muda de atividade
         Intent(this, CreateNewProductListActivity::class.java)
-                .putExtra(Constants.IS_LIST_DETAILS, 1)
+                .putExtra(Constants.IntentConstants.IS_LIST_DETAILS, 1)
                 .also {
             startActivity(it)
         }
@@ -159,7 +159,7 @@ class ManageProductListsActivity : AppCompatActivity() {
         btnCopyList.setOnClickListener {
             dialog.dismiss()
             Intent(this, CreateNewProductListActivity::class.java)
-                    .putExtra(Constants.IS_LIST_DETAILS, 2).also {
+                    .putExtra(Constants.IntentConstants.IS_LIST_DETAILS, 2).also {
                 startActivity(it)
             }
         }

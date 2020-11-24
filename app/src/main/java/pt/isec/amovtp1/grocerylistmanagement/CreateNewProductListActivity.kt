@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
-import pt.isec.amovtp1.grocerylistmanagement.data.Product
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.IntentConstants
 
 class CreateNewProductListActivity : AppCompatActivity() {
     lateinit var listName: String
-    var products = arrayListOf<Product>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,12 @@ class CreateNewProductListActivity : AppCompatActivity() {
         // Define title
         supportActionBar?.title = getString(R.string.create_new_product_list_title)
 
-        val opt = intent.getIntExtra(Constants.IS_LIST_DETAILS, 0)
+        var opt = intent.getIntExtra(IntentConstants.IS_NEW_PRODUCT, 0)
+        if(opt == 1) {
+            findViewById<EditText>(R.id.etListName).setText(intent.getStringExtra(IntentConstants.LIST_NAME))
+        }
+
+        opt = intent.getIntExtra(IntentConstants.IS_LIST_DETAILS, 0)
         if(opt == 1) {
             // Update title on actionbar and on the textview
             supportActionBar?.title = getString(R.string.edit_product_list_title)
@@ -55,11 +60,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
              */
 
             Intent(this, CreateNewProductActivity::class.java)
-                .putExtra(Constants.LIST_NAME, listName)
+                .putExtra(IntentConstants.LIST_NAME, listName)
                 .also {
                 startActivity(it)
             }
-            finish()
         }
 
         findViewById<Button>(R.id.btnFinishList).setOnClickListener {

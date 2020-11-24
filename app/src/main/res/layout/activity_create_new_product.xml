@@ -111,60 +111,6 @@
                     android:padding="@dimen/cnp_et_padding"
                     android:importantForAutofill="no"  />
 
-                </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/etProductQuantity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/cnpl_et_layout_margin"
-                    android:layout_weight="0.75"
-                    android:ems="10"
-                    android:hint="@string/quantity_placeholder"
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:textSize="@dimen/cnpl_et_name_text_size" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Spinner
-                        android:id="@+id/sUnit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <TextView
-                        android:id="@+id/addNewUnity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:padding="@dimen/cnp_tv_new_unit_padding"
-                        android:text="@string/new_unit_link"
-                        android:textColor="@color/dark_blue"
-                        android:textSize="@dimen/cnp_tv_text_size"
-                        android:textStyle="bold"
-                        android:typeface="sans"
-                        android:layout_marginEnd="@dimen/cnp_et_margin_end"
-                        app:layout_constraintBottom_toTopOf="@+id/sUnit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:onClick="addNewUnit" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
             </LinearLayout>
 
             <LinearLayout

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Grocery List Management</string>
     <string name="manage_product_lists">Gestão da Lista de Produtos</string>
-    <string name="manage_shopping_lists">Gestão da Lista de Compras</string>
+    <string name="manage_shopping_lists">Compras</string>
     <string name="menu_back_title">Voltar</string>
     <string name="rc_view_details">Ver detalhes</string>
     <string name="manage_product_list_title">Gestão da Lista de Produtos</string>
@@ -38,4 +38,6 @@
     <string name="no_categories_created_spinner_info">Sem categorias criadas</string>
     <string name="no_units_created_spinner_info">Sem unidades criadas</string>
     <string name="category_already_exists_error">Essa categoria já existe!</string>
+    <string name="product_already_exists">O produto já existe!</string>
+    <string name="this_field_cant_be_empty">Este campo não pode ficar vazio</string>
 </resources>

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -14,6 +15,7 @@ import android.os.StrictMode
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -21,8 +23,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
+import pt.isec.amovtp1.grocerylistmanagement.data.Product
+import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
 import java.io.File
 import java.io.IOException
 import java.lang.reflect.Method
@@ -31,10 +36,14 @@ import java.util.*
 
 class CreateNewProductActivity : AppCompatActivity() {
     lateinit var filePath: String
+    lateinit var db : GMLDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product)
+
+        // Init database
+        db = GMLDatabase(this)
 
         // Add back button on the actionbar
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -45,8 +54,8 @@ class CreateNewProductActivity : AppCompatActivity() {
         Utils.setImgFromAsset(ivPreview, Constants.ASSET_IMAGE_PATH)
         filePath = Constants.ASSET_IMAGE_PATH
 
+        // Add all the categories saved on the database to the category spinner
         addCategoriesOnSpinner()
-        addUnitsOnSpinner()
 
         // Permissions to access to the camera and gallery
         if (Build.VERSION.SDK_INT >= 24) {
@@ -70,15 +79,31 @@ class CreateNewProductActivity : AppCompatActivity() {
         // ------------------------------------------------------
 
         findViewById<Button>(R.id.btnAddNewList).setOnClickListener {
-            Intent(this, CreateNewProductListActivity::class.java).also {
+            // Product name field can't be empty
+            if(etProductName.text.isEmpty()) {
+                etProductName.error = getString(R.string.this_field_cant_be_empty)
+                return@setOnClickListener
+            }
+
+            val product = Product(etProductName.text.toString(),
+                    sProductCategory.selectedItem.toString(),
+                    if (etProductBrand.text.isEmpty()) null else etProductBrand.text.toString(),
+                    filePath,
+                    if (etObservations.text.isEmpty()) arrayListOf() else arrayListOf(Product.Observation(etObservations.text.toString(), Date())))
+            // Save the product in the database
+            /*if(!db.saveProduct(product)) {
+                etProductName.error = getString(R.string.product_already_exists)
+                return@setOnClickListener
+            }*/
+
+            db.closeDB()
+            Intent(this, CreateNewProductListActivity::class.java)
+                    .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
+                    .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
+                    .addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+                    .also {
                 startActivity(it)
             }
-            /*
-
-            TODO:
-                 ENVIAR AS INFORMAÇÕES DA NOVA LISTA PARA A ATIVIDADE ANTERIOR ATRAVÉS DO INTENT
-
-             */
             finish()
         }
 
@@ -95,6 +120,12 @@ class CreateNewProductActivity : AppCompatActivity() {
     }
 
     private fun addCategoriesOnSpinner() {
+        val categories = db.getAllCategoryNames()
+
+        if(categories.isEmpty())
+            sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(getString(R.string.no_categories_created_spinner_info)))
+        else
+            sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
     }
 
     private fun addUnitsOnSpinner() {
@@ -108,32 +139,24 @@ class CreateNewProductActivity : AppCompatActivity() {
         dialog.show()
 
         dialog.findViewById<TextView>(R.id.tvDialogTitle).text = getString(R.string.add_new_category_dialog_titlle)
-        var editText = dialog.findViewById<EditText>(R.id.etDialog)
+        val editText = dialog.findViewById<EditText>(R.id.etDialog)
         editText.hint = getString(R.string.insert_new_category_et_dialog_placeholder)
 
         val btnCancel = dialog.findViewById(R.id.btnCancel) as Button
         val btnSave = dialog.findViewById(R.id.btnSave) as Button
 
         btnSave.setOnClickListener {
-            if(!saveNewCategory(view.context, editText.text.toString()))
+            if(!db.addNewCategory(editText.text.toString()))
                 editText.error = getString(R.string.category_already_exists_error)
             else {
+                addCategoriesOnSpinner()
                 dialog.dismiss()
             }
         }
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
-
-    private fun saveNewCategory(context: Context, categoryName: String) : Boolean {
-       return false
-    }
-
-    private fun saveNewUnit(context: Context) {
-
-    }
-
-
+    // REMOVE
     fun addNewUnit(view: View) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_or_unit_dialog)
