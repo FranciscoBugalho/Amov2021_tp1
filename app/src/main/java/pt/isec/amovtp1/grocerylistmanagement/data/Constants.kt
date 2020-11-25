@@ -31,4 +31,9 @@ object Constants {
         // Intent putExtra to check if the activity comes from the CreateNewProduct
         const val IS_NEW_PRODUCT = "isNewProductActivity"
     }
+
+    object SaveDataConstants : BaseColumns {
+        // List Name
+        const val LIST_NAME_STR = "listName"
+    }
 }

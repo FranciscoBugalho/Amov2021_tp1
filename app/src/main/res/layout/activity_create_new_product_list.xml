@@ -58,6 +58,7 @@
                 android:importantForAutofill="no"  />
 
             <Button
+                android:id="@+id/btnSearchCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,8 +76,9 @@
             android:padding="@dimen/cnpl_ll_padding" >
 
             <LinearLayout
+                android:id="@+id/llProductCheckBoxes"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 tools:ignore="UselessLeaf">
 

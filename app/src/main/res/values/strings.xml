@@ -41,6 +41,8 @@
     <string name="category_already_exists_error">That category already exists!</string>
     <string name="product_already_exists">Product already exists!</string>
     <string name="this_field_cant_be_empty">This field can\'t be empty</string>
+    <string name="checked_flag" translatable="false">:checked</string>
+    <string name="you_have_to_add_products_first">You have to add products first!</string>
 
 
     <!-- Remover -->

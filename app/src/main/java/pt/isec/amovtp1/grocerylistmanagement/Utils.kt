@@ -48,4 +48,9 @@ object Utils {
     fun convertDateToDatetime(date: Date) : String {
         return SimpleDateFormat(DATE_FORMATE_TO_DB).format(Date(date.time))
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertToDate(date: String) : Date {
+        return SimpleDateFormat(DATE_FORMATE_TO_DB).parse(date)!!
+    }
 }

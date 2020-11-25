@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
@@ -100,7 +102,7 @@ class CreateNewProductActivity : AppCompatActivity() {
             Intent(this, CreateNewProductListActivity::class.java)
                     .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
                     .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
-                    .addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+                    .addFlags(FLAG_ACTIVITY_NEW_TASK)
                     .also {
                 startActivity(it)
             }
@@ -235,7 +237,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
-            Intent(this, CreateNewProductListActivity::class.java).also {
+            Intent(this, CreateNewProductListActivity::class.java)
+                    .addFlags(FLAG_ACTIVITY_NEW_TASK)
+                    .also {
                 startActivity(it)
             }
             finish()

@@ -40,4 +40,5 @@
     <string name="category_already_exists_error">Essa categoria já existe!</string>
     <string name="product_already_exists">O produto já existe!</string>
     <string name="this_field_cant_be_empty">Este campo não pode ficar vazio</string>
+    <string name="you_have_to_add_products_first">Tem de adicionar produtos primeiro!</string>
 </resources>

@@ -4,7 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import androidx.core.database.getStringOrNull
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToDatetime
+import pt.isec.amovtp1.grocerylistmanagement.Utils.convertToDate
 import pt.isec.amovtp1.grocerylistmanagement.data.Product
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.CategoryConstants.CATEGORY_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.CategoryConstants.CATEGORY_NAME
@@ -33,8 +36,12 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQ
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQueries.DROP_PRODUCT_PRICE_TABLE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQueries.DROP_PRODUCT_TABLE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQueries.DROP_UNIT_TABLE
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_INFO
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_OBSERVATIONS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORIES_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAMES
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAME_BY_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_WITH_SAME_NAME
 
 
@@ -149,9 +156,66 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
         return count != 0
     }
 
+    fun getAllProducts(): List<Product> {
+        if(countDbProducts() == 0)
+            return arrayListOf()
+
+        val db = writableDatabase
+        val cursorP = db.rawQuery(SELECT_ALL_PRODUCT_INFO, null)
+        cursorP.moveToFirst()
+
+        val productList = arrayListOf<Product>()
+        var categoryName: String
+        val observations = arrayListOf<Product.Observation>()
+        while(!cursorP.isAfterLast) {
+            val idCategory = cursorP.getInt(cursorP.getColumnIndex(CATEGORY_ID))
+            val cursorC = db.rawQuery(SELECT_CATEGORY_NAME_BY_ID, arrayOf(idCategory.toString()))
+            cursorC.moveToFirst()
+            categoryName = cursorC.getString(cursorC.getColumnIndex(CATEGORY_NAME))
+            cursorC.close()
+
+            val idProduct = cursorP.getInt(cursorP.getColumnIndex(PRODUCT_ID))
+            val cursorO = db.rawQuery(SELECT_ALL_PRODUCT_OBSERVATIONS, arrayOf(idProduct.toString()))
+            cursorO.moveToFirst()
+
+            while(!cursorO.isAfterLast) {
+                observations.add(Product.Observation(
+                        cursorO.getString(cursorO.getColumnIndex(PRODUCT_OBSERVATION_OBSERVATION)),
+                        convertToDate(cursorO.getString(cursorO.getColumnIndex(PRODUCT_OBSERVATION_DATE)))
+                    )
+                )
+                cursorO.moveToNext()
+            }
+            cursorO.close()
+
+            productList.add(Product(
+                    cursorP.getString(cursorP.getColumnIndex(PRODUCT_NAME)),
+                    categoryName,
+                    cursorP.getStringOrNull(cursorP.getColumnIndex(PRODUCT_BRAND)),
+                    cursorP.getString(cursorP.getColumnIndex(PRODUCT_IMAGE_FILEPATH)),
+                    observations
+                )
+            )
+            cursorP.moveToNext()
+        }
+        cursorP.close()
+
+        return productList
+    }
+
+    fun countDbProducts() : Int {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_NUM_PRODUCTS, null)
+        cursor.moveToFirst()
+        val count = cursor.count
+        cursor.close()
+        return count
+    }
+
     fun closeDB() {
         val db = readableDatabase
         if (db != null && db.isOpen)
             db.close()
     }
+
 }
