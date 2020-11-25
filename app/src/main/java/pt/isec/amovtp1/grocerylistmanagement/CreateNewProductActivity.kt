@@ -91,10 +91,10 @@ class CreateNewProductActivity : AppCompatActivity() {
                     filePath,
                     if (etObservations.text.isEmpty()) arrayListOf() else arrayListOf(Product.Observation(etObservations.text.toString(), Date())))
             // Save the product in the database
-            /*if(!db.saveProduct(product)) {
+            if(!db.saveProduct(product)) {
                 etProductName.error = getString(R.string.product_already_exists)
                 return@setOnClickListener
-            }*/
+            }
 
             db.closeDB()
             Intent(this, CreateNewProductListActivity::class.java)
@@ -126,10 +126,6 @@ class CreateNewProductActivity : AppCompatActivity() {
             sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(getString(R.string.no_categories_created_spinner_info)))
         else
             sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-    }
-
-    private fun addUnitsOnSpinner() {
-
     }
 
     fun addNewCategory(view: View) {

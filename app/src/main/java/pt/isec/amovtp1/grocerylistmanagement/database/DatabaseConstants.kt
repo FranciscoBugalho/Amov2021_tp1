@@ -25,9 +25,6 @@ object DatabaseConstants {
 
         // Product image filepath column name
         const val PRODUCT_IMAGE_FILEPATH = "productImageFilepath"
-
-        // Product quantity column name
-        const val PRODUCT_QUANTITY = "quantity"
     }
     /*------------------------*/
 
@@ -112,6 +109,9 @@ object DatabaseConstants {
     object ListProductConstants : BaseColumns {
         // ProductLists Product table name
         const val LIST_PRODUCT_TABLE_NAME = "glm_list_product"
+
+        // Product quantity column name
+        const val LIST_PRODUCT_QUANTITY = "productQuantity"
     }
     /*----------------------------*/
 

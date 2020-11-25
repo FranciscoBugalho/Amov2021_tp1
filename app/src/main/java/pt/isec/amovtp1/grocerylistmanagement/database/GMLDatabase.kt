@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToDatetime
 import pt.isec.amovtp1.grocerylistmanagement.data.Product
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.CategoryConstants.CATEGORY_ID
@@ -16,12 +15,10 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductConstants.PRODUCT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductConstants.PRODUCT_IMAGE_FILEPATH
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductConstants.PRODUCT_NAME
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductConstants.PRODUCT_QUANTITY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductConstants.PRODUCT_TABLE_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_DATE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_OBSERVATION
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_TABLE_NAME
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.CreateTableQueries.CREATE_CATEGORY_TABLE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.CreateTableQueries.CREATE_LIST_PRODUCT_TABLE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.CreateTableQueries.CREATE_LIST_TABLE
@@ -39,18 +36,15 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQ
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORIES_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAMES
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_WITH_SAME_NAME
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class GMLDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_LIST_TABLE)
-        db.execSQL(CREATE_UNIT_TABLE)
         db.execSQL(CREATE_CATEGORY_TABLE)
         db.execSQL(CREATE_PRODUCT_TABLE)
+        db.execSQL(CREATE_UNIT_TABLE)
         db.execSQL(CREATE_PRODUCT_OBSERVATION_TABLE)
         db.execSQL(CREATE_PRODUCT_PRICE_TABLE)
         db.execSQL(CREATE_LIST_PRODUCT_TABLE)
@@ -60,9 +54,9 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
         db.execSQL(DROP_LIST_PRODUCT_TABLE)
         db.execSQL(DROP_PRODUCT_PRICE_TABLE)
         db.execSQL(DROP_PRODUCT_OBSERVATION_TABLE)
+        db.execSQL(DROP_UNIT_TABLE)
         db.execSQL(DROP_PRODUCT_TABLE)
         db.execSQL(DROP_CATEGORY_TABLE)
-        db.execSQL(DROP_UNIT_TABLE)
         db.execSQL(DROP_LIST_TABLE)
         onCreate(db)
     }
@@ -120,8 +114,6 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, n
         valuesP.put(PRODUCT_NAME, product.name)
         valuesP.put(PRODUCT_BRAND, product.brand)
         valuesP.put(PRODUCT_IMAGE_FILEPATH, product.filePath)
-        valuesP.putNull(PRODUCT_QUANTITY)
-        valuesP.putNull(UNIT_ID)
         valuesP.put(CATEGORY_ID, categoryId)
         val productId = db.insert(PRODUCT_TABLE_NAME, null, valuesP)
 

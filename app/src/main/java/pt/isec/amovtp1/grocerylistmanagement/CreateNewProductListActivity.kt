@@ -43,10 +43,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnNewProduct).setOnClickListener {
 
             // Save the list name if the editBox is not empty
-            if(!etListName.text.isEmpty())
-                listName = etListName.text.toString()
-            else
-                listName = ""
+            listName = if(!etListName.text.isEmpty())
+                etListName.text.toString()
+            else ""
 
             /*
                 TODO = SALVAR OS PRODUTOS JÁ ASSOCIADOS
