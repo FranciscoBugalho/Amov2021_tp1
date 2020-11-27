@@ -6,25 +6,25 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMATE_TO_CARD
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMATE_TO_DB
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 object Utils {
     fun setPic(view: View, path: String) {
-        val targetW = view.width
+        /*val targetW = view.width
         val targetH = view.height
         if (targetH < 1 || targetW < 1)
-            return
+            return*/
         val bmpOptions = BitmapFactory.Options()
         bmpOptions.inJustDecodeBounds = true
         BitmapFactory.decodeFile(path, bmpOptions)
-        val photoW = bmpOptions.outWidth
+        /*val photoW = bmpOptions.outWidth
         val photoH = bmpOptions.outHeight
         val scale = min(photoW / targetW, photoH / targetH)
-        bmpOptions.inSampleSize = scale
+        bmpOptions.inSampleSize = scale*/
         bmpOptions.inJustDecodeBounds = false
         val bitmap = BitmapFactory.decodeFile(path, bmpOptions)
         when {
@@ -53,4 +53,10 @@ object Utils {
     fun convertToDate(date: String) : Date {
         return SimpleDateFormat(DATE_FORMATE_TO_DB).parse(date)!!
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertDateToStrCard(date: Date) : String {
+        return SimpleDateFormat(DATE_FORMATE_TO_CARD).format(Date(date.time))
+    }
+
 }

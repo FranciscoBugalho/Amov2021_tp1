@@ -10,6 +10,7 @@
         android:id="@+id/tvDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/add_new_category_dialog_titlle"
         android:textSize="@dimen/aud_tv_title_text_size"
         android:textAlignment="center" />
 
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/aud_et_margin_top"
         android:inputType="text"
+        android:hint="@string/insert_new_category_et_dialog_placeholder"
         android:textSize="@dimen/aud_et_text_size"
         android:importantForAutofill="no" />
 

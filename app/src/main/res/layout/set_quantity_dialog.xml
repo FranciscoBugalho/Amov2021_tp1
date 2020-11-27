@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/aud_ll_padding">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/define_the_product_quantity_dialog_title"
+        android:textSize="@dimen/aud_tv_title_text_size"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etProductQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cnpl_et_layout_margin"
+            android:layout_weight="0.6"
+            android:ems="10"
+            android:hint="@string/quantity_placeholder"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/cnpl_et_name_text_size" />
+
+        <Spinner
+            android:id="@+id/sUnit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/addNewUnity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:padding="@dimen/cnp_tv_new_unit_padding"
+        android:text="@string/new_unit_link"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/cnp_tv_text_size"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:layout_marginEnd="@dimen/cnp_et_margin_end" />
+
+    <LinearLayout
+        android:id="@+id/llNewUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/sqd_ll_new_unit_margin_top">
+
+        <EditText
+            android:id="@+id/etNewUnit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:hint="@string/add_new_unit_placeholder"
+            android:textColor="@color/black"
+            android:textSize="@dimen/aud_et_text_size"
+            android:inputType="text"
+            android:visibility="gone"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/btnAddUnit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add_unit_btn_text"
+            android:textSize="@dimen/sqd_btn_text_size"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/aud_ll_buttons_margin_top">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:text="@string/cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/aud_btns_text_size"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/aud_btns_margins"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:text="@string/confirm_quantity"
+            android:textColor="@color/black"
+            android:textSize="@dimen/aud_btns_text_size"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/aud_btns_margins"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+</LinearLayout>

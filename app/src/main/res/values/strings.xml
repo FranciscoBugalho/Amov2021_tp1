@@ -3,7 +3,7 @@
     <string name="manage_product_lists">Manage Product Lists</string>
     <string name="manage_shopping_lists">Shopping</string>
     <string name="menu_back_title">Back</string>
-    <string name="rc_view_details">View details</string>
+    <string name="rc_editList">Edit</string>
     <string name="plus_sign" translatable="false">+</string>
     <string name="manage_product_list_title">Manage Product Lists</string>
     <string name="create_new_product_list_title">Create New Product List</string>
@@ -43,6 +43,24 @@
     <string name="this_field_cant_be_empty">This field can\'t be empty</string>
     <string name="checked_flag" translatable="false">:checked</string>
     <string name="you_have_to_add_products_first">You have to add products first!</string>
+    <string name="category_doesnt_exist">Category doesn\'t exist!</string>
+    <string name="define_the_product_quantity_dialog_title">Define the product quantity</string>
+    <string name="confirm_quantity">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="should_create_new_units">Should create new units</string>
+    <string name="add_new_unit_placeholder">Insert New Unit</string>
+    <string name="add_unit_btn_text">Add unit</string>
+    <string name="this_field_must_be_filled">This field must be filled!</string>
+    <string name="unit_already_exists_error">Unit already exists!</string>
+    <string name="you_have_to_select_at_least_one_product">You have to select at least one product</string>
+    <string name="list_name_already_exists">List name already exists</string>
+    <string name="no_observations_set_for_this_product_yet">No observations set for this product yet.</string>
+    <string name="alphabetical_order_menu_text">Alphabetical Order</string>
+    <string name="created_date_menu_text">Created date</string>
+    <string name="bougth_menu_text">Bougth</string>
+    <string name="you_have_no_lists_created_click_on_the_plus_button">You have no lists, create some by clicking on the plus (\'+\') button.</string>
+    <string name="already_exists_a_list_with_this_name">Already exists a list with this name!</string>
+    <string name="edit_list_btn_txt">Edit List</string>
 
 
     <!-- Remover -->

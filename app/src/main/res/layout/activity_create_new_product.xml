@@ -7,7 +7,8 @@
     tools:context=".CreateNewProductActivity"
     android:background="@drawable/linearlayout_background"
     android:padding="@dimen/default_padding"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"

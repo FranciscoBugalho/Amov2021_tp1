@@ -17,7 +17,7 @@
     <dimen name="mpl_list_name_text_size">24sp</dimen>
     <dimen name="mpl_tc_tv_padding">4dp</dimen>
     <dimen name="mpl_product_list_text_size">20sp</dimen>
-    <dimen name="mpl_view_details_text_size">16sp</dimen>
+    <dimen name="mpl_view_details_text_size">14sp</dimen>
     <dimen name="mpl_plus_btn_size">60dp</dimen>
     <dimen name="mpl_plus_btn_text_size">38sp</dimen>
     <dimen name="mpl_btn_plus_margin">8dp</dimen>
@@ -48,10 +48,11 @@
     <dimen name="cnp_tv_product_image_padding">8dp</dimen>
     <dimen name="cnp_btn_check_text_size">28sp</dimen>
     <dimen name="cnp_iv_margin">8dp</dimen>
+    <dimen name="cnp_et_margin_end">2dp</dimen>
 
     <!-- ______________________________ -->
 
-    <!-- Add ProductUnit Dialog Dimensions -->
+    <!-- Add Product Unit Dialog Dimensions -->
     <dimen name="aud_ll_padding">15dp</dimen>
     <dimen name="aud_tv_title_text_size">24sp</dimen>
     <dimen name="aud_et_margin_top">10dp</dimen>
@@ -62,7 +63,12 @@
 
     <!-- ______________________________ -->
 
+    <!-- Set Quantity Dialog Dimensions -->
+    <dimen name="sqd_btn_text_size">18sp</dimen>
+    <dimen name="sqd_ll_new_unit_margin_top">8dp</dimen>
+
+    <!-- ______________________________ -->
+
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
-    <dimen name="cnp_et_margin_end">2dp</dimen>
 </resources>
