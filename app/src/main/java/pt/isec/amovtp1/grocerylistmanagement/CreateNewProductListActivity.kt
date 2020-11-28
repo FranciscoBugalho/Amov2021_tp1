@@ -345,6 +345,34 @@ class CreateNewProductListActivity : AppCompatActivity() {
         val productObservations = db.getAllObservations(productName)
 
         if(productObservations.isEmpty()) {
+            val ivProductImage = dialog.findViewById<ImageView>(R.id.ivProductImage)
+            val productFilePath = db.getProductFilePath(productName)
+            if(productFilePath == Constants.ASSET_IMAGE_PATH_NO_IMG)
+                Utils.setImgFromAsset(ivProductImage, Constants.ASSET_IMAGE_PATH_NO_IMG)
+            else
+                Utils.setPic(ivProductImage, productFilePath)
+
+            val tvProductName = dialog.findViewById<TextView>(R.id.tvProductName)
+
+            val productBrand = db.getProductBrand(productName)
+            if(productBrand == null) {
+                // Set the TextView with the product name
+                tvProductName.text = productName
+            } else {
+                // Set the TextView with the product name and its brand
+                tvProductName.text = "$productName ($productBrand)"
+            }
+            //-------------------------------------------------------
+
+            // Create a LinearLayout
+            val linearLayout = LinearLayout(this)
+            linearLayout.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            linearLayout.orientation = LinearLayout.HORIZONTAL
+            //-------------------------------------------------------
+
             // Create the TextView
             val textView = TextView(this)
             textView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -352,7 +380,11 @@ class CreateNewProductListActivity : AppCompatActivity() {
             textView.text = getString(R.string.no_observations_set_for_this_product_yet)
             textView.setTextColor(Color.BLACK)
             textView.gravity = Gravity.CENTER
+            textView.setTextColor(Color.BLACK)
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             //-------------------------------------
+            linearLayout.addView(textView)
+            linearLayoutObservations.addView(linearLayout)
             return
         }
 
@@ -365,9 +397,16 @@ class CreateNewProductListActivity : AppCompatActivity() {
             else
                 Utils.setPic(ivProductImage, productFilePath)
 
-            // Set product name
             val tvProductName = dialog.findViewById<TextView>(R.id.tvProductName)
-            tvProductName.text = productName
+
+            val productBrand = db.getProductBrand(productName)
+            if(productBrand == null) {
+                // Set the TextView with the product name
+                tvProductName.text = productName
+            } else {
+                // Set the TextView with the product name and its brand
+                tvProductName.text = "$productName ($productBrand)"
+            }
 
             // Create LinearLayout
             val linearLayout = LinearLayout(this)

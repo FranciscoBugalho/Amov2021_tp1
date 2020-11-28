@@ -6,8 +6,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
-import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMATE_TO_CARD
-import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMATE_TO_DB
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMAT_TO_CARD
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.DATE_FORMAT_TO_DB
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.TIME_FORMAT_TO_CARD
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,17 +47,22 @@ object Utils {
 
     @SuppressLint("SimpleDateFormat")
     fun convertDateToDatetime(date: Date) : String {
-        return SimpleDateFormat(DATE_FORMATE_TO_DB).format(Date(date.time))
+        return SimpleDateFormat(DATE_FORMAT_TO_DB).format(Date(date.time))
     }
 
     @SuppressLint("SimpleDateFormat")
     fun convertToDate(date: String) : Date {
-        return SimpleDateFormat(DATE_FORMATE_TO_DB).parse(date)!!
+        return SimpleDateFormat(DATE_FORMAT_TO_DB).parse(date)!!
     }
 
     @SuppressLint("SimpleDateFormat")
     fun convertDateToStrCard(date: Date) : String {
-        return SimpleDateFormat(DATE_FORMATE_TO_CARD).format(Date(date.time))
+        return SimpleDateFormat(DATE_FORMAT_TO_CARD).format(Date(date.time))
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertTimeToStrCard(date: Date) : String {
+        return SimpleDateFormat(TIME_FORMAT_TO_CARD).format(Date(date.time))
     }
 
 }

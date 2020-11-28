@@ -56,7 +56,6 @@
     <string name="created_date_menu_text">Data de criação</string>
     <string name="bougth_menu_text">Comprada</string>
     <string name="you_have_no_lists_created_click_on_the_plus_button">Não tem listas criadas, clique no botão mais (\'+\') para criar novas listas</string>
-    <string name="rc_editList">Editar</string>
     <string name="already_exists_a_list_with_this_name">Já existe uma lista com este nome!</string>
     <string name="edit_list_btn_txt">Editar Lista</string>
 </resources>

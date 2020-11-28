@@ -25,10 +25,13 @@ object Constants {
     const val DATE_FORMAT_TO_IMG = "yyyyMMdd_HHmmss"
 
     // Date format to the database
-    const val DATE_FORMATE_TO_DB = "dd/MM/yyyy HH:mm:ss"
+    const val DATE_FORMAT_TO_DB = "dd/MM/yyyy HH:mm:ss"
 
     // Date format for the CardView
-    const val DATE_FORMATE_TO_CARD = "dd/MM/yy HH:mm"
+    const val DATE_FORMAT_TO_CARD = "dd/MM/yy"
+
+    // Time format for the CardView
+    const val TIME_FORMAT_TO_CARD = "HH:mm"
 
     const val SHOW_ALL_PRODUCTS = "All"
 

@@ -18,24 +18,25 @@ val listInfo = arrayListOf<ListInfo>()
 class RVListAdapter(private val listInfo: ArrayList<ListInfo>) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
     class RVViewHolder(view: View, val context: Context) : RecyclerView.ViewHolder(view) {
         var listName: TextView = view.findViewById(R.id.listName)
-        var listDate: TextView = view.findViewById(R.id.tvListModificationDate)
+        var listDate: TextView = view.findViewById(R.id.tvDate)
+        var listTime: TextView = view.findViewById(R.id.tvTime)
         var productListInformation: TextView = view.findViewById(R.id.productList)
-        var editTextView: TextView = view.findViewById(R.id.tvEditList)
 
-        fun update(lnStr: String, ldStr: String, pliStr: String) {
+        fun update(lnStr: String, ldStr: String, ltStr: String, pliStr: String) {
             // Add the onLongClickListener
             productListInformation.setOnLongClickListener{
                 (context as ManageProductListsActivity).createDialogToCopyOrDelete(listName.text.toString())
                 return@setOnLongClickListener true
             }
 
-            editTextView.setOnClickListener {
+            productListInformation.setOnClickListener {
                 (context as ManageProductListsActivity).onEdit(listName.text.toString())
                 return@setOnClickListener
             }
 
             listName.text = lnStr
             listDate.text = ldStr
+            listTime.text = ltStr
             productListInformation.text = pliStr
         }
 
@@ -48,7 +49,9 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: RVViewHolder, position: Int) {
-        holder.update(listInfo[position].listName, Utils.convertDateToStrCard(listInfo[position].listDate), listInfo[position].productInfo)
+        holder.update(listInfo[position].listName, Utils.convertDateToStrCard(listInfo[position].listDate),
+                Utils.convertTimeToStrCard(listInfo[position].listDate),
+                listInfo[position].productInfo)
     }
 
     override fun getItemCount(): Int = listInfo.size

@@ -74,6 +74,7 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_NAME_BY_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_UNITS
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_BRAND_FROM_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_ID_BY_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_ID_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_IMAGE_FILEPATH_FROM_NAME
@@ -456,7 +457,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
                 val amount = selectedProducts[key]!!.split(" ")
                 valuesPL.put(LIST_PRODUCT_QUANTITY, amount[0])
 
-                if(amount.size == 1) {
+                if(amount.size == 2) {
                     val cursorU = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(amount[1]))
                     cursorU.moveToFirst()
                     val unitId = cursorU.getLong(cursorU.getColumnIndex(UNIT_ID))
@@ -595,6 +596,15 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val productImageFilePath = cursor.getString(cursor.getColumnIndex(PRODUCT_IMAGE_FILEPATH))
         cursor.close()
         return productImageFilePath
+    }
+
+    fun getProductBrand(productName: String): String? {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_PRODUCT_BRAND_FROM_NAME, arrayOf(productName))
+        cursor.moveToFirst()
+        val productBrand = cursor.getString(cursor.getColumnIndex(PRODUCT_BRAND))
+        cursor.close()
+        return productBrand
     }
 
     fun getAllLists(listOrder: HashMap<String, String?>): List<ListInformation> {
@@ -836,4 +846,5 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         }
         return query
     }
+
 }

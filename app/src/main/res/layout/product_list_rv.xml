@@ -38,7 +38,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvListModificationDate"
+                android:id="@+id/tvDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -49,18 +49,15 @@
                 android:padding="@dimen/mpl_tc_tv_padding" />
 
             <TextView
-                android:id="@+id/tvEditList"
+                android:id="@+id/tvTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="0.7"
                 android:gravity="end"
                 android:background="@color/dark_yellow"
                 android:textColor="@color/black"
-                android:text="@string/rc_editList"
-                android:textStyle="bold"
                 android:textSize="@dimen/mpl_view_details_text_size"
-                android:padding="@dimen/mpl_tc_tv_padding"
-                android:onClick="onEdit" />
+                android:padding="@dimen/mpl_tc_tv_padding" />
 
         </LinearLayout>
 

@@ -3,7 +3,6 @@
     <string name="manage_product_lists">Manage Product Lists</string>
     <string name="manage_shopping_lists">Shopping</string>
     <string name="menu_back_title">Back</string>
-    <string name="rc_editList">Edit</string>
     <string name="plus_sign" translatable="false">+</string>
     <string name="manage_product_list_title">Manage Product Lists</string>
     <string name="create_new_product_list_title">Create New Product List</string>
@@ -63,22 +62,4 @@
     <string name="edit_list_btn_txt">Edit List</string>
 
 
-    <!-- Remover -->
-    <string-array name="category_arrays">
-        <item>Carne</item>
-        <item>Peixe</item>
-        <item>Fruta</item>
-        <item>Legumes</item>
-        <item>Produtos de limpeza </item>
-    </string-array>
-    <string-array name="country_arrays">
-        <item>Malaysia</item>
-        <item>United States</item>
-        <item>Indonesia</item>
-        <item>France</item>
-        <item>Italy</item>
-        <item>Singapore</item>
-        <item>New Zealand</item>
-        <item>India</item>
-    </string-array>
 </resources>
