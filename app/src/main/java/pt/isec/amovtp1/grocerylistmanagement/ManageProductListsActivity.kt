@@ -70,12 +70,12 @@ class ManageProductListsActivity : AppCompatActivity() {
             findViewById<ConstraintLayout>(R.id.clManageProductLists).addView(textView)
         } else {
             repeat(lists.size) {
-                val item = ListInfo(lists[it].listName, lists[it].date, listProductsName(db.productsInThisList(lists[it].listName)))
+                val item = ListInfo(lists[it].listName, lists[it].date, Utils.listProductsName(db.productsInThisList(lists[it].listName)))
                 listInfo.add(item)
             }
 
             rvProductList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            rvProductList.adapter = RVListAdapter(listInfo)
+            rvProductList.adapter = RVListAdapter(listInfo, false)
         }
     }
 
@@ -173,16 +173,6 @@ class ManageProductListsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.order_menu, menu)
         return true
-    }
-
-    private fun listProductsName(productList: List<String>) : String {
-        var str = ""
-
-        for (item in productList) {
-            str += item
-            str += "\n"
-        }
-        return str
     }
 
     fun onEdit(listName: String) {

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PurchaseProductsActivity"
+    android:background="@drawable/linearlayout_background"
+    android:padding="@dimen/default_padding"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/tvTitleListPurchase"
+        android:padding="@dimen/default_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/ac_title_text_size"
+        android:typeface="serif"
+        android:textStyle="bold|italic"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rounded_corners_textviews"
+        android:elevation="@dimen/ac_tv_elevation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/cnpl_et_category_search_padding_start"
+        tools:ignore="RtlSymmetry">
+
+        <EditText
+            android:id="@+id/etCategoryPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ems="10"
+            android:hint="@string/insert_a_category_to_search_placeholder"
+            android:inputType="text"
+            android:textSize="@dimen/cnpl_et_name_text_size"
+            android:importantForAutofill="no"  />
+
+        <Button
+            android:id="@+id/btnSearchCategoryPurchase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/search_btn"
+            android:elevation="2dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:padding="@dimen/cnpl_ll_padding" >
+
+        <LinearLayout
+            android:id="@+id/llProductCheckBoxesPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessLeaf">.
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+        <Button
+            android:id="@+id/btnFinishListPurchase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/purchase"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/cnpl_btn_padding"/>
+    </LinearLayout>
+</LinearLayout>
