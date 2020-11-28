@@ -59,7 +59,11 @@
     <string name="bougth_menu_text">Bougth</string>
     <string name="you_have_no_lists_created_click_on_the_plus_button">You have no lists, create some by clicking on the plus (\'+\') button.</string>
     <string name="already_exists_a_list_with_this_name">Already exists a list with this name!</string>
-    <string name="edit_list_btn_txt">Edit List</string>
+    <string name="edit_list_btn_txt">Finish</string>
+    <string name="shopping_area">Shopping Area</string>
+    <string name="you_have_no_lists_created_go_to_manage_product_lists_menu">You have no lists, create new lists on the \'Manage Product Lists\' menu.</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="purchase">Purchase</string>
 
 
 </resources>

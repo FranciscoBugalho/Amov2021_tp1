@@ -780,10 +780,14 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
                 val amount = selectedProducts[key]!!.split(" ")
                 valuesPL.put(LIST_PRODUCT_QUANTITY, amount[0])
 
-                val cursorU = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(amount[1]))
-                cursorU.moveToFirst()
-                val unitId = cursorU.getLong(cursorU.getColumnIndex(UNIT_ID))
-                valuesPL.put(UNIT_ID, unitId)
+                if(amount.size == 2){
+                    val cursorU = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(amount[1]))
+                    cursorU.moveToFirst()
+                    val unitId = cursorU.getLong(cursorU.getColumnIndex(UNIT_ID))
+                    valuesPL.put(UNIT_ID, unitId)
+                }
+                else
+                    valuesPL.putNull(UNIT_ID)
             } else {
                 valuesPL.put(LIST_PRODUCT_QUANTITY, 0)
                 valuesPL.putNull(UNIT_ID)

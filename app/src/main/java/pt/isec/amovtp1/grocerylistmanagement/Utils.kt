@@ -65,4 +65,14 @@ object Utils {
         return SimpleDateFormat(TIME_FORMAT_TO_CARD).format(Date(date.time))
     }
 
+    fun listProductsName(productList: List<String>) : String {
+        var str = ""
+
+        for (item in productList) {
+            str += item
+            str += "\n"
+        }
+        return str
+    }
+
 }
