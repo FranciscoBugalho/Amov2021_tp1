@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Grocery List Management</string>
-    <string name="manage_product_lists">Manage Product Lists</string>
+    <string name="manage_product_lists">Lists</string>
     <string name="manage_shopping_lists">Shopping</string>
     <string name="menu_back_title">Back</string>
     <string name="plus_sign" translatable="false">+</string>
@@ -60,6 +60,7 @@
     <string name="you_have_no_lists_created_click_on_the_plus_button">You have no lists, create some by clicking on the plus (\'+\') button.</string>
     <string name="already_exists_a_list_with_this_name">Already exists a list with this name!</string>
     <string name="edit_list_btn_txt">Edit List</string>
+    <string name="products">Produtcs</string>
 
 
 </resources>

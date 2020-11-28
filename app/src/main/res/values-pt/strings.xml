@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Grocery List Management</string>
-    <string name="manage_product_lists">Gestão da Lista de Produtos</string>
+    <string name="manage_product_lists">Listas</string>
     <string name="manage_shopping_lists">Compras</string>
     <string name="menu_back_title">Voltar</string>
     <string name="manage_product_list_title">Gestão da Lista de Produtos</string>
@@ -58,4 +58,5 @@
     <string name="you_have_no_lists_created_click_on_the_plus_button">Não tem listas criadas, clique no botão mais (\'+\') para criar novas listas</string>
     <string name="already_exists_a_list_with_this_name">Já existe uma lista com este nome!</string>
     <string name="edit_list_btn_txt">Editar Lista</string>
+    <string name="products">Produtos</string>
 </resources>
