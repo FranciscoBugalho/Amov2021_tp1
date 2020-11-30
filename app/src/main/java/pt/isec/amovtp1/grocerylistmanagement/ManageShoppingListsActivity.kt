@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_manage_product_lists.*
 import kotlinx.android.synthetic.main.activity_manage_shopping_lists.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.IntentConstants.LIST_NAME_TO_EDIT
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ListOrders.ALPHABETICAL_ORDER
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ListOrders.ORDER_ASC
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
@@ -38,6 +39,7 @@ class ManageShoppingListsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         // Define title
         supportActionBar?.title = getString(R.string.shopping_area)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -56,7 +58,7 @@ class ManageShoppingListsActivity : AppCompatActivity() {
     }
 
     private fun fillRecycleView() {
-        val lists = db.getAllLists(listOrder)
+        val lists = db.getAllNonBoughtLists(listOrder)
 
         if(lists.isEmpty()) {
             // Create a TextView
@@ -83,19 +85,12 @@ class ManageShoppingListsActivity : AppCompatActivity() {
         listInfo.clear()
         db.closeDB()
         Intent(this, PurchaseProductsActivity::class.java)
+            .putExtra(LIST_NAME_TO_EDIT, listName)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            .putExtra(Constants.IntentConstants.IS_LIST_DETAILS, 1)
-            .putExtra(Constants.IntentConstants.LIST_NAME_TO_EDIT, listName)
             .also {
                 startActivity(it)
             }
     }
-
-
-
-
-
-
 
     override fun onResume() {
         super.onResume()

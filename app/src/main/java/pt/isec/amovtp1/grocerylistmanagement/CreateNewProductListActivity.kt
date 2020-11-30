@@ -3,14 +3,21 @@ package pt.isec.amovtp1.grocerylistmanagement
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.opengl.Visibility
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import kotlinx.android.synthetic.main.dialog_show_product_observations.*
@@ -25,6 +32,7 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LI
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LIST_NAME_STR
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.SELECTED_PRODUCTS_STR
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
+import kotlin.math.log
 
 class CreateNewProductListActivity : AppCompatActivity() {
     private lateinit var listName: String
@@ -180,43 +188,47 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             linearLayout.orientation = LinearLayout.HORIZONTAL
-            linearLayout.tag = "ll" + products[key]
+            linearLayout.tag = "ll$key"
             linearLayout.setOnLongClickListener {
                 showProductObservations(key)
                 true
             }
 
             var param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-            param.weight = 1.0f
+            param.weight = 0.20f
 
-            var buttonQuantity: ImageButton? = null
+            val buttonQuantity = ImageButton(this)
+            buttonQuantity.layoutParams = param
+            buttonQuantity.tag = "btnQuantity$key"
+            buttonQuantity.background = null
+            buttonQuantity.setOnClickListener {
+                setProductQuantity(key)
+                return@setOnClickListener
+            }
+
+            param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
+            param.weight = 1.0f
 
             // Create the Checkbox
             val checkBox = CheckBox(this)
             checkBox.layoutParams = param
             checkBox.tag = "cc$key"
             checkBox.text = key
+            checkBox.maxLines = 1
             checkBox.setOnCheckedChangeListener { _, _ ->
                 if(checkBox.isChecked) {
                     // Create an ImageButton to define the Amount of product
-                    param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    param.weight = 0.20f
-
-                    buttonQuantity = ImageButton(this)
-                    buttonQuantity!!.layoutParams = param
-                    buttonQuantity!!.tag = "btnQuantity$key"
-                    buttonQuantity!!.background = null
-
                     if(!selectedProducts.containsKey(key)) {
                         // Every time the CheckBox is checked the amount becomes null
                         selectedProducts[key] = null
 
                         // Set the image with an empty shopping car
                         Utils.setImgFromAsset(
-                            buttonQuantity!!,
+                            buttonQuantity,
                             Constants.ASSET_IMAGE_PATH_SHOPPING_EMPTY
                         )
 
+                        buttonQuantity.visibility = ViewGroup.VISIBLE
                     } else {
                         // If the product has a Amount already defined
                         if(selectedProducts[key] != null) {
@@ -225,14 +237,14 @@ class CreateNewProductListActivity : AppCompatActivity() {
                             if(quantity[0] == "0.0" || quantity[0] == "0") {
                                 // Set the image with an empty shopping car
                                 Utils.setImgFromAsset(
-                                        buttonQuantity!!,
+                                        buttonQuantity,
                                         Constants.ASSET_IMAGE_PATH_SHOPPING_EMPTY
                                 )
                             }
                             else {
                                 // Set the image with an empty shopping car
                                 Utils.setImgFromAsset(
-                                        buttonQuantity!!,
+                                        buttonQuantity,
                                         Constants.ASSET_IMAGE_PATH_SHOPPING_FULL
                                 )
                             }
@@ -240,27 +252,26 @@ class CreateNewProductListActivity : AppCompatActivity() {
                         else {
                             // Set the image with an empty shopping car
                             Utils.setImgFromAsset(
-                                buttonQuantity!!,
+                                buttonQuantity,
                                 Constants.ASSET_IMAGE_PATH_SHOPPING_EMPTY
                             )
                         }
                     }
-                    buttonQuantity!!.setOnClickListener {
-                        setProductQuantity(key)
-                    }
-                    linearLayout.addView(buttonQuantity)
                 }
                 else {
                     // If the CheckBox is no more checked the product is removed from the selected products list
                     if(selectedProducts.containsKey(key)) {
                         selectedProducts.remove(key)
 
-                        buttonQuantity = linearLayout.getChildAt(3) as ImageButton?
-                        linearLayout.removeView(buttonQuantity)
+                        buttonQuantity.visibility = ViewGroup.INVISIBLE
                     }
                 }
             }
             checkBox.isChecked = selectedProducts.containsKey(key)
+            if(checkBox.isChecked)
+                buttonQuantity.visibility = ViewGroup.VISIBLE
+            else
+                buttonQuantity.visibility = ViewGroup.INVISIBLE
             checkBox.setOnLongClickListener {
                 showProductObservations(key)
                 true
@@ -277,10 +288,11 @@ class CreateNewProductListActivity : AppCompatActivity() {
             textView.text = products[key]
             textView.setTextColor(Color.BLACK)
             textView.gravity = Gravity.CENTER
-            //-----------------------------------1-
+            textView.maxLines = 1
+            //-------------------------------------
 
             param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.20f
+            param.weight = 0.30f
 
             // Create the Button
             val button = Button(this)
@@ -291,7 +303,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
             // Edit Product
             button.setOnClickListener {
                 // Save the list name if the editBox is not empty
-                listName = if(!etListName.text.isEmpty())
+                listName = if(etListName.text.isNotEmpty())
                     etListName.text.toString()
                 else ""
 
@@ -310,15 +322,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
             linearLayout.addView(checkBox)
             linearLayout.addView(textView)
             linearLayout.addView(button)
-            if(buttonQuantity != null) {
-                linearLayout.removeView(buttonQuantity)
-                param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-                param.weight = 0.20f
-                buttonQuantity!!.layoutParams = param
-                buttonQuantity!!.tag = "btnQuantity$key"
-                buttonQuantity!!.background = null
-                linearLayout.addView(buttonQuantity)
-            }
+            linearLayout.addView(buttonQuantity)
 
             // Add the LinearLayout to the main Layout
             llProducts.addView(linearLayout)
@@ -493,9 +497,11 @@ class CreateNewProductListActivity : AppCompatActivity() {
             if(et.isVisible && btn.isVisible) {
                 et.visibility = View.GONE
                 btn.visibility = View.GONE
+                btnConfirm.isClickable = true
             } else {
                 et.visibility = View.VISIBLE
                 btn.visibility = View.VISIBLE
+                btnConfirm.isClickable = false // TODO: MUDAR A COR DESTE BOTÃO QUANDO NÃO SE PODE CLICAR NELE
             }
         }
 
@@ -566,7 +572,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
-            Intent(this, ManageProductListsActivity::class.java).also {
+            Intent(this, ManageProductListsActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
                 startActivity(it)
             }
             finish()

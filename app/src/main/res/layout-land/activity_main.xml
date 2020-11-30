@@ -35,6 +35,25 @@
             tools:ignore="UselessLeaf" />
 
         <Button
+            android:id="@+id/btnProducts"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/products_btn_txt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/ac_btn_margin"
+            android:padding="@dimen/ac_btn_padding"
+            android:background="@drawable/btns_ripple_main_activity" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            tools:ignore="UselessLeaf" />
+
+        <Button
             android:id="@+id/btnProductsLists"
             android:layout_width="0dp"
             android:layout_weight="1"

@@ -35,6 +35,8 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_DATE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_OBSERVATION
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_TABLE_NAME
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductPriceConstants.PRODUCT_PRICE_DATE
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductPriceConstants.PRODUCT_PRICE_PRICE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_TABLE_NAME
@@ -54,24 +56,32 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQ
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.DropTableQueries.DROP_UNIT_TABLE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_INFO_IN_LIST_PRODUCT
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_LIST_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_NOT_PURCHASED_LISTS_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRICES_BY_PRODUCT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_DATE_ASC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_DATE_DESC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_IS_BOUGHT_ASC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_IS_BOUGHT_DESC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_NAME_ASC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_NAME_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_INFO
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_NAME_CATEGORY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_OBSERVATIONS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORIES_WITH_SAME_NAME
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_ID_BY_PRODUCT_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAMES
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAME_BY_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CHECKED_PRODUCT_NAME_CATEGORY
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LAST_PRODUCT_PRICE_AND_DATE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LISTS_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_ID_BY_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_ID_WITH_SAME_NAME
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_DATE_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_DATE_DESC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_DESC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_NAME_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_NAME_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_NAME_BY_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_DESC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_UNITS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_BRAND_FROM_NAME
@@ -81,6 +91,8 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_INFO_BY_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_NAME_BY_CATEGORY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_NAME_BY_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_PRICES_AND_DATE
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_QUANTITY_UNIT
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_UNITS_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_UNIT_ID_BY_NAME
@@ -614,7 +626,30 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val db = writableDatabase
         val lists = arrayListOf<ListInformation>()
 
-        val query = getOrderedLists(listOrder)
+        val query = getOrderedLists(listOrder, false)
+
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            lists.add(ListInformation(cursor.getString(cursor.getColumnIndex(LIST_NAME)),
+                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))))
+            )
+
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return lists
+    }
+
+    fun getAllNonBoughtLists(listOrder: HashMap<String, String?>): List<ListInformation> {
+        if(countDbNumNotPurchasedLists() == 0)
+            return arrayListOf()
+
+        val db = writableDatabase
+        val lists = arrayListOf<ListInformation>()
+
+        val query = getOrderedLists(listOrder, true)
 
         val cursor = db.rawQuery(query, null)
         cursor.moveToFirst()
@@ -633,6 +668,15 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
     private fun countDbNumLists(): Int {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_ALL_LIST_ID, null)
+        cursor.moveToFirst()
+        val count = cursor.count
+        cursor.close()
+        return count
+    }
+
+    private fun countDbNumNotPurchasedLists(): Int {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_ALL_NOT_PURCHASED_LISTS_ID, null)
         cursor.moveToFirst()
         val count = cursor.count
         cursor.close()
@@ -823,26 +867,124 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         db.delete(LIST_TABLE_NAME, "$LIST_ID = ?", arrayOf(listId.toString()))
     }
 
-    private fun getOrderedLists(listOrder: HashMap<String, String?>): String {
+    fun getProductQuantityAndUnit(listName: String, productName: String): String {
+        val productId = getProductIdByName(productName)
+        val listId = getListIdByName(listName)
+
+        val db = writableDatabase
+        val cursorQU = db.rawQuery(SELECT_PRODUCT_QUANTITY_UNIT, arrayOf(productId.toString(), listId.toString()))
+        cursorQU.moveToFirst()
+        val quantity = cursorQU.getDouble(cursorQU.getColumnIndex(LIST_PRODUCT_QUANTITY))
+
+        if(quantity == 0.0) {
+            return "N/A"
+        }
+
+        val cursorU = db.rawQuery(SELECT_UNIT_NAME_BY_ID, arrayOf(cursorQU.getLong(cursorQU.getColumnIndex(LIST_PRODUCT_QUANTITY)).toString()))
+        cursorQU.close()
+        cursorU.moveToFirst()
+        val unit = cursorU.getString(cursorU.getColumnIndex(UNIT_NAME))
+        cursorU.close()
+
+        return "$quantity $unit"
+    }
+
+    fun getAllProductPrices(productName: String): List<String>? {
+        val productId = getProductIdByName(productName)
+
+        if(hasPrices(productId))
+            return null
+
+        val db = writableDatabase
+        val cursorP = db.rawQuery(SELECT_PRODUCT_PRICES_AND_DATE, arrayOf(productId.toString()))
+        cursorP.moveToFirst()
+
+        val prices = arrayListOf<String>()
+        while(!cursorP.isAfterLast) {
+            val aux = "${cursorP.getDouble(cursorP.getColumnIndex(PRODUCT_PRICE_PRICE))} " +
+                    convertDateToDatetime(convertToDate(cursorP.getString(cursorP.getColumnIndex(PRODUCT_PRICE_DATE))))
+            prices.add(aux)
+            cursorP.moveToNext()
+        }
+        cursorP.close()
+
+        return prices
+    }
+
+    fun getLastProductPrice(productName: String): String? {
+        val productId = getProductIdByName(productName)
+
+        if(hasPrices(productId))
+            return null
+
+        val db = writableDatabase
+        val cursorP = db.rawQuery(SELECT_LAST_PRODUCT_PRICE_AND_DATE, arrayOf(productId.toString()))
+        cursorP.moveToFirst()
+
+        val prices = "${cursorP.getDouble(cursorP.getColumnIndex(PRODUCT_PRICE_PRICE))} " +
+                convertDateToDatetime(convertToDate(cursorP.getString(cursorP.getColumnIndex(PRODUCT_PRICE_DATE))))
+
+        cursorP.close()
+        return prices
+    }
+
+    private fun hasPrices(productId: Long): Boolean {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_ALL_PRICES_BY_PRODUCT_ID, arrayOf(productId.toString()))
+        cursor.moveToFirst()
+        val count = cursor.count
+        cursor.close()
+        return count == 0
+    }
+
+    fun getCategoryByProductName(productName: String): String {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_CATEGORY_ID_BY_PRODUCT_NAME, arrayOf(productName))
+        cursor.moveToFirst()
+        val categoryId = cursor.getLong(cursor.getColumnIndex(CATEGORY_ID))
+        cursor.close()
+
+        val cursorC = db.rawQuery(SELECT_CATEGORY_NAME_BY_ID, arrayOf(categoryId.toString()))
+        cursorC.moveToFirst()
+        val categoryName = cursorC.getString(cursorC.getColumnIndex(CATEGORY_NAME))
+        cursorC.close()
+        return categoryName
+    }
+
+    private fun getOrderedLists(listOrder: HashMap<String, String?>, isShopping: Boolean): String {
         val query: String
         when {
             listOrder.keys.contains(ALPHABETICAL_ORDER) -> {
-                query = if(listOrder[ALPHABETICAL_ORDER] == ORDER_ASC)
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_NAME_ASC
-                else
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_NAME_DESC
+                query = if(listOrder[ALPHABETICAL_ORDER] == ORDER_ASC) {
+                    if (isShopping)
+                        SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_ASC
+                    else
+                        SELECT_LIST_INFO_ORDER_BY_NAME_ASC
+                } else {
+                    if (isShopping)
+                        SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_DESC
+                    else
+                        SELECT_LIST_INFO_ORDER_BY_NAME_DESC
+                }
             }
             listOrder.keys.contains(CREATED_DATE_ORDER) -> {
-                query = if(listOrder[CREATED_DATE_ORDER] == ORDER_ASC)
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_DATE_ASC
-                else
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_DATE_DESC
+                query = if (listOrder[CREATED_DATE_ORDER] == ORDER_ASC) {
+                    if (isShopping)
+                        SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_ASC
+                    else
+                        SELECT_LIST_INFO_ORDER_BY_DATE_ASC
+                } else {
+                    if (isShopping)
+                        SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_DESC
+                    else
+                        SELECT_LIST_INFO_ORDER_BY_DATE_DESC
+                }
             }
             listOrder.keys.contains(IS_BOUGHT_ORDER) -> {
                 query = if(listOrder[IS_BOUGHT_ORDER] == ORDER_ASC)
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_IS_BOUGHT_ASC
+                    SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_ASC
                 else
-                    SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT_ORDER_BY_IS_BOUGHT_DESC
+                    SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_DESC
             }
             else -> {
                 query = SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT

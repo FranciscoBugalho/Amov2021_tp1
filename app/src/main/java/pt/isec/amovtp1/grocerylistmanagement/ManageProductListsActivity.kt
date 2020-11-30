@@ -79,7 +79,6 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // If user clicks on the back menu button
         when (item.itemId) {

@@ -33,6 +33,7 @@
     <dimen name="cnpl_ll_padding">8dp</dimen>
     <dimen name="cnpl_et_category_search_padding_start">8dp</dimen>
     <dimen name="cnpl_ll_new_product_padding">8dp</dimen>
+    <dimen name="cnpl_spinner_padding">4dp</dimen>
     <dimen name="rounded_btn_stroke_with">3dip</dimen>
     <dimen name="rounded_btn_size">100dp</dimen>
 
@@ -69,6 +70,15 @@
 
     <!-- ______________________________ -->
 
+    <!-- Purchase Products Activity -->
+    <dimen name="pp_sv_margins">4dp</dimen>
+    <dimen name="pp_ll_search_margin_top">8dp</dimen>
+    <dimen name="pp_tv_title_text_size">18sp</dimen>
+    <dimen name="pp_tv_padding">6dp</dimen>
+
+    <!-- ______________________________ -->
+
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="ipp_dialog_tv_sign_padding">4dp</dimen>
 </resources>

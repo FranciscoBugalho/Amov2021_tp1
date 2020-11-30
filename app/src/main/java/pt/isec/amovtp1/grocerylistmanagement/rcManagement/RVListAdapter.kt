@@ -12,16 +12,16 @@ import java.util.*
 data class ListInfo(val listName: String, val listDate: Date, val productInfo: String)
 val listInfo = arrayListOf<ListInfo>()
 
-class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isShopping : Boolean) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
+class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isShopping: Boolean) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
     class RVViewHolder(view: View, val context: Context) : RecyclerView.ViewHolder(view) {
         var listName: TextView = view.findViewById(R.id.listName)
         var listDate: TextView = view.findViewById(R.id.tvDate)
         var listTime: TextView = view.findViewById(R.id.tvTime)
         var productListInformation: TextView = view.findViewById(R.id.productList)
 
-        fun update(lnStr: String, ldStr: String, ltStr: String, pliStr: String, isShopping : Boolean) {
-            // Add the onLongClickListener
+        fun update(lnStr: String, ldStr: String, ltStr: String, pliStr: String, isShopping: Boolean) {
             if(!isShopping){
+                // Add the onLongClickListener
                 productListInformation.setOnLongClickListener{
                     (context as ManageProductListsActivity).createDialogToCopyOrDelete(listName.text.toString())
                     return@setOnLongClickListener true
@@ -38,7 +38,6 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
                     return@setOnClickListener
                 }
             }
-
 
             listName.text = lnStr
             listDate.text = ldStr

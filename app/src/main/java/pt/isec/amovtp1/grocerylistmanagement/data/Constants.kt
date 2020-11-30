@@ -82,6 +82,10 @@ object Constants {
         const val LIST_ID_EDIT_MODE = "listIdForEditMode"
 
         const val LIST_ORDER_STR = "listOrder"
+
+        const val ALL_PRODCUTS = "allProducts"
+
+        const val PRUCHASED_PRODUCTS = "purchasedProducts"
     }
 
     object ListOrders : BaseColumns {
