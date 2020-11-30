@@ -2,9 +2,14 @@ package pt.isec.amovtp1.grocerylistmanagement
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MenuItem
@@ -14,16 +19,20 @@ import android.widget.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_purchase_products.*
+import kotlinx.android.synthetic.main.set_quantity_dialog.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.IntentConstants.LIST_NAME_TO_EDIT
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.ALL_PRODCUTS
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.PRUCHASED_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class PurchaseProductsActivity : AppCompatActivity() {
     private lateinit var listName: String
-    private var allProducts = hashMapOf<String, ArrayList<String>>()
-    private var boughtProducts = hashMapOf<String, ArrayList<String>>()
+    private var allProducts = mutableMapOf<String, ArrayList<String>>()
+    private var boughtProducts = mutableMapOf<String, ArrayList<String>>()
     private lateinit var db : GMLDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,31 +56,251 @@ class PurchaseProductsActivity : AppCompatActivity() {
             setupScrollViews(allProducts, true)
         }
 
+        val button = findViewById<Button>(R.id.btnSettings)
+        val drawable = getDrawable(R.drawable.settings_btn)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            drawable!!.colorFilter = BlendModeColorFilter(Color.DKGRAY, BlendMode.SRC_IN)
+        } else {
+            drawable!!.setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN)
+        }
+        button.background = drawable
+        button.setOnClickListener {
+            insertNewUnit()
+            return@setOnClickListener
+        }
+
         // Add information to the Spinner
-        var orderList = arrayListOf(getString(R.string.alphabetical_order_asc_text), getString(R.string.alphabetical_order_desc_text))
+        var orderList = arrayListOf(getString(R.string.alphabetical_order_asc_text), getString(R.string.alphabetical_order_desc_text), "-------------------------")
         orderList = (orderList + db.getAllCategoryNames()) as ArrayList<String>
         sOrderCategories.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, orderList)
+        sOrderCategories.setSelection(2)
         // Create the listener
         sOrderCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-                /*
-
-
-                 TODO: FAZER A ORDENAÇÃO
-
-
-                 */
-
+                when {
+                    position == 0 -> {
+                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap()
+                        setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
+                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap()
+                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts, false)
+                    }
+                    position == 1 -> {
+                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap(compareByDescending { it })
+                        setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
+                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap(compareByDescending { it })
+                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts, false)
+                    }
+                    position > 2 -> {
+                        setupScrollViews(this@PurchaseProductsActivity.allProducts.filterValues { it[0] == orderList[position] } as MutableMap<String, ArrayList<String>>, true)
+                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts.filterValues { it[0] == orderList[position] } as MutableMap<String, ArrayList<String>>, false)
+                    }
+                    else -> {
+                        setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
+                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts, false)
+                    }
+                }
             }
 
             // Nothing happens
             override fun onNothingSelected(parent: AdapterView<*>?) { }
 
         }
+
+        // By default the button is disabled
+        btnFinishListPurchase.isEnabled = false
+        btnFinishListPurchase.setOnClickListener {
+            finishPurchase(tvTotal.text.toString())
+        }
     }
 
-    private fun setupScrollViews(productsToView: HashMap<String, ArrayList<String>>, isAllProductView: Boolean) {
+    private fun finishPurchase(totalPrice: String) {
+        // Create the Dialog
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.purchase_receipt_dialog)
+        dialog.setCanceledOnTouchOutside(true)
+
+        // Set dialog layout parameters
+        val layoutParams = WindowManager.LayoutParams()
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialog.window!!.attributes = layoutParams
+
+        dialog.show()
+
+        val llPurchasedProducts = dialog.findViewById<LinearLayout>(R.id.llPurchasedProducts)
+
+        val tvPurchaseListName = dialog.findViewById<TextView>(R.id.tvPurchaseListName)
+        tvPurchaseListName.text = listName
+
+        for(key in boughtProducts.keys) {
+            // Create the LinearLayout
+            val linearLayout = LinearLayout(this)
+            linearLayout.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            linearLayout.orientation = LinearLayout.HORIZONTAL
+            linearLayout.tag = "ll$key"
+            linearLayout.setPadding(5, 5, 5, 5)
+
+            var param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
+            param.weight = 0.70f
+
+            // Create the TextView
+            val tvProductName = TextView(this)
+            tvProductName.layoutParams = param
+            tvProductName.tag = "tv$key"
+            tvProductName.text = key
+            tvProductName.setTextColor(Color.BLACK)
+            tvProductName.gravity = Gravity.START
+            tvProductName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            tvProductName.maxLines = 1
+            //-----------------------
+
+            val productInfo = boughtProducts[key]
+            param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
+            param.weight = 0.40f
+
+            // Create the TextView
+            val tvQuantity = TextView(this)
+            tvQuantity.layoutParams = param
+            tvQuantity.tag = "tvQnt$key"
+            tvQuantity.text = productInfo!![1]
+            tvQuantity.setTextColor(Color.BLACK)
+            tvQuantity.gravity = Gravity.END
+            tvQuantity.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            //-----------------------
+
+            param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
+            param.weight = 0.40f
+
+            // Create the TextView
+            val tvPrice = TextView(this)
+            tvPrice.layoutParams = param
+            tvPrice.tag = "tvPrice$key"
+            tvPrice.setTextColor(Color.BLACK)
+            tvPrice.gravity = Gravity.END
+            tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+
+            if(productInfo.size == 3) {
+                tvPrice.text = productInfo[2] + getString(R.string.price_sign)
+            } else if(productInfo.size == 4) { // Has new price set
+                tvPrice.text = productInfo[3] + getString(R.string.price_sign)
+            }
+
+
+            linearLayout.addView(tvProductName)
+            linearLayout.addView(tvQuantity)
+            linearLayout.addView(tvPrice)
+            llPurchasedProducts.addView(linearLayout)
+        }
+        val param = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        param.gravity = Gravity.END
+        param.setMargins(0, 5, 0, 0)
+
+        // Create the LinearLayout
+        val llPrice = LinearLayout(this)
+        llPrice.layoutParams = param
+        llPrice.orientation = LinearLayout.HORIZONTAL
+        llPrice.tag = "llPrice"
+        llPrice.setPadding(5, 5, 5, 5)
+
+        // Create the TextView
+        val tvTotalPrice = TextView(this)
+        tvTotalPrice.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        tvTotalPrice.tag = "tvTotalPrice"
+        tvTotalPrice.text = getString(R.string.pp_tv_total_text) + " " + totalPrice + getString(R.string.price_sign)
+        tvTotalPrice.setTextColor(Color.BLACK)
+        tvTotalPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+        tvTotalPrice.maxLines = 1
+        //-----------------------
+        llPrice.addView(tvTotalPrice)
+        llPurchasedProducts.addView(llPrice)
+
+        val btnCancel = dialog.findViewById(R.id.btnCancelPurchase) as Button
+        val btnFinishPurchase = dialog.findViewById(R.id.btnFinishPurchase) as Button
+
+        btnFinishPurchase.setOnClickListener {
+            // If the all products list is empty just set the list as bought in the database
+            if(allProducts.isEmpty()) {
+                db.setListAsBought(listName)
+            } else {
+                val ln = listName + " " + Utils.convertDateToStrCard(Date()) + "_" + Utils.convertTimeToStrCard(Date())
+                db.saveList(ln, getProductQuantity(boughtProducts))
+                db.setListAsBought(ln)
+            }
+
+            // Save the products price
+            for(key in boughtProducts.keys) {
+                if(boughtProducts[key]!!.size == 4)
+                    db.saveProductPrice(db.getProductIdByName(key), boughtProducts[key]!![3])
+                else if(boughtProducts[key]!!.size == 3) {
+                    if (db.getLastProductPrice(key) == null)
+                        db.saveProductPrice(db.getProductIdByName(key), boughtProducts[key]!![2])
+                }
+            }
+
+            Intent(this, MainActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
+            finish()
+
+            dialog.dismiss()
+        }
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+    }
+
+    private fun getProductQuantity(boughtProducts: MutableMap<String, ArrayList<String>>): HashMap<String, String?> {
+        val productAndQuantities = hashMapOf<String, String?>()
+
+        for(key in boughtProducts.keys)
+            productAndQuantities[key] = boughtProducts[key]!![1]
+
+        return productAndQuantities
+    }
+
+    private fun insertNewUnit() {
+        // Create the Dialog
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.insert_new_unit_dialog)
+        dialog.setCanceledOnTouchOutside(true)
+
+        dialog.show()
+
+        val btnCancel = dialog.findViewById(R.id.btnCancel) as Button
+        val btnSave = dialog.findViewById(R.id.btnSaveUnit) as Button
+        val etDialogNewUnit = dialog.findViewById(R.id.etDialogNewUnit) as EditText
+
+        btnSave.setOnClickListener {
+            if(etDialogNewUnit.text.isEmpty()) {
+                etDialogNewUnit.error = getString(R.string.this_field_must_be_filled)
+            } else if(!db.addNewUnit(etDialogNewUnit.text.toString()))
+                etDialogNewUnit.error = getString(R.string.unit_already_exists_error)
+            else {
+                dialog.dismiss()
+                if(sOrderCategories.selectedItemId > 2) {
+                    setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
+                    setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+                } else {
+                    setupScrollViews(boughtProducts, false)
+                    setupScrollViews(allProducts, true)
+                }
+            }
+        }
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+    }
+
+    private fun setupScrollViews(productsToView: MutableMap<String, ArrayList<String>>, isAllProductView: Boolean) {
         val llScrollView: LinearLayout = if(isAllProductView)
             findViewById(R.id.llAllProducts)
         else
@@ -164,9 +393,10 @@ class PurchaseProductsActivity : AppCompatActivity() {
                 etPrice.inputType = InputType.TYPE_CLASS_NUMBER.or(InputType.TYPE_NUMBER_FLAG_DECIMAL)
                 etPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
 
-                if (productInfo.size == 3)
-                    etPrice.hint = productInfo[2] + getString(R.string.price_sign)
-                else
+                if (productInfo.size == 3) {
+                    val lastPrice = productInfo[2].split(" ")
+                    etPrice.hint = lastPrice[0]
+                } else
                     etPrice.hint = getString(R.string.pp_et_price_placeholder)
 
                 param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -221,7 +451,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
                 val tvQuantity = TextView(this)
                 tvQuantity.layoutParams = param
                 tvQuantity.tag = "tvQnt$key"
-                tvQuantity.text = productInfo!![0]
+                tvQuantity.text = productInfo!![1]
                 tvQuantity.setTextColor(Color.BLACK)
                 tvQuantity.gravity = Gravity.END
                 tvQuantity.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
@@ -282,11 +512,14 @@ class PurchaseProductsActivity : AppCompatActivity() {
     }
 
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
-        if (etPrice.text.isEmpty() && productInfo!!.size == 1) {
+        if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
             etPrice.error = getString(R.string.pp_et_price_error)
-        } else if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
+        } else if (etPrice.text.isEmpty() && productInfo!!.size == 3) {
             productInfo.removeAt(1)
             productInfo.add(1, quantity)
+            val price = productInfo[2].split(" ")[0]
+            productInfo.removeAt(2)
+            productInfo.add(price)
             boughtProducts[productName] = productInfo
             allProducts.remove(productName)
         } else if(etPrice.text.isNotEmpty()) {
@@ -301,8 +534,16 @@ class PurchaseProductsActivity : AppCompatActivity() {
         val tvTotal = findViewById<TextView>(R.id.tvTotal)
         tvTotal.text = (tvTotal.text.toString().toDouble() + q[0].toDouble()).toString()
 
-        setupScrollViews(boughtProducts, false)
-        setupScrollViews(allProducts, true)
+        if(sOrderCategories.selectedItemId > 2) {
+            setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
+            setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+        } else {
+            setupScrollViews(boughtProducts, false)
+            setupScrollViews(allProducts, true)
+        }
+
+        // Enable if the price is bigger than "0.0" and the bought product list is not empty
+        btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
@@ -331,8 +572,16 @@ class PurchaseProductsActivity : AppCompatActivity() {
         allProducts[productName] = productInfo
         boughtProducts.remove(productName)
 
-        setupScrollViews(boughtProducts, false)
-        setupScrollViews(allProducts, true)
+        if(sOrderCategories.selectedItemId > 2) {
+            setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
+            setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+        } else {
+            setupScrollViews(boughtProducts, false)
+            setupScrollViews(allProducts, true)
+        }
+
+        // Enable if the price is bigger than "0.0" and the bought product list is not empty
+        btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
     private fun showPriceHistory(productName: String) {
@@ -452,8 +701,8 @@ class PurchaseProductsActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putSerializable(ALL_PRODCUTS, allProducts)
-        outState.putSerializable(PRUCHASED_PRODUCTS, boughtProducts)
+        outState.putSerializable(ALL_PRODCUTS, allProducts as HashMap<String, ArrayList<String>>)
+        outState.putSerializable(PRUCHASED_PRODUCTS, boughtProducts as HashMap<String, ArrayList<String>>)
 
     }
 
@@ -465,6 +714,10 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
         setupScrollViews(boughtProducts, false)
         setupScrollViews(allProducts, true)
+    }
+
+    fun <K, V> Map<K, V>.toMutableMap(): MutableMap<K, V> {
+        return HashMap(this)
     }
 
 }

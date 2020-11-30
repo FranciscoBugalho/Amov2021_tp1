@@ -76,4 +76,7 @@
     <string name="pp_et_quantity_error">Tem de inserir uma quantidade</string>
     <string name="pp_et_price_error">Tem de introduzir um preço para o produto!</string>
     <string name="pp_tv_total_text">Total:</string>
+    <string name="inu_dialog_tv_title">Adicionar Nova Unidade</string>
+    <string name="inu_dialog_et_placeholder">Insira a nova unidade</string>
+    <string name="prd_btn_text_finish_purchase">Concluir Compra</string>
 </resources>

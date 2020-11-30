@@ -37,6 +37,7 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductO
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductObservationConstants.PRODUCT_OBSERVATION_TABLE_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductPriceConstants.PRODUCT_PRICE_DATE
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductPriceConstants.PRODUCT_PRICE_PRICE
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.ProductPriceConstants.PRODUCT_PRICE_TABLE_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseConstants.UnitConstants.UNIT_TABLE_NAME
@@ -951,6 +952,25 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return categoryName
     }
 
+    fun setListAsBought(listName: String) {
+        val listId = getListIdByName(listName)
+
+        val db = writableDatabase
+        val valuesL = ContentValues()
+        valuesL.put(LIST_DATE, convertDateToDatetime(Date()))
+        valuesL.put(LIST_IS_BOUGHT, 1)
+        db.update(LIST_TABLE_NAME, valuesL,"$LIST_ID = ?", arrayOf(listId.toString()))
+    }
+
+    fun saveProductPrice(productId: Long, price: String) {
+        val db = writableDatabase
+        val values = ContentValues()
+        values.put(PRODUCT_PRICE_PRICE, price.toDouble())
+        values.put(PRODUCT_PRICE_DATE, convertDateToDatetime(Date()))
+        values.put(PRODUCT_ID, productId)
+        db.insert(PRODUCT_PRICE_TABLE_NAME, null, values)
+    }
+
     private fun getOrderedLists(listOrder: HashMap<String, String?>, isShopping: Boolean): String {
         val query: String
         when {
@@ -982,9 +1002,9 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
             }
             listOrder.keys.contains(IS_BOUGHT_ORDER) -> {
                 query = if(listOrder[IS_BOUGHT_ORDER] == ORDER_ASC)
-                    SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_ASC
-                else
                     SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_DESC
+                else
+                    SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_ASC
             }
             else -> {
                 query = SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT

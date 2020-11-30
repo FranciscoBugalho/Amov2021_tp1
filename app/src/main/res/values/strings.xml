@@ -79,6 +79,9 @@
     <string name="pp_et_price_error">Have to insert a price!</string>
     <string name="total_start_number" translatable="false">0.0</string>
     <string name="pp_tv_total_text">Total:</string>
+    <string name="inu_dialog_tv_title">Add New Unit</string>
+    <string name="inu_dialog_et_placeholder">Insert new unit</string>
+    <string name="prd_btn_text_finish_purchase">Purchase</string>
 
 
 </resources>
