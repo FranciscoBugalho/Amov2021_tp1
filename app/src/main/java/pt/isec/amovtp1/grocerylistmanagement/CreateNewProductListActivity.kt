@@ -54,8 +54,19 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
         var opt = intent.getIntExtra(IntentConstants.IS_NEW_PRODUCT, 0)
         if(opt == 1) {
-            findViewById<EditText>(R.id.etListName).setText(intent.getStringExtra(IntentConstants.LIST_NAME))
+            listName = intent.getStringExtra(IntentConstants.LIST_NAME)!!
+            findViewById<EditText>(R.id.etListName).setText(listName)
             selectedProducts = intent.getSerializableExtra(IntentConstants.SELECTED_PRODUCTS_LIST) as HashMap<String, String?>
+
+            // Update title on actionbar and on the textview
+            val title = intent.getStringExtra(IntentConstants.MANAGE_PRODUCTS_TITLE)!!
+            tvTitle!!.text = title
+
+            if(title == getString(R.string.create_new_list_title)) {
+                listId = null
+                supportActionBar?.title = getString(R.string.create_new_product_list_title)
+            } else
+                listId = db.getListIdByName(listName)
         }
 
         opt = intent.getIntExtra(IntentConstants.IS_LIST_DETAILS, 0)
@@ -94,8 +105,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 etListName.text.toString()
             else ""
             Intent(this, CreateNewProductActivity::class.java)
-                .putExtra(IntentConstants.LIST_NAME, listName)
-                .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
+                    .putExtra(IntentConstants.LIST_NAME, listName)
+                    .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
+                    .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
                 .also {
                 startActivity(it)
             }

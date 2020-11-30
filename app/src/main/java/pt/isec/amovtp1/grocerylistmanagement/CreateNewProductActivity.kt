@@ -126,6 +126,7 @@ class CreateNewProductActivity : AppCompatActivity() {
             Intent(this, CreateNewProductListActivity::class.java)
                         .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
                         .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
+                        .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
                         .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
                         .addFlags(FLAG_ACTIVITY_NEW_TASK)
                         .also {
@@ -272,6 +273,7 @@ class CreateNewProductActivity : AppCompatActivity() {
             Intent(this, CreateNewProductListActivity::class.java)
                     .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
                     .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
+                    .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
                     .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
                     .also {
                 startActivity(it)

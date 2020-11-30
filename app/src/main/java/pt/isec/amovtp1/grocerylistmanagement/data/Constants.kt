@@ -60,6 +60,9 @@ object Constants {
 
         // Intent putExtra to refer the list name which will be edited
         const val LIST_NAME_TO_EDIT = "listNameToEdit"
+
+        // Intent putExtra with the title from the previous activity (Create or Edit)
+        const val MANAGE_PRODUCTS_TITLE = "manageProductTitle"
     }
 
     object SaveDataConstants : BaseColumns {

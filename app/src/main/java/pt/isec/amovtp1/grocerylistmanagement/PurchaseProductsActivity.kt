@@ -188,7 +188,6 @@ class PurchaseProductsActivity : AppCompatActivity() {
                 tvPrice.text = productInfo[3] + getString(R.string.price_sign)
             }
 
-
             linearLayout.addView(tvProductName)
             linearLayout.addView(tvQuantity)
             linearLayout.addView(tvPrice)
@@ -714,10 +713,6 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
         setupScrollViews(boughtProducts, false)
         setupScrollViews(allProducts, true)
-    }
-
-    fun <K, V> Map<K, V>.toMutableMap(): MutableMap<K, V> {
-        return HashMap(this)
     }
 
 }
