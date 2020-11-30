@@ -173,8 +173,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
         llProducts.removeAllViews()
 
         // If there are no products in the database
-        if(db.countDbProducts() == 0)
+        if(db.countDbProducts() == 0) {
             presentError(llProducts, getString(R.string.you_have_to_add_products_first))
+            return
+        }
 
         val products: HashMap<String, String>
         // Get the products to present on the ScrollView

@@ -634,7 +634,8 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
 
         while (!cursor.isAfterLast) {
             lists.add(ListInformation(cursor.getString(cursor.getColumnIndex(LIST_NAME)),
-                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))))
+                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))),
+                    cursor.getInt(cursor.getColumnIndex(LIST_IS_BOUGHT)) != 0)
             )
 
             cursor.moveToNext()
@@ -657,7 +658,8 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
 
         while (!cursor.isAfterLast) {
             lists.add(ListInformation(cursor.getString(cursor.getColumnIndex(LIST_NAME)),
-                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))))
+                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))),
+                    false)
             )
 
             cursor.moveToNext()
@@ -1007,7 +1009,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
                     SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_ASC
             }
             else -> {
-                query = SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT
+                query = SELECT_LIST_INFO_ORDER_BY_NAME_ASC
             }
         }
         return query

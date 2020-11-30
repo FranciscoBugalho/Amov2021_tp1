@@ -46,6 +46,9 @@ object Constants {
         // Intent putExtra name to refer the product name which will be edited
         const val PRODUCT_NAME_TO_EDIT = "productNameToEdit"
 
+        // Intent putExtra to refer that the activity come from ManageProductsActivity
+        const val IS_VIEW_PRODUCTS = "isViewProducts"
+
         // Intent putExtra name to open the list details
         const val IS_LIST_DETAILS = "isDetails"
 
@@ -77,6 +80,8 @@ object Constants {
         const val PRODUCT_IMAGE_STR = "productImageFilepath"
 
         const val PRODUCT_ID_EDIT_MODE = "productIdForEditMode"
+
+        const val IS_MANAGE_PRODUCT_ACTIVITY = "isManageProductActivity"
 
         const val LIST_NAME_STR = "listName"
 

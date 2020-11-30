@@ -3,7 +3,7 @@ package pt.isec.amovtp1.grocerylistmanagement.data
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListInformation(var listName: String, var date: Date)
+class ListInformation(var listName: String, var date: Date, var isBought: Boolean)
 
 class Product(var name: String, var category: String, var brand: String?, var filePath: String, var observations: ArrayList<Observation>) {
     // Amount Class

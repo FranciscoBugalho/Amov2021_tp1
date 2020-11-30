@@ -22,16 +22,17 @@
             android:textSize="@dimen/mpl_list_name_text_size"
             android:padding="@dimen/mpl_tc_tv_padding"
             android:maxLines="1" />
-        <TextView
+
+        <LinearLayout
             android:id="@+id/productList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:background="@color/light_golden"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/mpl_product_list_text_size"
-            android:padding="@dimen/mpl_tc_tv_padding" />
+            android:padding="6dp">
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

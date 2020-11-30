@@ -82,6 +82,8 @@
     <string name="inu_dialog_tv_title">Add New Unit</string>
     <string name="inu_dialog_et_placeholder">Insert new unit</string>
     <string name="prd_btn_text_finish_purchase">Purchase</string>
+    <string name="purchase_history_btn_txt">Purchase History</string>
+    <string name="manage_all_products_title">Manage All Products</string>
 
 
 </resources>

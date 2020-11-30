@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,76 +22,74 @@
         android:background="@drawable/rounded_corners_textviews"
         android:elevation="@dimen/ac_tv_elevation" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:layout_margin="@dimen/default_margin"
         android:padding="@dimen/default_padding">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btnPurchaseHistory"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            tools:ignore="UselessLeaf" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/ac_btn_padding"
+            android:text="@string/purchase_history_btn_txt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/btnProducts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnProducts"
+            android:id="@+id/btnViewAllProducts"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/ac_btn_padding"
             android:text="@string/products_btn_txt"
             android:textColor="@color/black"
             android:textSize="@dimen/ac_btn_text_size"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/ac_btn_margin"
-            android:padding="@dimen/ac_btn_padding"
-            android:background="@drawable/btns_ripple_main_activity" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            tools:ignore="UselessLeaf" />
+            app:layout_constraintBottom_toTopOf="@+id/btnProductsLists"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPurchaseHistory" />
 
         <Button
             android:id="@+id/btnProductsLists"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/ac_btn_padding"
             android:text="@string/manage_product_lists"
             android:textColor="@color/black"
             android:textSize="@dimen/ac_btn_text_size"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/ac_btn_margin"
-            android:padding="@dimen/ac_btn_padding"
-            android:background="@drawable/btns_ripple_main_activity" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            tools:ignore="UselessLeaf" />
+            app:layout_constraintBottom_toTopOf="@+id/btnShoppingLists"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnViewAllProducts" />
 
         <Button
             android:id="@+id/btnShoppingLists"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/ac_btn_padding"
             android:text="@string/manage_shopping_lists"
             android:textColor="@color/black"
             android:textSize="@dimen/ac_btn_text_size"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/ac_btn_margin"
-            android:padding="@dimen/ac_btn_padding"
-            android:background="@drawable/btns_ripple_main_activity" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnProductsLists" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            tools:ignore="UselessLeaf" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
