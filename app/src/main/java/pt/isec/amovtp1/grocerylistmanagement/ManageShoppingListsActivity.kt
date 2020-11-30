@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -53,8 +54,66 @@ class ManageShoppingListsActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            R.id.alphabeticalOrder -> {
+                if(listOrder.keys.contains(ALPHABETICAL_ORDER)) {
+                    if (listOrder[ALPHABETICAL_ORDER] == ORDER_ASC) {
+                        listOrder.clear()
+                        listOrder[ALPHABETICAL_ORDER] = Constants.ListOrders.ORDER_DESC
+                        item.title = ""
+                        item.title =  resources.getString(R.string.alphabetical_order_menu_text) + " ($ORDER_ASC)"
+                    }
+                    else {
+                        listOrder.clear()
+                        listOrder[ALPHABETICAL_ORDER] = ORDER_ASC
+                        item.title = ""
+                        item.title =  resources.getString(R.string.alphabetical_order_menu_text) + " (${Constants.ListOrders.ORDER_DESC})"
+                    }
+                } else {
+                    listOrder.clear()
+                    listOrder[ALPHABETICAL_ORDER] = ORDER_ASC
+                    item.title = ""
+                    item.title =  resources.getString(R.string.alphabetical_order_menu_text) + " (${Constants.ListOrders.ORDER_DESC})"
+                }
+                listInfo.clear()
+                fillRecycleView()
+                return true
+            }
+            R.id.createdDate -> {
+                if(listOrder.keys.contains(Constants.ListOrders.CREATED_DATE_ORDER)) {
+                    if (listOrder[Constants.ListOrders.CREATED_DATE_ORDER] == ORDER_ASC) {
+                        listOrder.clear()
+                        listOrder[Constants.ListOrders.CREATED_DATE_ORDER] = Constants.ListOrders.ORDER_DESC
+                        item.title = ""
+                        item.title = resources.getString(R.string.created_date_menu_text) + " ($ORDER_ASC)"
+                    }
+                    else {
+                        listOrder.clear()
+                        listOrder[Constants.ListOrders.CREATED_DATE_ORDER] = ORDER_ASC
+                        item.title = ""
+                        item.title = resources.getString(R.string.created_date_menu_text) + " (${Constants.ListOrders.ORDER_DESC})"
+                    }
+                } else {
+                    listOrder.clear()
+                    listOrder[Constants.ListOrders.CREATED_DATE_ORDER] = ORDER_ASC
+                    item.title = ""
+                    item.title = resources.getString(R.string.created_date_menu_text) + " (${Constants.ListOrders.ORDER_DESC})"
+                }
+                listInfo.clear()
+                fillRecycleView()
+                return true
+            }
             else -> return  super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.order_menu, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.removeItem(R.id.isBought)
+        return super.onPrepareOptionsMenu(menu)
     }
 
     private fun fillRecycleView() {
