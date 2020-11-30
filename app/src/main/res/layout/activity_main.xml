@@ -32,46 +32,66 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.55"
+            android:layout_weight="0.2"
+            tools:ignore="UselessLeaf" />
+
+        <Button
+            android:id="@+id/btnProducts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/ac_btn_margin"
+            android:layout_marginBottom="432dp"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:padding="@dimen/ac_btn_padding"
+            android:text="@string/products_btn_txt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
             tools:ignore="UselessLeaf" />
 
         <Button
             android:id="@+id/btnProductsLists"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="0dp"
-            android:text="@string/manage_product_lists"
-            android:textColor="@color/black"
-            android:textSize="@dimen/ac_btn_text_size"
             android:layout_gravity="center"
             android:layout_margin="@dimen/ac_btn_margin"
+            android:layout_weight="1"
+            android:background="@drawable/btns_ripple_main_activity"
             android:padding="@dimen/ac_btn_padding"
-            android:background="@drawable/btns_ripple_main_activity" />
+            android:text="@string/manage_product_lists"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3"
+            android:layout_weight="0.4"
             tools:ignore="UselessLeaf" />
 
         <Button
             android:id="@+id/btnShoppingLists"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="0dp"
-            android:text="@string/manage_shopping_lists"
-            android:textColor="@color/black"
-            android:textSize="@dimen/ac_btn_text_size"
             android:layout_gravity="center"
             android:layout_margin="@dimen/ac_btn_margin"
+            android:layout_weight="1"
+            android:background="@drawable/btns_ripple_main_activity"
             android:padding="@dimen/ac_btn_padding"
-            android:background="@drawable/btns_ripple_main_activity" />
+            android:text="@string/manage_shopping_lists"
+            android:textColor="@color/black"
+            android:textSize="@dimen/ac_btn_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.4"
             tools:ignore="UselessLeaf" />
+
     </LinearLayout>
 
 </LinearLayout>

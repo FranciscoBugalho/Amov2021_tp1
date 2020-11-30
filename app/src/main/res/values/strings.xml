@@ -63,7 +63,22 @@
     <string name="shopping_area">Shopping Area</string>
     <string name="you_have_no_lists_created_go_to_manage_product_lists_menu">You have no lists, create new lists on the \'Manage Product Lists\' menu.</string>
     <string name="shopping_cart">Shopping Cart</string>
-    <string name="purchase">Purchase</string>
+    <string name="purchase">Finish Purchase</string>
+    <string name="purchase_products">Purchase Products</string>
+    <string name="products_btn_txt">Products</string>
+    <string name="alphabetical_order_asc_text">Alphabetical ASC</string>
+    <string name="alphabetical_order_desc_text">Alphabetical DESC</string>
+    <string name="price_sign">$</string>
+    <string name="ipp_dialog_tv_text">Insert Product Price</string>
+    <string name="ipp_dialog_et_placeholder_last_price">Last price:</string>
+    <string name="ipp_dialog_et_placeholder_default">Insert product price</string>
+    <string name="ph_dialog_tv_title">Price History</string>
+    <string name="no_prices_set_for_this_product">No prices set for this product.</string>
+    <string name="pp_et_price_placeholder">Price</string>
+    <string name="pp_et_quantity_error">You have to insert a quantity!</string>
+    <string name="pp_et_price_error">Have to insert a price!</string>
+    <string name="total_start_number" translatable="false">0.0</string>
+    <string name="pp_tv_total_text">Total:</string>
 
 
 </resources>

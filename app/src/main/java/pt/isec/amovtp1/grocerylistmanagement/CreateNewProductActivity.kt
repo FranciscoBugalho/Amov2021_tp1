@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
@@ -178,6 +179,7 @@ class CreateNewProductActivity : AppCompatActivity() {
             sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listOf(getString(R.string.no_categories_created_spinner_info)))
         else
             sProductCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+
     }
 
     fun addNewCategory(view: View) {

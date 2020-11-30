@@ -61,5 +61,19 @@
     <string name="shopping_area">Área de compras</string>
     <string name="you_have_no_lists_created_go_to_manage_product_lists_menu">Não tem listas criadas, por favor vá para o menu \"Gestão da Lista de Produtos\" para criar novas listas.</string>
     <string name="shopping_cart">Carrinho de Compras</string>
-    <string name="purchase">Comprar</string>
+    <string name="purchase">Concluir Compra</string>
+    <string name="purchase_products">Comprar produtos</string>
+    <string name="products_btn_txt">Produtos</string>
+    <string name="alphabetical_order_asc_text">Ordem Alfabetica ASC</string>
+    <string name="alphabetical_order_desc_text">Ordem Alfabetica DESC</string>
+    <string name="price_sign">€</string>
+    <string name="ipp_dialog_tv_text">Insira o Preço do Producto</string>
+    <string name="ipp_dialog_et_placeholder_last_price">Último preço:</string>
+    <string name="ipp_dialog_et_placeholder_default">Insira o preço do produto</string>
+    <string name="ph_dialog_tv_title">Histórico de Preços</string>
+    <string name="no_prices_set_for_this_product">Não há registo de preços para este produto.</string>
+    <string name="pp_et_price_placeholder">Preço</string>
+    <string name="pp_et_quantity_error">Tem de inserir uma quantidade</string>
+    <string name="pp_et_price_error">Tem de introduzir um preço para o produto!</string>
+    <string name="pp_tv_total_text">Total:</string>
 </resources>

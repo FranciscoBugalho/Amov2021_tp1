@@ -20,7 +20,8 @@
             android:text=""
             android:textStyle="bold"
             android:textSize="@dimen/mpl_list_name_text_size"
-            android:padding="@dimen/mpl_tc_tv_padding" />
+            android:padding="@dimen/mpl_tc_tv_padding"
+            android:maxLines="1" />
         <TextView
             android:id="@+id/productList"
             android:layout_width="match_parent"
@@ -46,7 +47,8 @@
                 android:background="@color/dark_yellow"
                 android:textColor="@color/black"
                 android:textSize="@dimen/mpl_view_details_text_size"
-                android:padding="@dimen/mpl_tc_tv_padding" />
+                android:padding="@dimen/mpl_tc_tv_padding"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tvTime"
