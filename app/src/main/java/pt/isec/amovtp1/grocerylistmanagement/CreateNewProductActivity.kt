@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants

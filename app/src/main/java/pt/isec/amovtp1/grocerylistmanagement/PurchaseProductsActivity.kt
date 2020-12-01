@@ -9,7 +9,6 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MenuItem
@@ -25,9 +24,6 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.AL
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.PRUCHASED_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-
 
 class PurchaseProductsActivity : AppCompatActivity() {
     private lateinit var listName: String

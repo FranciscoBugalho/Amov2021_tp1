@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_create_new_product_list.*
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_manage_products.*
-import kotlinx.android.synthetic.main.activity_purchase_products.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
 

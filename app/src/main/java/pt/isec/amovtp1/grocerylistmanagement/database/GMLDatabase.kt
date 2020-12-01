@@ -8,7 +8,6 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import pt.isec.amovtp1.grocerylistmanagement.Utils
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToDatetime
-import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToStrCard
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertToDate
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ListOrders.ALPHABETICAL_ORDER

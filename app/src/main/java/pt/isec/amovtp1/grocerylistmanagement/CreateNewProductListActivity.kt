@@ -3,21 +3,14 @@ package pt.isec.amovtp1.grocerylistmanagement
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.opengl.Visibility
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import kotlinx.android.synthetic.main.dialog_show_product_observations.*
@@ -32,7 +25,6 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LI
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LIST_NAME_STR
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.SELECTED_PRODUCTS_STR
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
-import kotlin.math.log
 
 class CreateNewProductListActivity : AppCompatActivity() {
     private lateinit var listName: String
