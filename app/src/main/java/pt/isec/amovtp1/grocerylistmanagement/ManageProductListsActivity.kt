@@ -75,7 +75,7 @@ class ManageProductListsActivity : AppCompatActivity() {
             }
 
             rvProductList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            rvProductList.adapter = RVListAdapter(listInfo, false)
+            rvProductList.adapter = RVListAdapter(listInfo, 0)
         }
     }
 

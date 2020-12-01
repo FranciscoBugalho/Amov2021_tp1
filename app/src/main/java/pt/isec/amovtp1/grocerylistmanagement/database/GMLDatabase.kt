@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
+import pt.isec.amovtp1.grocerylistmanagement.Utils
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToDatetime
+import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToStrCard
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertToDate
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ListOrders.ALPHABETICAL_ORDER
@@ -63,6 +65,12 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_INFO
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_NAME_CATEGORY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_OBSERVATIONS
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PURCHASED_LISTS_ID
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_BOUGHT_DATE_BY_LIST_NAME
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_DESC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORIES_WITH_SAME_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_ID_BY_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_ID_BY_PRODUCT_NAME
@@ -679,6 +687,30 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return lists
     }
 
+    fun getAllBoughtLists(listOrder: HashMap<String, String?>): List<ListInformation> {
+        if(countDbNumPurchasedLists() == 0)
+            return arrayListOf()
+
+        val db = writableDatabase
+        val lists = arrayListOf<ListInformation>()
+
+        val query = getOrderedBoughtLists(listOrder)
+
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast) {
+            lists.add(ListInformation(cursor.getString(cursor.getColumnIndex(LIST_NAME)),
+                convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))),
+                true)
+            )
+
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return lists
+    }
+
     private fun countDbNumLists(): Int {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_ALL_LIST_ID, null)
@@ -691,6 +723,15 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
     private fun countDbNumNotPurchasedLists(): Int {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_ALL_NOT_PURCHASED_LISTS_ID, null)
+        cursor.moveToFirst()
+        val count = cursor.count
+        cursor.close()
+        return count
+    }
+
+    private fun countDbNumPurchasedLists(): Int {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_ALL_PURCHASED_LISTS_ID, null)
         cursor.moveToFirst()
         val count = cursor.count
         cursor.close()
@@ -965,7 +1006,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return categoryName
     }
 
-    fun setListAsBought(listName: String) {
+    fun setListAsBought(listName: String, allProducts: HashMap<String, String?>?) {
         val listId = getListIdByName(listName)
 
         val db = writableDatabase
@@ -973,6 +1014,38 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         valuesL.put(LIST_DATE, convertDateToDatetime(Date()))
         valuesL.put(LIST_IS_BOUGHT, 1)
         db.update(LIST_TABLE_NAME, valuesL,"$LIST_ID = ?", arrayOf(listId.toString()))
+
+        if (allProducts != null) {
+            for (key in allProducts.keys) {
+
+                val cursorP = db.rawQuery(SELECT_PRODUCT_ID_BY_NAME, arrayOf(key))
+                cursorP.moveToFirst()
+                val productId = cursorP.getLong(cursorP.getColumnIndex(PRODUCT_ID))
+
+                val valuesPL = ContentValues()
+                valuesPL.put(LIST_ID, listId)
+                valuesPL.put(PRODUCT_ID, productId)
+
+                if (allProducts[key] != null) {
+                    val amount = allProducts[key]!!.split(" ")
+                    valuesPL.put(LIST_PRODUCT_QUANTITY, amount[0])
+
+                    if (amount.size == 2) {
+                        val cursorU = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(amount[1]))
+                        cursorU.moveToFirst()
+                        val unitId = cursorU.getLong(cursorU.getColumnIndex(UNIT_ID))
+                        valuesPL.put(UNIT_ID, unitId)
+                    } else
+                        valuesPL.putNull(UNIT_ID)
+                } else {
+                    valuesPL.putNull(LIST_PRODUCT_QUANTITY)
+                    valuesPL.putNull(UNIT_ID)
+                }
+
+                db.update(LIST_PRODUCT_TABLE_NAME, valuesPL,"$LIST_ID = ? AND $PRODUCT_ID = ?",
+                    arrayOf(listId.toString(), productId.toString()))
+            }
+        }
     }
 
     fun saveProductPrice(productId: Long, price: String) {
@@ -1035,6 +1108,16 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return true
     }
 
+    fun getListDate(listName: String): String {
+        val db = writableDatabase
+
+        val cursor = db.rawQuery(SELECT_BOUGHT_DATE_BY_LIST_NAME, arrayOf(listName))
+        cursor.moveToFirst()
+        val boughtDate = Utils.convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE)))
+        cursor.close()
+        return Utils.convertDateToStrCard(boughtDate) + " " + Utils.convertTimeToStrCard(boughtDate)
+    }
+
     private fun getOrderedLists(listOrder: HashMap<String, String?>, isShopping: Boolean): String {
         val query: String
         when {
@@ -1073,6 +1156,26 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
             else -> {
                 query = SELECT_LIST_INFO_ORDER_BY_NAME_ASC
             }
+        }
+        return query
+    }
+
+    private fun getOrderedBoughtLists(listOrder: HashMap<String, String?>): String {
+        val query: String
+        when {
+            listOrder.keys.contains(ALPHABETICAL_ORDER) -> {
+                query = if (listOrder[ALPHABETICAL_ORDER] == ORDER_ASC)
+                    SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
+                else
+                    SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_DESC
+            }
+            listOrder.keys.contains(CREATED_DATE_ORDER) -> {
+                query = if (listOrder[CREATED_DATE_ORDER] == ORDER_ASC)
+                    SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_ASC
+                else
+                    SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_DESC
+            }
+            else -> query = SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
         }
         return query
     }

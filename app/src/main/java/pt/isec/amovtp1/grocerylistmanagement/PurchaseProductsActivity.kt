@@ -144,7 +144,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
             linearLayout.setPadding(5, 5, 5, 5)
 
             var param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.70f
+            param.weight = 0.50f
 
             // Create the TextView
             val tvProductName = TextView(this)
@@ -154,12 +154,12 @@ class PurchaseProductsActivity : AppCompatActivity() {
             tvProductName.setTextColor(Color.BLACK)
             tvProductName.gravity = Gravity.START
             tvProductName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tvProductName.maxLines = 1
+            tvProductName.maxLines = 2
             //-----------------------
 
             val productInfo = boughtProducts[key]
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.40f
+            param.weight = 0.20f
 
             // Create the TextView
             val tvQuantity = TextView(this)
@@ -172,7 +172,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
             //-----------------------
 
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.40f
+            param.weight = 0.10f
 
             // Create the TextView
             val tvPrice = TextView(this)
@@ -228,11 +228,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnFinishPurchase.setOnClickListener {
             // If the all products list is empty just set the list as bought in the database
             if(allProducts.isEmpty()) {
-                db.setListAsBought(listName)
+                db.setListAsBought(listName, getProductQuantity(boughtProducts))
             } else {
                 val ln = listName + " " + Utils.convertDateToStrCard(Date()) + "_" + Utils.convertTimeToStrCard(Date())
                 db.saveList(ln, getProductQuantity(boughtProducts))
-                db.setListAsBought(ln)
+                db.setListAsBought(ln, null)
             }
 
             // Save the products price

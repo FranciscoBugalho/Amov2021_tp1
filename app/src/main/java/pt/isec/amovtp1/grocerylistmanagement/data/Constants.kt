@@ -69,6 +69,9 @@ object Constants {
 
         // Intent putExtra to define if will show categories or units in the activity
         const val SHOW_CATEGORIES = "showCategories"
+
+        // Intent putExtra to refer the list name which will be shown
+        const val LIST_NAME_TO_SHOW = "listNameToShow"
     }
 
     object SaveDataConstants : BaseColumns {
@@ -99,6 +102,8 @@ object Constants {
         const val PRUCHASED_PRODUCTS = "purchasedProducts"
 
         const val IS_CATEGORIES = "isCategories"
+
+        const val TOTAL_PRICE = "totalPrice"
     }
 
     object ListOrders : BaseColumns {

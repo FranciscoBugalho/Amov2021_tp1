@@ -89,4 +89,7 @@
     <string name="aud_tv_edit_unit_text">Editar Unidade</string>
     <string name="manage_categories_title">Gestão de Categorias</string>
     <string name="manage_units_title">Gestão de Unidades</string>
+    <string name="you_dont_have_any_purchase_history_text">Não tem nenhum histórico de compras</string>
+    <string name="list_details_title">Detalhes da lista</string>
+    <string name="avbld_tv_bought_date_text">Data de Compra:</string>
 </resources>

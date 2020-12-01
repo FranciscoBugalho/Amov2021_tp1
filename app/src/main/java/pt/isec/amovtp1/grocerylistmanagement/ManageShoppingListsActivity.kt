@@ -135,7 +135,7 @@ class ManageShoppingListsActivity : AppCompatActivity() {
                 listInfo.add(item)
             }
             rvShoppingList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            rvShoppingList.adapter = RVListAdapter(listInfo, true)
+            rvShoppingList.adapter = RVListAdapter(listInfo, 1)
         }
     }
 

@@ -18,15 +18,15 @@ import kotlin.collections.ArrayList
 data class ListInfo(val listName: String, val listDate: Date, val isBought: Boolean, val productInfo: List<String>)
 val listInfo = arrayListOf<ListInfo>()
 
-class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isShopping: Boolean) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
+class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isShopping: Int) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
     class RVViewHolder(view: View, val context: Context) : RecyclerView.ViewHolder(view) {
         var listName: TextView = view.findViewById(R.id.listName)
         var listDate: TextView = view.findViewById(R.id.tvDate)
         var listTime: TextView = view.findViewById(R.id.tvTime)
         var productListInformation: LinearLayout = view.findViewById(R.id.productList)
 
-        fun update(lnStr: String, ldStr: String, ltStr: String, isBought: Boolean, productNames: List<String>, isShopping: Boolean) {
-            if(!isShopping){
+        fun update(lnStr: String, ldStr: String, ltStr: String, isBought: Boolean, productNames: List<String>, isShopping: Int) {
+            if(isShopping == 0) {
                 // Add the onLongClickListener
                 productListInformation.setOnLongClickListener{
                     (context as ManageProductListsActivity).createDialogToCopyOrDelete(listName.text.toString())
@@ -38,13 +38,18 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
                         (context as ManageProductListsActivity).onEdit(listName.text.toString())
                         return@setOnClickListener
                     }
-            }
-            else{
+            } else if(isShopping == 1) {
                 productListInformation.setOnClickListener {
                     (context as ManageShoppingListsActivity).onSelectingListElement(listName.text.toString())
                     return@setOnClickListener
                 }
+            } else {
+                productListInformation.setOnClickListener {
+                    (context as ViewPurchaseHistoryActivity).onSelectingList(listName.text.toString())
+                    return@setOnClickListener
+                }
             }
+
 
             listName.text = lnStr
             listDate.text = ldStr
@@ -87,10 +92,12 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
     }
 
     override fun onBindViewHolder(holder: RVViewHolder, position: Int) {
-        holder.update(listInfo[position].listName, Utils.convertDateToStrCard(listInfo[position].listDate),
-                Utils.convertTimeToStrCard(listInfo[position].listDate), listInfo[position].isBought,
-                listInfo[position].productInfo,
-                isShopping)
+        holder.update(listInfo[position].listName,
+            Utils.convertDateToStrCard(listInfo[position].listDate),
+            Utils.convertTimeToStrCard(listInfo[position].listDate),
+            listInfo[position].isBought,
+            listInfo[position].productInfo,
+            isShopping)
     }
 
     override fun getItemCount(): Int = listInfo.size
