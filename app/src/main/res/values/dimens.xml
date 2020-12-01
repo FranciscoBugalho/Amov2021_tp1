@@ -71,14 +71,21 @@
     <!-- ______________________________ -->
 
     <!-- Purchase Products Activity -->
-    <dimen name="pp_sv_margins">4dp</dimen>
-    <dimen name="pp_ll_search_margin_top">8dp</dimen>
-    <dimen name="pp_tv_title_text_size">18sp</dimen>
-    <dimen name="pp_tv_padding">6dp</dimen>
+    <dimen name="app_sv_margins">4dp</dimen>
+    <dimen name="app_ll_search_margin_top">8dp</dimen>
+    <dimen name="app_tv_title_text_size">18sp</dimen>
+    <dimen name="app_tv_padding">6dp</dimen>
+    <dimen name="app_tv_total_padding">4dp</dimen>
+    <dimen name="app_btn_land_padding">4dp</dimen>
+    <dimen name="ipp_dialog_tv_sign_padding">4dp</dimen>
+
+    <!-- ______________________________ -->
+
+    <!-- Manage Products Activity -->
+    <dimen name="amp_ll_sv_padding">6dp</dimen>
 
     <!-- ______________________________ -->
 
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
-    <dimen name="ipp_dialog_tv_sign_padding">4dp</dimen>
 </resources>

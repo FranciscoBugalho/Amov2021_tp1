@@ -76,4 +76,20 @@
     <string name="pp_et_quantity_error">Tem de inserir uma quantidade</string>
     <string name="pp_et_price_error">Tem de introduzir um preço para o produto!</string>
     <string name="pp_tv_total_text">Total:</string>
+    <string name="inu_dialog_tv_title">Adicionar Nova Unidade</string>
+    <string name="inu_dialog_et_placeholder">Insira a nova unidade</string>
+    <string name="prd_btn_text_finish_purchase">Concluir Compra</string>
+    <string name="purchase_history_btn_txt">Histórico de Compras</string>
+    <string name="manage_all_products_title">Gestão de todos os produtos</string>
+    <string name="mcu_manage_categories_text">Gestão das Categorias</string>
+    <string name="mcu_manage_units_text">Gestão das Unidades</string>
+    <string name="you_have_to_add_categories_error">Tem de adicionar categorias primeiro!</string>
+    <string name="you_have_to_add_units_first_error">Tem de adicionar unidades primeiro!</string>
+    <string name="acd_tv_edit_category_text">Editar Categoria</string>
+    <string name="aud_tv_edit_unit_text">Editar Unidade</string>
+    <string name="manage_categories_title">Gestão de Categorias</string>
+    <string name="manage_units_title">Gestão de Unidades</string>
+    <string name="you_dont_have_any_purchase_history_text">Não tem nenhum histórico de compras</string>
+    <string name="list_details_title">Detalhes da lista</string>
+    <string name="avbld_tv_bought_date_text">Data de Compra:</string>
 </resources>

@@ -70,12 +70,12 @@ class ManageProductListsActivity : AppCompatActivity() {
             findViewById<ConstraintLayout>(R.id.clManageProductLists).addView(textView)
         } else {
             repeat(lists.size) {
-                val item = ListInfo(lists[it].listName, lists[it].date, Utils.listProductsName(db.productsInThisList(lists[it].listName)))
+                val item = ListInfo(lists[it].listName, lists[it].date, lists[it].isBought, db.productsInThisList(lists[it].listName))
                 listInfo.add(item)
             }
 
             rvProductList.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            rvProductList.adapter = RVListAdapter(listInfo, false)
+            rvProductList.adapter = RVListAdapter(listInfo, 0)
         }
     }
 

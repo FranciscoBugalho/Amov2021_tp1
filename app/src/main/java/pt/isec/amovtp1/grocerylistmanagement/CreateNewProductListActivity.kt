@@ -3,21 +3,14 @@ package pt.isec.amovtp1.grocerylistmanagement
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.opengl.Visibility
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import kotlinx.android.synthetic.main.dialog_show_product_observations.*
@@ -32,7 +25,6 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LI
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LIST_NAME_STR
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.SELECTED_PRODUCTS_STR
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
-import kotlin.math.log
 
 class CreateNewProductListActivity : AppCompatActivity() {
     private lateinit var listName: String
@@ -54,8 +46,19 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
         var opt = intent.getIntExtra(IntentConstants.IS_NEW_PRODUCT, 0)
         if(opt == 1) {
-            findViewById<EditText>(R.id.etListName).setText(intent.getStringExtra(IntentConstants.LIST_NAME))
+            listName = intent.getStringExtra(IntentConstants.LIST_NAME)!!
+            findViewById<EditText>(R.id.etListName).setText(listName)
             selectedProducts = intent.getSerializableExtra(IntentConstants.SELECTED_PRODUCTS_LIST) as HashMap<String, String?>
+
+            // Update title on actionbar and on the textview
+            val title = intent.getStringExtra(IntentConstants.MANAGE_PRODUCTS_TITLE)!!
+            tvTitle!!.text = title
+
+            if(title == getString(R.string.create_new_list_title)) {
+                listId = null
+                supportActionBar?.title = getString(R.string.create_new_product_list_title)
+            } else
+                listId = db.getListIdByName(listName)
         }
 
         opt = intent.getIntExtra(IntentConstants.IS_LIST_DETAILS, 0)
@@ -94,8 +97,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 etListName.text.toString()
             else ""
             Intent(this, CreateNewProductActivity::class.java)
-                .putExtra(IntentConstants.LIST_NAME, listName)
-                .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
+                    .putExtra(IntentConstants.LIST_NAME, listName)
+                    .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
+                    .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
                 .also {
                 startActivity(it)
             }
@@ -161,8 +165,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
         llProducts.removeAllViews()
 
         // If there are no products in the database
-        if(db.countDbProducts() == 0)
+        if(db.countDbProducts() == 0) {
             presentError(llProducts, getString(R.string.you_have_to_add_products_first))
+            return
+        }
 
         val products: HashMap<String, String>
         // Get the products to present on the ScrollView
@@ -573,10 +579,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ManageProductListsActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .also {
-                startActivity(it)
-            }
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .also {
+                    startActivity(it)
+                }
             finish()
             return true
         }

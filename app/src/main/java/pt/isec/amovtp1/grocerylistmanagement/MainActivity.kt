@@ -10,6 +10,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        findViewById<Button>(R.id.btnPurchaseHistory).setOnClickListener {
+            Intent(this, ViewPurchaseHistoryActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        findViewById<Button>(R.id.btnViewAllProducts).setOnClickListener {
+            Intent(this, ManageProductsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
         findViewById<Button>(R.id.btnProductsLists).setOnClickListener {
             Intent(this, ManageProductListsActivity::class.java).also {
                 startActivity(it)

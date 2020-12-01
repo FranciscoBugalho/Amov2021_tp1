@@ -21,11 +21,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_create_new_product.*
 import kotlinx.android.synthetic.main.activity_create_new_product_list.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ASSET_IMAGE_PATH_NO_IMG
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.IS_MANAGE_PRODUCT_ACTIVITY
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.PRODUCT_BRAND_STR
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.PRODUCT_CATEGORY_NUM
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.PRODUCT_ID_EDIT_MODE
@@ -44,6 +44,7 @@ class CreateNewProductActivity : AppCompatActivity() {
     private lateinit var filePath: String
     private lateinit var db : GMLDatabase
     private var productId: Long? = null
+    private var isManageProducts: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +72,9 @@ class CreateNewProductActivity : AppCompatActivity() {
             completeProductFields(intent.getStringExtra(Constants.IntentConstants.PRODUCT_NAME_TO_EDIT)!!)
             // Get the product id which will be edited
             productId = db.getProductIdByName(intent.getStringExtra(Constants.IntentConstants.PRODUCT_NAME_TO_EDIT)!!)
-        }
+
+            isManageProducts = intent.getBooleanExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, false)
+        } else isManageProducts = intent.getBooleanExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, false)
 
         // Permissions to access to the camera and gallery
         if (Build.VERSION.SDK_INT >= 24) {
@@ -123,14 +126,22 @@ class CreateNewProductActivity : AppCompatActivity() {
             }
 
             db.closeDB()
-            Intent(this, CreateNewProductListActivity::class.java)
-                        .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
-                        .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
-                        .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
-                        .addFlags(FLAG_ACTIVITY_NEW_TASK)
-                        .also {
-                startActivity(it)
-            }
+            if(!isManageProducts)
+                Intent(this, CreateNewProductListActivity::class.java)
+                            .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
+                            .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
+                            .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
+                            .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
+                            .addFlags(FLAG_ACTIVITY_NEW_TASK)
+                            .also {
+                    startActivity(it)
+                }
+            else
+                Intent(this, ManageProductsActivity::class.java)
+                    .addFlags(FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
             finish()
         }
 
@@ -269,13 +280,22 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
-            Intent(this, CreateNewProductListActivity::class.java)
-                    .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
-                    .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
-                    .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
+            if(!isManageProducts)
+                Intent(this, CreateNewProductListActivity::class.java)
+                        .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
+                        .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
+                        .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
+                        .putExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST, intent.getSerializableExtra(Constants.IntentConstants.SELECTED_PRODUCTS_LIST))
+                        .addFlags(FLAG_ACTIVITY_NEW_TASK)
+                        .also {
+                    startActivity(it)
+                }
+            else
+                Intent(this, ManageProductsActivity::class.java)
+                    .addFlags(FLAG_ACTIVITY_NEW_TASK)
                     .also {
-                startActivity(it)
-            }
+                        startActivity(it)
+                    }
             finish()
             return true
         }
@@ -292,6 +312,7 @@ class CreateNewProductActivity : AppCompatActivity() {
         outState.putString(PRODUCT_OBSERVATION_STR, etObservations.text.toString())
         outState.putString(PRODUCT_IMAGE_STR, filePath)
         outState.putString(PRODUCT_ID_EDIT_MODE, productId?.toString())
+        outState.putBoolean(IS_MANAGE_PRODUCT_ACTIVITY, isManageProducts)
 
     }
 
@@ -304,6 +325,7 @@ class CreateNewProductActivity : AppCompatActivity() {
         etProductBrand.setText(savedInstanceState.getString(PRODUCT_OBSERVATION_STR))
         filePath = savedInstanceState.getString(PRODUCT_IMAGE_STR).toString()
         productId = savedInstanceState.getString(PRODUCT_ID_EDIT_MODE)?.toLong()
+        isManageProducts = savedInstanceState.getBoolean(IS_MANAGE_PRODUCT_ACTIVITY)
 
         if(filePath == ASSET_IMAGE_PATH_NO_IMG)
             Utils.setImgFromAsset(ivPreview, ASSET_IMAGE_PATH_NO_IMG)

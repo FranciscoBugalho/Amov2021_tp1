@@ -79,6 +79,22 @@
     <string name="pp_et_price_error">Have to insert a price!</string>
     <string name="total_start_number" translatable="false">0.0</string>
     <string name="pp_tv_total_text">Total:</string>
+    <string name="inu_dialog_tv_title">Add New Unit</string>
+    <string name="inu_dialog_et_placeholder">Insert new unit</string>
+    <string name="prd_btn_text_finish_purchase">Purchase</string>
+    <string name="purchase_history_btn_txt">Purchase History</string>
+    <string name="manage_all_products_title">Manage All Products</string>
+    <string name="mcu_manage_categories_text">Manage Categories</string>
+    <string name="mcu_manage_units_text">Manage Units</string>
+    <string name="you_have_to_add_categories_error">You have to add categories first!</string>
+    <string name="you_have_to_add_units_first_error">You have to add units first!</string>
+    <string name="acd_tv_edit_category_text">Edit Category</string>
+    <string name="aud_tv_edit_unit_text">Edit Unit</string>
+    <string name="manage_categories_title">Manage Categories</string>
+    <string name="manage_units_title">Manage Units</string>
+    <string name="you_dont_have_any_purchase_history_text">You don\'t have any purchase history!</string>
+    <string name="list_details_title">List Details</string>
+    <string name="avbld_tv_bought_date_text">Bought Date:</string>
 
 
 </resources>

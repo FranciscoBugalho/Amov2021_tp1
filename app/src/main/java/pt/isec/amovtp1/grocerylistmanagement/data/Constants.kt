@@ -46,6 +46,9 @@ object Constants {
         // Intent putExtra name to refer the product name which will be edited
         const val PRODUCT_NAME_TO_EDIT = "productNameToEdit"
 
+        // Intent putExtra to refer that the activity come from ManageProductsActivity
+        const val IS_VIEW_PRODUCTS = "isViewProducts"
+
         // Intent putExtra name to open the list details
         const val IS_LIST_DETAILS = "isDetails"
 
@@ -60,6 +63,15 @@ object Constants {
 
         // Intent putExtra to refer the list name which will be edited
         const val LIST_NAME_TO_EDIT = "listNameToEdit"
+
+        // Intent putExtra with the title from the previous activity (Create or Edit)
+        const val MANAGE_PRODUCTS_TITLE = "manageProductTitle"
+
+        // Intent putExtra to define if will show categories or units in the activity
+        const val SHOW_CATEGORIES = "showCategories"
+
+        // Intent putExtra to refer the list name which will be shown
+        const val LIST_NAME_TO_SHOW = "listNameToShow"
     }
 
     object SaveDataConstants : BaseColumns {
@@ -75,6 +87,8 @@ object Constants {
 
         const val PRODUCT_ID_EDIT_MODE = "productIdForEditMode"
 
+        const val IS_MANAGE_PRODUCT_ACTIVITY = "isManageProductActivity"
+
         const val LIST_NAME_STR = "listName"
 
         const val SELECTED_PRODUCTS_STR = "selectedProducts"
@@ -86,6 +100,10 @@ object Constants {
         const val ALL_PRODCUTS = "allProducts"
 
         const val PRUCHASED_PRODUCTS = "purchasedProducts"
+
+        const val IS_CATEGORIES = "isCategories"
+
+        const val TOTAL_PRICE = "totalPrice"
     }
 
     object ListOrders : BaseColumns {

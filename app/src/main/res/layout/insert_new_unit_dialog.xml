@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/aud_ll_padding">
 
     <TextView
+        android:id="@+id/tvDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ipp_dialog_tv_text"
+        android:text="@string/inu_dialog_tv_title"
         android:textSize="@dimen/aud_tv_title_text_size"
         android:textAlignment="center" />
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/etDialogNewUnit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/etProductPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/cnpl_et_layout_margin"
-            android:layout_weight="0.9"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:textSize="@dimen/cnpl_et_name_text_size"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:id="@+id/tvPriceSign"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="start"
-            android:textSize="@dimen/aud_tv_title_text_size"
-            android:padding="@dimen/ipp_dialog_tv_sign_padding" />
-
-    </LinearLayout>
+        android:layout_marginTop="@dimen/aud_et_margin_top"
+        android:inputType="text"
+        android:hint="@string/inu_dialog_et_placeholder"
+        android:textSize="@dimen/aud_et_text_size"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,11 +30,11 @@
         android:layout_marginTop="@dimen/aud_ll_buttons_margin_top">
 
         <Button
-            android:id="@+id/btnCancelPurchase"
+            android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btns_ripple_main_activity"
-            android:text="@string/cancel"
+            android:text="@string/cancel_text"
             android:textColor="@color/black"
             android:textSize="@dimen/aud_btns_text_size"
             android:layout_weight="1"
@@ -59,11 +42,11 @@
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btnConfirmPrice"
+            android:id="@+id/btnSaveUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btns_ripple_main_activity"
-            android:text="@string/confirm_quantity"
+            android:text="@string/save_text"
             android:textColor="@color/black"
             android:textSize="@dimen/aud_btns_text_size"
             android:layout_weight="1"

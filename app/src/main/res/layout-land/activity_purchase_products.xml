@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/linearlayout_background"
+    android:padding="@dimen/default_padding"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/tvTitleListPurchase"
+        android:padding="@dimen/app_tv_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/app_tv_title_text_size"
+        android:typeface="serif"
+        android:textStyle="bold|italic"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rounded_corners_textviews"
+        android:elevation="@dimen/ac_tv_elevation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/app_ll_search_margin_top"
+        android:paddingStart="@dimen/cnpl_et_category_search_padding_start"
+        tools:ignore="RtlSymmetry">
+
+        <Spinner
+            android:id="@+id/sOrderCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textSize="@dimen/cnpl_et_name_text_size"
+            android:padding="@dimen/cnpl_spinner_padding"
+            android:layout_margin="2dp"/>
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/cnpl_spinner_padding" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/app_sv_margins"
+                android:layout_marginBottom="@dimen/app_sv_margins"
+                android:padding="@dimen/cnpl_ll_padding" >
+
+                <LinearLayout
+                    android:id="@+id/llAllProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessLeaf">
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_marginTop="@dimen/app_sv_margins"
+            android:layout_marginBottom="@dimen/app_sv_margins"
+            android:padding="@dimen/cnpl_ll_padding" >
+
+            <LinearLayout
+                android:id="@+id/llBoughtProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="UselessLeaf">
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btnFinishListPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btns_ripple_main_activity"
+                    android:padding="@dimen/app_btn_land_padding"
+                    android:text="@string/purchase"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvTotalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:elevation="@dimen/ac_tv_elevation"
+                    android:padding="@dimen/app_tv_total_padding"
+                    android:text="@string/pp_tv_total_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_tv_title_text_size" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:text="@string/total_start_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_tv_title_text_size" />
+
+                <TextView
+                    android:id="@+id/tvTotalPriceSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:padding="0dp"
+                    android:text="@string/price_sign"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_tv_title_text_size" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
