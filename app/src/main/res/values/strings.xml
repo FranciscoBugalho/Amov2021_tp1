@@ -57,7 +57,7 @@
     <string name="alphabetical_order_menu_text">Alphabetical Order</string>
     <string name="created_date_menu_text">Created date</string>
     <string name="bougth_menu_text">Bougth</string>
-    <string name="you_have_no_lists_created_click_on_the_plus_button">You have no lists, create some by clicking on the plus (\'+\') button.</string>
+    <string name="you_have_no_lists_created_click_on_the_plus_button">You don\'t have any lists. Create a new list by clicking the plus button bottom left.</string>
     <string name="already_exists_a_list_with_this_name">Already exists a list with this name!</string>
     <string name="edit_list_btn_txt">Finish</string>
     <string name="shopping_area">Shopping Area</string>
@@ -92,7 +92,7 @@
     <string name="aud_tv_edit_unit_text">Edit Unit</string>
     <string name="manage_categories_title">Manage Categories</string>
     <string name="manage_units_title">Manage Units</string>
-    <string name="you_dont_have_any_purchase_history_text">You don\'t have any purchase history!</string>
+    <string name="you_dont_have_any_purchase_history_text">You don\'t have any purchases yet!</string>
     <string name="list_details_title">List Details</string>
     <string name="avbld_tv_bought_date_text">Bought Date:</string>
 

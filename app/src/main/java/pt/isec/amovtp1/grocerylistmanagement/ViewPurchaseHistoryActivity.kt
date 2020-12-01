@@ -7,9 +7,11 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_view_purchase_history.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
@@ -54,15 +56,22 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
         val lists = db.getAllBoughtLists(listOrder)
 
         if(lists.isEmpty()) {
+
+            val cl = findViewById<ConstraintLayout>(R.id.clShoppedLists)
             // Create a TextView
             val textView = TextView(this)
-            textView.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+            val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+            params.leftToLeft = cl.id
+            params.rightToRight = cl.id
+            textView.layoutParams = params
             textView.tag = "tvShoppedLists"
             textView.text = getString(R.string.you_dont_have_any_purchase_history_text)
             textView.setTextColor(Color.BLACK)
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
             textView.gravity = Gravity.CENTER
-            findViewById<ConstraintLayout>(R.id.clShoppedLists).addView(textView)
+
+            cl.addView(textView)
+
         } else {
             repeat(lists.size) {
                 val item = ListInfo(lists[it].listName, lists[it].date, lists[it].isBought, db.productsInThisList(lists[it].listName))

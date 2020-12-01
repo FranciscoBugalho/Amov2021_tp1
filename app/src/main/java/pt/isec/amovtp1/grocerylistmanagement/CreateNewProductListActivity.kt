@@ -522,6 +522,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 et.visibility = View.GONE
                 et.text.clear()
                 dialog.findViewById<Button>(R.id.btnAddUnit).visibility = View.GONE
+                btnConfirm.isClickable = true
             }
         }
 
