@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import pt.isec.amovtp1.grocerylistmanagement.Utils
@@ -546,7 +547,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val count = cursor.count
 
         // If exist one and it isn't with the same id
-        if(count > 1 || cursor.getLong(cursor.getColumnIndex(PRODUCT_ID)) != productId) {
+        if(count > 1 || (count == 1 && cursor.getLong(cursor.getColumnIndex(PRODUCT_ID)) != productId)){
             cursor.close()
             return false
         }
@@ -836,7 +837,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val count = cursor.count
 
         // If exist one or it isn't with the same id
-        if(count > 1 || cursor.getLong(cursor.getColumnIndex(LIST_ID)) != listId) {
+        if(count > 1 || (count == 1 && cursor.getLong(cursor.getColumnIndex(LIST_ID)) != listId)){
             cursor.close()
             return false
         }
@@ -1065,7 +1066,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val count = cursor.count
 
         // If exist one and it isn't with the same id
-        if(count > 1 || cursor.getLong(cursor.getColumnIndex(CATEGORY_ID)) != categoryId) {
+        if(count > 1 || (count == 1 && cursor.getLong(cursor.getColumnIndex(CATEGORY_ID)) != categoryId)){
             cursor.close()
             return false
         }
@@ -1095,7 +1096,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val count = cursor.count
 
         // If exist one and it isn't with the same id
-        if(count > 1 || cursor.getLong(cursor.getColumnIndex(UNIT_ID)) != unitId) {
+        if(count > 1 || (count == 1 && cursor.getLong(cursor.getColumnIndex(UNIT_ID)) != unitId)){
             cursor.close()
             return false
         }
