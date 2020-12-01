@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ManageCategoriesUnitsActivity"
     android:orientation="vertical"
-    tools:context=".ManageProductsActivity"
     android:background="@drawable/linearlayout_background"
     android:padding="@dimen/default_padding"
     android:focusableInTouchMode="true">
@@ -20,7 +20,7 @@
         tools:ignore="RtlSymmetry">
 
         <Spinner
-            android:id="@+id/sOrderProducts"
+            android:id="@+id/sOrderCategoriesUnits"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             android:layout_margin="2dp"/>
 
         <Button
-            android:id="@+id/btnAddNewProduct"
+            android:id="@+id/btnAddNewCategoryUnit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
@@ -47,7 +47,7 @@
         tools:ignore="UselessParent">
 
         <LinearLayout
-            android:id="@+id/llShowAllProducts"
+            android:id="@+id/llShowAllCategoriesUnits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

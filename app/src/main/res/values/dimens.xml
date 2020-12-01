@@ -81,6 +81,11 @@
 
     <!-- ______________________________ -->
 
+    <!-- Manage Products Activity -->
+    <dimen name="amp_ll_sv_padding">6dp</dimen>
+
+    <!-- ______________________________ -->
+
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
 </resources>

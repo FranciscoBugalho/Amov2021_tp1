@@ -64,6 +64,7 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_NAME_CATEGORY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_OBSERVATIONS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORIES_WITH_SAME_NAME
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_ID_BY_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_ID_BY_PRODUCT_NAME
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAMES
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_CATEGORY_NAME_BY_ID
@@ -83,6 +84,7 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_ASC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_DESC
+import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_CATEGORIES
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_PRODUCTS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NUM_UNITS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_PRODUCT_BRAND_FROM_NAME
@@ -397,6 +399,15 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return count
     }
 
+    fun countDbCategories(): Int {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_NUM_CATEGORIES, null)
+        cursor.moveToFirst()
+        val count = cursor.count
+        cursor.close()
+        return count
+    }
+
     fun getAllUnitsNames(): List<String> {
         val db = writableDatabase
 
@@ -528,7 +539,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val count = cursor.count
 
         // If exist one and it isn't with the same id
-        if(count > 1 && cursor.getLong(cursor.getColumnIndex(PRODUCT_ID)) != productId) {
+        if(count > 1 || cursor.getLong(cursor.getColumnIndex(PRODUCT_ID)) != productId) {
             cursor.close()
             return false
         }
@@ -784,8 +795,8 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         cursor.moveToFirst()
         val count = cursor.count
 
-        // If exist one and it isn't with the same id
-        if(count > 1 && cursor.getLong(cursor.getColumnIndex(LIST_ID)) != listId) {
+        // If exist one or it isn't with the same id
+        if(count > 1 || cursor.getLong(cursor.getColumnIndex(LIST_ID)) != listId) {
             cursor.close()
             return false
         }
@@ -971,6 +982,57 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         values.put(PRODUCT_PRICE_DATE, convertDateToDatetime(Date()))
         values.put(PRODUCT_ID, productId)
         db.insert(PRODUCT_PRICE_TABLE_NAME, null, values)
+    }
+
+    fun editCategory(categoryName: String, categoryId: Long): Boolean {
+        val db = writableDatabase
+
+        // Gets the category id with the list name that user inserted
+        val cursor = db.rawQuery(SELECT_CATEGORY_ID_BY_NAME, arrayOf(categoryName))
+        cursor.moveToFirst()
+        val count = cursor.count
+
+        // If exist one and it isn't with the same id
+        if(count > 1 || cursor.getLong(cursor.getColumnIndex(CATEGORY_ID)) != categoryId) {
+            cursor.close()
+            return false
+        }
+
+        val values = ContentValues()
+        values.put(CATEGORY_NAME, categoryName)
+        db.update(CATEGORY_TABLE_NAME, values, "$CATEGORY_ID = ?", arrayOf(categoryId.toString()))
+
+        return true
+    }
+
+    fun getUnitIdByName(categoryName: String): Long {
+        val db = writableDatabase
+        val cursor = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(categoryName))
+        cursor.moveToFirst()
+        val unitId = cursor.getLong(cursor.getColumnIndex(UNIT_ID))
+        cursor.close()
+        return unitId
+    }
+
+    fun editUnit(unitName: String, unitId: Long): Boolean {
+        val db = writableDatabase
+
+        // Gets the category id with the list name that user inserted
+        val cursor = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(unitName))
+        cursor.moveToFirst()
+        val count = cursor.count
+
+        // If exist one and it isn't with the same id
+        if(count > 1 || cursor.getLong(cursor.getColumnIndex(UNIT_ID)) != unitId) {
+            cursor.close()
+            return false
+        }
+
+        val values = ContentValues()
+        values.put(UNIT_NAME, unitName)
+        db.update(UNIT_TABLE_NAME, values, "$UNIT_ID = ?", arrayOf(unitId.toString()))
+
+        return true
     }
 
     private fun getOrderedLists(listOrder: HashMap<String, String?>, isShopping: Boolean): String {

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GroceryListManagement">
-        <activity android:name=".ViewPurchaseHistoryActivity"></activity>
+        <activity android:name=".ManageCategoriesUnitsActivity" />
+        <activity android:name=".ViewPurchaseHistoryActivity" />
         <activity android:name=".ManageProductsActivity" />
         <activity android:name=".PurchaseProductsActivity" />
         <activity android:name=".CreateNewProductActivity" />

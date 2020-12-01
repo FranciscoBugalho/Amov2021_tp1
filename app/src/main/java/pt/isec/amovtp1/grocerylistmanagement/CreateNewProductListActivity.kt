@@ -587,10 +587,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ManageProductListsActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .also {
-                startActivity(it)
-            }
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .also {
+                    startActivity(it)
+                }
             finish()
             return true
         }

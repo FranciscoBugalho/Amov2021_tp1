@@ -66,6 +66,9 @@ object Constants {
 
         // Intent putExtra with the title from the previous activity (Create or Edit)
         const val MANAGE_PRODUCTS_TITLE = "manageProductTitle"
+
+        // Intent putExtra to define if will show categories or units in the activity
+        const val SHOW_CATEGORIES = "showCategories"
     }
 
     object SaveDataConstants : BaseColumns {
@@ -94,6 +97,8 @@ object Constants {
         const val ALL_PRODCUTS = "allProducts"
 
         const val PRUCHASED_PRODUCTS = "purchasedProducts"
+
+        const val IS_CATEGORIES = "isCategories"
     }
 
     object ListOrders : BaseColumns {

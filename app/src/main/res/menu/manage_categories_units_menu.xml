@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/manageCategories"
+        android:title="@string/mcu_manage_categories_text"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/manageUnits"
+        android:title="@string/mcu_manage_units_text"
+        app:showAsAction="never"/>
+</menu>

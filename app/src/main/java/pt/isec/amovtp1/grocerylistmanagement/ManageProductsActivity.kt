@@ -69,6 +69,18 @@ class ManageProductsActivity : AppCompatActivity() {
         }
 
         displayAllProducts(products)
+
+        val addBtn = findViewById<Button>(R.id.btnAddNewProduct)
+        addBtn.background = getDrawable(R.drawable.add_btn)
+        addBtn.setOnClickListener {
+            db.closeDB()
+            Intent(this, CreateNewProductActivity::class.java)
+                .putExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, true)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .also {
+                    startActivity(it)
+                }
+        }
     }
 
     private fun displayAllProducts(products: MutableMap<String, String>) {
@@ -120,7 +132,7 @@ class ManageProductsActivity : AppCompatActivity() {
             //-------------------------------------
 
             param = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.30f
+            param.weight = 0.20f
 
             // Create the Button
             val button = Button(this)
@@ -262,7 +274,6 @@ class ManageProductsActivity : AppCompatActivity() {
     }
 
     private fun presentError(error: String) {
-
         val linearLayout = LinearLayout(this)
         linearLayout.gravity = Gravity.CENTER
         linearLayout.layoutParams = LinearLayout.LayoutParams(
@@ -283,15 +294,41 @@ class ManageProductsActivity : AppCompatActivity() {
         return
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.manage_categories_units_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home) {
-            Intent(this, MainActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .also {
-                    startActivity(it)
-                }
-            finish()
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                db.closeDB()
+                Intent(this, MainActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
+                finish()
+                return true
+            }
+            R.id.manageCategories -> {
+                Intent(this, ManageCategoriesUnitsActivity::class.java)
+                    .putExtra(Constants.IntentConstants.SHOW_CATEGORIES, true)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
+                return true
+            }
+            R.id.manageUnits -> {
+                Intent(this, ManageCategoriesUnitsActivity::class.java)
+                    .putExtra(Constants.IntentConstants.SHOW_CATEGORIES, false)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

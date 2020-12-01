@@ -75,7 +75,7 @@ class CreateNewProductActivity : AppCompatActivity() {
             productId = db.getProductIdByName(intent.getStringExtra(Constants.IntentConstants.PRODUCT_NAME_TO_EDIT)!!)
 
             isManageProducts = intent.getBooleanExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, false)
-        }
+        } else isManageProducts = intent.getBooleanExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, false)
 
         // Permissions to access to the camera and gallery
         if (Build.VERSION.SDK_INT >= 24) {
