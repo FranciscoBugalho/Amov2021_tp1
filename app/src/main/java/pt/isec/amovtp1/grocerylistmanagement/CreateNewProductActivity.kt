@@ -212,6 +212,7 @@ class CreateNewProductActivity : AppCompatActivity() {
                 editText.error = getString(R.string.category_already_exists_error)
             else {
                 addCategoriesOnSpinner()
+                //sProductCategory.setSelect
                 dialog.dismiss()
             }
         }

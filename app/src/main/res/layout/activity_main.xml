@@ -8,19 +8,33 @@
     android:background="@drawable/linearlayout_background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_margin="@dimen/ac_tv_layout_margin"
-        android:padding="@dimen/default_padding"
-        android:textSize="@dimen/ac_title_text_size"
-        android:typeface="serif"
-        android:textStyle="bold|italic"
-        android:textColor="@color/white"
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:background="@drawable/rounded_corners_textviews"
-        android:elevation="@dimen/ac_tv_elevation" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        android:layout_margin="@dimen/default_margin"
+        android:orientation="vertical"
+>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/final_logo"
+            />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,9 +50,11 @@
             android:background="@drawable/btns_ripple_main_activity"
             android:padding="@dimen/ac_btn_padding"
             android:text="@string/purchase_history_btn_txt"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/ac_btn_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/btnProducts"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnViewAllProducts"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -47,10 +63,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btns_ripple_main_activity"
-            android:padding="@dimen/ac_btn_padding"
             android:text="@string/products_btn_txt"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:padding="@dimen/ac_btn_padding"
             android:textSize="@dimen/ac_btn_text_size"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toTopOf="@+id/btnProductsLists"
             app:layout_constraintTop_toBottomOf="@+id/btnPurchaseHistory"
             tools:layout_editor_absoluteX="16dp" />
@@ -63,11 +81,14 @@
             android:background="@drawable/btns_ripple_main_activity"
             android:padding="@dimen/ac_btn_padding"
             android:text="@string/manage_product_lists"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/ac_btn_text_size"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toTopOf="@+id/btnShoppingLists"
             app:layout_constraintTop_toBottomOf="@+id/btnViewAllProducts"
-            tools:layout_editor_absoluteX="16dp" />
+            tools:layout_editor_absoluteX="16dp"
+            />
 
         <Button
             android:id="@+id/btnShoppingLists"
@@ -77,12 +98,16 @@
             android:background="@drawable/btns_ripple_main_activity"
             android:padding="@dimen/ac_btn_padding"
             android:text="@string/manage_shopping_lists"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/ac_btn_text_size"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnProductsLists"
-            tools:layout_editor_absoluteX="16dp" />
+            tools:layout_editor_absoluteX="16dp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

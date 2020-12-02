@@ -2,9 +2,9 @@
 <resources>
     <!-- Activity Main Layout Dimensions -->
     <dimen name="ac_tv_layout_margin">24dp</dimen>
-    <dimen name="ac_btn_text_size">25sp</dimen>
+    <dimen name="ac_btn_text_size">16sp</dimen>
     <dimen name="ac_btn_margin">10dp</dimen>
-    <dimen name="ac_btn_padding">8dp</dimen>
+    <dimen name="ac_btn_padding">5dp</dimen>
     <dimen name="ac_btn_stroke_width">2dp</dimen>
     <dimen name="ac_btn_radius">20dp</dimen>
     <dimen name="ac_tv_radius">5dp</dimen>

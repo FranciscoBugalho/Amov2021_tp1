@@ -2,6 +2,7 @@ package pt.isec.amovtp1.grocerylistmanagement.rcManagement
 
 import android.content.Context
 import android.graphics.Color
+import android.provider.CalendarContract
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -56,7 +57,7 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
             listTime.text = ltStr
             createProductList(productNames)
             if(isBought)
-                productListInformation.setBackgroundColor(Color.CYAN)
+                productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow)) //todo put in colors
         }
 
         private fun createProductList(productNames: List<String>) {
