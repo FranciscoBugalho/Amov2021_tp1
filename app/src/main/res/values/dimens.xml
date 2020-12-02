@@ -10,6 +10,8 @@
     <dimen name="ac_tv_radius">5dp</dimen>
     <dimen name="ac_tv_elevation">4dp</dimen>
     <dimen name="ac_title_text_size">24sp</dimen>
+    <dimen name="ac_cl_margin">8dp</dimen>
+    <dimen name="ac_cl_padding">8dp</dimen>
     <!-- ______________________________ -->
 
     <!-- Activity Manage Product ProductLists Dimensions -->
