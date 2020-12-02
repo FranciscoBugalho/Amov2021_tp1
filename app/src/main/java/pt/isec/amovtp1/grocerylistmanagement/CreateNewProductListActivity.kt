@@ -32,6 +32,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
     private var listId: Long? = null
     private lateinit var db : GMLDatabase
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product_list)
@@ -159,6 +162,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * addProductsToScrollView
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun addProductsToScrollView(toShow: String) {
         val llProducts = findViewById<LinearLayout>(R.id.llProductCheckBoxes)
@@ -335,6 +341,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * showProductObservations
+     */
     @SuppressLint("SetTextI18n")
     private fun showProductObservations(productName: String) {
         // Create the Dialog
@@ -445,6 +454,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * setProductQuantity
+     */
     @SuppressLint("CutPasteId")
     fun setProductQuantity(productName: String) {
         // Create the Dialog
@@ -528,6 +540,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * addUnitsOnSpinner
+     */
     private fun addUnitsOnSpinner(dialog: Dialog) {
         val units = db.getAllUnitsNames()
 
@@ -547,6 +562,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
             )
     }
 
+    /**
+     * presentError
+     */
     private fun presentError(llProducts: LinearLayout, error: String) {
         val linearLayout = LinearLayout(this)
         linearLayout.gravity = Gravity.CENTER
@@ -568,6 +586,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         return
     }
 
+    /**
+     * completeFields
+     */
     private fun completeFields(isEdit: Int) {
         selectedProducts = db.getListInformation(listId)
         // If is not edit mode clear de listId
@@ -577,6 +598,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         addProductsToScrollView(SHOW_ALL_PRODUCTS)
     }
 
+    /**
+     * onOptionsItemSelected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ManageProductListsActivity::class.java)
@@ -590,6 +614,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -599,6 +626,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         outState.putString(LIST_ID_EDIT_MODE, listId?.toString())
     }
 
+    /**
+     * onRestoreInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

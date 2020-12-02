@@ -31,6 +31,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
     private var boughtProducts = mutableMapOf<String, ArrayList<String>>()
     private lateinit var db : GMLDatabase
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_products)
@@ -109,6 +112,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * finishPurchase
+     */
     private fun finishPurchase(totalPrice: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -254,6 +260,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * getProductQuantity
+     */
     private fun getProductQuantity(boughtProducts: MutableMap<String, ArrayList<String>>): HashMap<String, String?> {
         val productAndQuantities = hashMapOf<String, String?>()
 
@@ -263,6 +272,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return productAndQuantities
     }
 
+    /**
+     * insertNewUnit
+     */
     private fun insertNewUnit() {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -295,6 +307,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * setupScrollViews
+     */
     private fun setupScrollViews(productsToView: MutableMap<String, ArrayList<String>>, isAllProductView: Boolean) {
         val llScrollView: LinearLayout = if(isAllProductView)
             findViewById(R.id.llAllProducts)
@@ -506,6 +521,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * purchaseProduct
+     */
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
         if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
             etPrice.error = getString(R.string.pp_et_price_error)
@@ -541,6 +559,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
+    /**
+     * removeProduct
+     */
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
         val qnt = productInfo[1].split(" ")
         if(productInfo.size == 4) {
@@ -579,6 +600,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
+    /**
+     * showPriceHistory
+     */
     private fun showPriceHistory(productName: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -650,6 +674,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * getUnitPositionOnSpinner
+     */
     private fun getUnitPositionOnSpinner(unitName: String): Int {
         val units = db.getAllUnitsNames()
         for(i in units.indices)
@@ -658,6 +685,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return 0
     }
 
+    /**
+     * getAllProductsInformation
+     */
     fun getAllProductsInformation() {
         val products = db.productsInThisList(listName)
 
@@ -680,6 +710,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onOptionsItemSelected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ManageShoppingListsActivity::class.java)
@@ -693,6 +726,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -701,6 +737,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

@@ -57,7 +57,7 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
             listTime.text = ltStr
             createProductList(productNames)
             if(isBought)
-                productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow)) //todo put in colors
+                productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow)) //TODO: put in colors
         }
 
         private fun createProductList(productNames: List<String>) {

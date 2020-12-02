@@ -20,6 +20,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
     private lateinit var listName: String
     private var totalPrice: Double = 0.0
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_bought_list_details)
@@ -38,6 +41,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.list_details_title)
     }
 
+    /**
+     * getAllProductsInformation
+     */
     fun getAllProductsInformation(): MutableMap<String, ArrayList<String>> {
         val products = db.productsInThisList(listName)
         val boughtProducts = mutableMapOf<String, ArrayList<String>>()
@@ -62,6 +68,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         return boughtProducts
     }
 
+    /**
+     * displayAllProductInfo
+     */
     fun displayAllProductInfo() {
         val llPurchasedProducts = findViewById<LinearLayout>(R.id.llAllBoughtProducts)
 
@@ -173,6 +182,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         llPurchasedProducts.addView(llPrice)
     }
 
+    /**
+     * onOptionsItemSelected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ViewPurchaseHistoryActivity::class.java)
@@ -186,12 +198,18 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onResume
+     */
     override fun onResume() {
         super.onResume()
 
         displayAllProductInfo()
     }
 
+    /**
+     * onSaveInstanceState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -200,6 +218,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

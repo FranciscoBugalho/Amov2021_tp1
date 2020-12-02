@@ -20,6 +20,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
     private lateinit var db : GMLDatabase
     private var isCategories: Boolean = false
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_categories_units)
@@ -73,6 +76,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * getInformation
+     */
     private fun getInformation(): List<String> {
         if(isCategories) {
             if(db.countDbCategories() == 0) {
@@ -92,6 +98,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * addInformationToScrollView
+     */
     private fun addInformationToScrollView(information: List<String>) {
         val llInformation = findViewById<LinearLayout>(R.id.llShowAllCategoriesUnits)
         llInformation.removeAllViews()
@@ -146,6 +155,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * showDialogUnit
+     */
     private fun showDialogUnit(unitName: String?) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_dialog)
@@ -187,6 +199,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * showDialogCategory
+     */
     private fun showDialogCategory(categoryName: String?) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_dialog)
@@ -228,6 +243,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * presentError
+     */
     private fun presentError(error: String) {
         val linearLayout = LinearLayout(this)
         linearLayout.gravity = Gravity.CENTER
@@ -249,6 +267,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         return
     }
 
+    /**
+     * onOptionsItemSelected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             db.closeDB()
@@ -263,12 +284,18 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putBoolean(IS_CATEGORIES, isCategories)
     }
 
+    /**
+     * onRestoreInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         isCategories = savedInstanceState.getBoolean(IS_CATEGORIES)

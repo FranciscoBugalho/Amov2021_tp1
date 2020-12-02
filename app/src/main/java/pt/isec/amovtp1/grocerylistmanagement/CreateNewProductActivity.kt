@@ -46,6 +46,9 @@ class CreateNewProductActivity : AppCompatActivity() {
     private var productId: Long? = null
     private var isManageProducts: Boolean = false
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product)
@@ -157,6 +160,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * completeProductFields
+     */
     private fun completeProductFields(productName: String) {
         val productInfo = db.getProductInfoByName(productName)
 
@@ -175,6 +181,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         sProductCategory.setSelection(getCategoryPositionOnSpinner(productInfo[2].toString()))
     }
 
+    /**
+     * getCategoryPositionOnSpinner
+     */
     private fun getCategoryPositionOnSpinner(productCategory: String): Int {
         val categories = db.getAllCategoryNames()
         for(i in categories.indices)
@@ -183,6 +192,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         return 0
     }
 
+    /**
+     * addCategoriesOnSpinner
+     */
     private fun addCategoriesOnSpinner() {
         val categories = db.getAllCategoryNames()
 
@@ -193,6 +205,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * addNewCategory
+     */
     fun addNewCategory(view: View) {
         val dialog = Dialog(view.context)
         dialog.setContentView(R.layout.add_category_dialog)
@@ -219,6 +234,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * createImageFile
+     */
     @SuppressLint("SimpleDateFormat")
     private fun createImageFile(): File {
         // Create an image file name
@@ -234,6 +252,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * dispatchTakePictureIntent
+     */
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -259,6 +280,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onActivityResult
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, info: Intent?) {
         // Gallery
         if (requestCode == Constants.REQUEST_CODE_GALLERY && resultCode == Activity.RESULT_OK && info != null) {
@@ -279,6 +303,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, info)
     }
 
+    /**
+     * onOptionsItemSelected
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             if(!isManageProducts)
@@ -303,6 +330,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -317,6 +347,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

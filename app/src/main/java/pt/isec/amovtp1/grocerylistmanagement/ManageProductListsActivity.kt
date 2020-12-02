@@ -31,15 +31,23 @@ class ManageProductListsActivity : AppCompatActivity() {
     private lateinit var db : GMLDatabase
     private var listOrder = hashMapOf<String, String?>()
 
+    /**
+     * onCreate
+     * 1. Sets the view to "activity_manage_product_lists"
+     * 2. Connects the context to the Database
+     * 3. Sets the order of the list of "previously purchased lists" (Alphabetical Ascendant)
+     * 4. Sets an action bar on the top of the screen
+     * 5. Sets the "Add new product" button's onClickListener that redirects to the "CreateNewProductListActivity"
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_product_lists)
 
-        if(savedInstanceState == null)
-            listOrder[ALPHABETICAL_ORDER] = ORDER_ASC
-
         // Init database
         db = GMLDatabase(this)
+
+        if(savedInstanceState == null)
+            listOrder[ALPHABETICAL_ORDER] = ORDER_ASC
 
         // Add back button on the actionbar
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -56,6 +64,14 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * fillRecycleView
+     * 1. Gets the list of "previously purchased lists" from the Database
+     * 2. If the list is empty, adds to the "clShoppedLists" layout (which is in the "activity_view_purchase_history") an informative textView
+     * 3. If the list isn't empty, fill a recycle view with every "previously purchased list"
+     * 4. The recycle view re-uses every component that's correspondent to a "previously purchased list"
+     * that is scrolled out of the screen to fill with a new "previously purchased list" that is now on the screen
+     */
     private fun fillRecycleView() {
         val lists = db.getAllLists(listOrder)
 
@@ -82,6 +98,10 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar", including the "order_menu" dropdown and the "home" arrow component
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // If user clicks on the back menu button
         when (item.itemId) {
@@ -172,11 +192,21 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onCreateOptionsMenu
+     * 1. Creates "order_menu"
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.order_menu, menu)
         return true
     }
 
+    /**
+     * onEdit
+     * 1. Clears "listInfo", that contains the data of each list of products
+     * 2. Closes Database
+     * 3. Redirects to the "CreateNewProductListActivity" passing IS_LIST_DETAILS (flag that defines if it an edit or a create list) and LIST_NAME_TO_EDIT (list's name) as constants
+     */
     fun onEdit(listName: String) {
         // Clear the information in the list to rebuild later
         listInfo.clear()
@@ -190,6 +220,13 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * createDialogToCopyOrDelete
+     * 1. Creates a dialog box and sets it's content view as "edit_or_delete_list_dialog" and other properties
+     * 2. Creates a "delete list" button and defines it's "onClickListener"
+     * 3. Creates a "copy list" button and defines it's "onClickListener" that redirects to the "CreateNewProductListActivity"
+     * passing IS_LIST_DETAILS (flag that defines if it an edit or a create list) and LIST_NAME_TO_EDIT (list's name) as constants
+     */
     fun createDialogToCopyOrDelete(listName: String) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.edit_or_delete_list_dialog)
@@ -221,6 +258,10 @@ class ManageProductListsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onResume
+     * 1. Calls "fillRecycleView" method
+     */
     override fun onResume() {
         super.onResume()
         // Fill the RecycleView if it's empty
@@ -228,6 +269,10 @@ class ManageProductListsActivity : AppCompatActivity() {
             fillRecycleView()
     }
 
+    /**
+     * onPause
+     * 1. Clears "listInfo"
+     */
     override fun onPause() {
         super.onPause()
         // Fill the RecycleView if it's empty
@@ -235,12 +280,21 @@ class ManageProductListsActivity : AppCompatActivity() {
             listInfo.clear()
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "listOrder"
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putSerializable(LIST_ORDER_STR, listOrder)
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "listOrder"
+     * 2. Clears "listInfo"
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
