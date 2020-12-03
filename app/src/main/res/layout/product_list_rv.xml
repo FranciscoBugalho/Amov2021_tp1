@@ -29,7 +29,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/light_golden"
-            android:padding="6dp">
+            android:paddingStart="12dp"
+            android:paddingTop="@dimen/pl_rv_ll_content_padding"
+            android:paddingEnd="@dimen/pl_rv_ll_content_padding"
+            android:paddingBottom="@dimen/pl_rv_ll_content_padding">
 
 
         </LinearLayout>

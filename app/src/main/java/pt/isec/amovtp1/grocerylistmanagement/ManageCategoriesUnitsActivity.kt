@@ -47,8 +47,8 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     0 -> addInformationToScrollView(getInformation())
-                    1 -> addInformationToScrollView(getInformation().sorted())
-                    2 -> addInformationToScrollView(getInformation().sortedByDescending { it })
+                    1 -> addInformationToScrollView(getInformation().sortedBy { it.toLowerCase() })
+                    2 -> addInformationToScrollView(getInformation().sortedByDescending { it.toLowerCase() })
                 }
             }
 

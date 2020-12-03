@@ -3,7 +3,10 @@ package pt.isec.amovtp1.grocerylistmanagement
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
@@ -47,13 +50,13 @@ class ManageProductsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when {
                     position == 0 -> {
-                        displayAllProducts(products.toSortedMap())
+                        displayAllProducts(products.toSortedMap(String.CASE_INSENSITIVE_ORDER))
                     }
                     position == 1 -> {
-                        displayAllProducts(products.toSortedMap(compareByDescending { it }))
+                        displayAllProducts(products.toSortedMap(compareByDescending ( String.CASE_INSENSITIVE_ORDER, { it }) ))
                     }
                     position > 2 -> {
-                        displayAllProducts(products.filterValues { it == orderProducts[position] } as MutableMap<String, String>)
+                        displayAllProducts(products.filterValues { it.equals(orderProducts[position], ignoreCase = true) } as MutableMap<String, String>)
                     }
                     else -> {
                         displayAllProducts(products)
@@ -69,7 +72,14 @@ class ManageProductsActivity : AppCompatActivity() {
         displayAllProducts(products)
 
         val addBtn = findViewById<Button>(R.id.btnAddNewProduct)
-        addBtn.background = getDrawable(R.drawable.add_btn)
+        val drawable = getDrawable(R.drawable.add_btn)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_orange), BlendMode.SRC_IN)
+        }
+        else{
+            drawable!!.setColorFilter(resources.getColor(R.color.theme_orange),PorterDuff.Mode.SRC_IN )
+        }
+        addBtn.background = drawable
         addBtn.setOnClickListener {
             db.closeDB()
             Intent(this, CreateNewProductActivity::class.java)

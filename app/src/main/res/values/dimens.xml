@@ -14,10 +14,10 @@
 
     <!-- Activity Manage Product ProductLists Dimensions -->
     <dimen name="mpl_cv_layout_margin">8dp</dimen>
-    <dimen name="mpl_list_name_text_size">24sp</dimen>
+    <dimen name="mpl_list_name_text_size">18sp</dimen>
     <dimen name="mpl_tc_tv_padding">4dp</dimen>
     <dimen name="mpl_product_list_text_size">20sp</dimen>
-    <dimen name="mpl_view_details_text_size">16sp</dimen>
+    <dimen name="mpl_view_details_text_size">12sp</dimen>
     <dimen name="mpl_plus_btn_size">60dp</dimen>
     <dimen name="mpl_plus_btn_text_size">38sp</dimen>
     <dimen name="mpl_btn_plus_margin">8dp</dimen>
@@ -29,7 +29,7 @@
     <dimen name="cnpl_tv_new_product_text_size">15sp</dimen>
     <dimen name="cnpl_tv_padding_bottom">4dp</dimen>
     <dimen name="cnpl_tv_titulo_padding">4dp</dimen>
-    <dimen name="cnpl_btn_padding">8dp</dimen>
+    <dimen name="cnpl_btn_padding_vertical">8dp</dimen>
     <dimen name="cnpl_ll_padding">8dp</dimen>
     <dimen name="cnpl_et_category_search_padding_start">8dp</dimen>
     <dimen name="cnpl_ll_new_product_padding">8dp</dimen>
@@ -57,7 +57,7 @@
     <dimen name="aud_ll_padding">15dp</dimen>
     <dimen name="aud_tv_title_text_size">24sp</dimen>
     <dimen name="aud_et_margin_top">10dp</dimen>
-    <dimen name="aud_et_text_size">20sp</dimen>
+    <dimen name="aud_et_text_size">16sp</dimen>
     <dimen name="aud_ll_buttons_margin_top">15dp</dimen>
     <dimen name="aud_btns_text_size">20sp</dimen>
     <dimen name="aud_btns_margins">4dp</dimen>
@@ -65,7 +65,7 @@
     <!-- ______________________________ -->
 
     <!-- Set Quantity Dialog Dimensions -->
-    <dimen name="sqd_btn_text_size">18sp</dimen>
+    <dimen name="sqd_btn_text_size">14sp</dimen>
     <dimen name="sqd_ll_new_unit_margin_top">8dp</dimen>
 
     <!-- ______________________________ -->
@@ -85,7 +85,17 @@
     <dimen name="amp_ll_sv_padding">6dp</dimen>
 
     <!-- ______________________________ -->
+    <dimen name="vbld_tv_title_size">22dp</dimen>
+    <dimen name="vbld_tv_boughtdate_size">16dp</dimen>
+
+
+    <!-- ______________________________ -->
 
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="amp_ll_sv_padding_start">12dp</dimen>
+    <dimen name="amp_ll_sv_padding_start_land">24dp</dimen>
+    <dimen name="cnpl_et_category_search_padding_end_land">26dp</dimen>
+    <dimen name="pl_rv_ll_content_padding">6dp</dimen>
+    <dimen name="cnpl_btn_padding_horizontal">16dp</dimen>
 </resources>

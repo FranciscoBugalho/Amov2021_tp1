@@ -35,11 +35,12 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btns_ripple_main_activity"
             android:text="@string/cancel_text"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/aud_btns_text_size"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/aud_btns_margins"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"
+            />
 
         <Button
             android:id="@+id/btnSave"
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btns_ripple_main_activity"
             android:text="@string/save_text"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/aud_btns_text_size"
             android:layout_weight="1"
             android:layout_marginStart="@dimen/aud_btns_margins"

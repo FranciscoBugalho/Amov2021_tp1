@@ -3,7 +3,11 @@ package pt.isec.amovtp1.grocerylistmanagement
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
@@ -314,10 +318,11 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 else ""
 
                 Intent(this, CreateNewProductActivity::class.java)
-                    .putExtra(IntentConstants.IS_EDIT_PRODUCT, 1)
-                    .putExtra(IntentConstants.PRODUCT_NAME_TO_EDIT, key)
-                    .putExtra(IntentConstants.LIST_NAME, listName)
-                    .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
+                        .putExtra(IntentConstants.IS_EDIT_PRODUCT, 1)
+                        .putExtra(IntentConstants.PRODUCT_NAME_TO_EDIT, key)
+                        .putExtra(IntentConstants.LIST_NAME, listName)
+                        .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
+                        .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
                     .also {
                     startActivity(it)
                 }
@@ -504,10 +509,18 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 et.visibility = View.GONE
                 btn.visibility = View.GONE
                 btnConfirm.isClickable = true
+                btnConfirm.background = getDrawable(R.drawable.btns_ripple_main_activity)
             } else {
                 et.visibility = View.VISIBLE
                 btn.visibility = View.VISIBLE
-                btnConfirm.isClickable = false // TODO: MUDAR A COR DESTE BOTÃO QUANDO NÃO SE PODE CLICAR NELE
+                btnConfirm.isClickable = false
+                val drawable = getDrawable(R.drawable.btns_ripple_main_activity)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_gray500), BlendMode.SRC_IN)
+                } else {
+                    drawable!!.setColorFilter(resources.getColor(R.color.theme_gray500), PorterDuff.Mode.SRC_IN)
+                }
+                btnConfirm.background = drawable
             }
         }
 
@@ -519,17 +532,33 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 et.error = getString(R.string.unit_already_exists_error)
             else {
                 addUnitsOnSpinner(dialog)
+                dialog.findViewById<Spinner>(R.id.sUnit).setSelection(getUnitPositionOnSpinner(et.text.toString()))
                 et.visibility = View.GONE
                 et.text.clear()
                 dialog.findViewById<Button>(R.id.btnAddUnit).visibility = View.GONE
                 btnConfirm.isClickable = true
+                btnConfirm.background = getDrawable(R.drawable.btns_ripple_main_activity)
             }
         }
 
     }
 
+    /**
+     * getUnitPositionOnSpinner
+     *
+     */
+    private fun getUnitPositionOnSpinner(unit: String): Int {
+        val units = db.getAllUnitsNames()
+        for(i in units.indices)
+            if(units[i] == unit)
+                return i
+        return 0
+    }
+
     private fun addUnitsOnSpinner(dialog: Dialog) {
         val units = db.getAllUnitsNames()
+
+
 
         if(units.isEmpty())
             dialog.findViewById<Spinner>(R.id.sUnit).adapter = ArrayAdapter(

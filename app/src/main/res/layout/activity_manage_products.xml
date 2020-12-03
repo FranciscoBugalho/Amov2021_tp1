@@ -51,7 +51,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/amp_ll_sv_padding"
+            android:paddingStart="@dimen/amp_ll_sv_padding_start"
+            android:paddingTop="@dimen/amp_ll_sv_padding"
+            android:paddingEnd="@dimen/amp_ll_sv_padding"
+            android:paddingBottom="@dimen/amp_ll_sv_padding"
             tools:ignore="ScrollViewSize">
 
 

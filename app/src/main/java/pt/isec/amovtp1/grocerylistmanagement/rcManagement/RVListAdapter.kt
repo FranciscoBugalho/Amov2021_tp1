@@ -2,7 +2,6 @@ package pt.isec.amovtp1.grocerylistmanagement.rcManagement
 
 import android.content.Context
 import android.graphics.Color
-import android.provider.CalendarContract
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -56,8 +55,11 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
             listDate.text = ldStr
             listTime.text = ltStr
             createProductList(productNames)
-            if(isBought)
-                productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow)) //todo put in colors
+            if(isBought) {
+                productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow))
+                listName.setBackgroundColor(context.resources.getColor(R.color.theme_gray400))
+                listName.setTextColor(context.resources.getColor(R.color.theme_gray500))
+            }
         }
 
         private fun createProductList(productNames: List<String>) {
@@ -75,7 +77,7 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
                 textView.tag = "tv$i"
                 textView.text = productNames[i]
                 textView.setTextColor(Color.BLACK)
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                 textView.gravity = Gravity.START
                 textView.maxLines = 2
 

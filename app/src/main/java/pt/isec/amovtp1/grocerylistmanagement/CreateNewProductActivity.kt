@@ -6,6 +6,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +20,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -154,7 +158,34 @@ class CreateNewProductActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnCamara).setOnClickListener {
             dispatchTakePictureIntent()
         }
+        canRemoveImage()
 
+        val addBtn = findViewById<Button>(R.id.btnAddNewCategory)
+        val drawable = getDrawable(R.drawable.add_btn)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_orange), BlendMode.SRC_IN)
+        }
+        else{
+            drawable!!.setColorFilter(resources.getColor(R.color.theme_orange), PorterDuff.Mode.SRC_IN )
+        }
+        addBtn.background = drawable
+        addBtn.setOnClickListener {
+            addNewCategory()
+        }
+
+    }
+
+    /**
+     * completeProductFields
+     */
+    private fun canRemoveImage() {
+        val iv = findViewById<ImageView>(R.id.ivPreview)
+        if(filePath != ASSET_IMAGE_PATH_NO_IMG) {
+            iv.setOnLongClickListener {
+                openDialogDeleteImage(iv)
+                return@setOnLongClickListener true
+            }
+        } else iv.setOnLongClickListener(null)
     }
 
     private fun completeProductFields(productName: String) {
@@ -193,8 +224,8 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
-    fun addNewCategory(view: View) {
-        val dialog = Dialog(view.context)
+    fun addNewCategory() {
+        val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_dialog)
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
@@ -212,11 +243,31 @@ class CreateNewProductActivity : AppCompatActivity() {
                 editText.error = getString(R.string.category_already_exists_error)
             else {
                 addCategoriesOnSpinner()
-                //sProductCategory.setSelect
+                sProductCategory.setSelection(getCategoryPositionOnSpinner(editText.text.toString()))
                 dialog.dismiss()
             }
         }
         btnCancel.setOnClickListener { dialog.dismiss() }
+    }
+
+    /**
+     * openDialogDeleteImage
+     */
+    private fun openDialogDeleteImage(ivPreview: ImageView) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.delete_product_image_dialog)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+
+        val btnNo = dialog.findViewById(R.id.btnNo) as Button
+        val btnYes = dialog.findViewById(R.id.btnYes) as Button
+
+        btnYes.setOnClickListener {
+            filePath = ASSET_IMAGE_PATH_NO_IMG
+            Utils.setImgFromAsset(ivPreview, filePath)
+            dialog.dismiss()
+        }
+        btnNo.setOnClickListener { dialog.dismiss() }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -269,14 +320,17 @@ class CreateNewProductActivity : AppCompatActivity() {
                     filePath = cursor.getString(0)
             }
             Utils.setPic(ivPreview, filePath)
+            canRemoveImage()
             return
         }
         // Camera
         else if (requestCode == Constants.REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             Utils.setPic(ivPreview, filePath)
+            canRemoveImage()
             return
         }
         super.onActivityResult(requestCode, resultCode, info)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,10 +4,15 @@
     <!--  Theme Colors  -->
 
     <color name="theme_blue">#00bcd4</color>
-    <color name="theme_light_tblue">#8bcdcd</color>
+    <color name="theme_light_blue">#4DBEDC</color>
     <color name="theme_orange">#ff7e55</color>
     <color name="theme_red">#dd2c00</color>
     <color name="theme_yelow">#fcf876</color>
+
+    <!-- Black and White -->
+    <color name="theme_gray400">#BBBBBB</color>
+    <color name="theme_gray500">#6C6C6C</color>
+    <color name="dark_grey">#A9A9A9</color>
 
 
     <!-- Background Colors -->
@@ -17,8 +22,7 @@
 
     <!-- Activity Main Layout Resources -->
     <color name="ac_buttons_border_color">#E0BCDD</color>
-    <color name="ac_tv_color">#FFA080</color>
-    <color name="dark_grey">#A9A9A9</color>
+
 
     <!-- ______________________________ -->
 

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/ac_title_text_size"
         android:typeface="serif"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:gravity="center"
         android:text="@string/create_new_list_title"
@@ -123,10 +123,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/new_product"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/ac_btn_text_size"
                     android:background="@drawable/btns_ripple_main_activity"
-                    android:padding="@dimen/cnpl_btn_padding"/>
+                    android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
+                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -139,10 +141,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/finish_list"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/ac_btn_text_size"
                     android:background="@drawable/btns_ripple_main_activity"
-                    android:padding="@dimen/cnpl_btn_padding"/>
+                    android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
+                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
+                    />
             </LinearLayout>
 
         </LinearLayout>

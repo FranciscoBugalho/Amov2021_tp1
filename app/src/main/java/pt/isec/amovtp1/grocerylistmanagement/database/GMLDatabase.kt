@@ -651,12 +651,18 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         val cursor = db.rawQuery(query, null)
         cursor.moveToFirst()
 
-        while (!cursor.isAfterLast) {
-            lists.add(ListInformation(cursor.getString(cursor.getColumnIndex(LIST_NAME)),
-                    convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE))),
-                    cursor.getInt(cursor.getColumnIndex(LIST_IS_BOUGHT)) != 0)
-            )
 
+
+        while (!cursor.isAfterLast) {
+
+            val name = cursor.getString(cursor.getColumnIndex(LIST_NAME)) // 03/12/20_18:50
+            val date = cursor.getString(cursor.getColumnIndex(LIST_DATE)) // 03/12/2020 18:51:00
+            val isBought = cursor.getInt(cursor.getColumnIndex(LIST_IS_BOUGHT)) != 0
+
+            if(isBought)
+                lists.add(ListInformation(name, convertToDate(date), isBought))
+            else
+                lists.add(ListInformation(name, convertToDate(date), isBought))
             cursor.moveToNext()
         }
         cursor.close()
@@ -935,7 +941,8 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
             return "N/A"
         }
 
-        val cursorU = db.rawQuery(SELECT_UNIT_NAME_BY_ID, arrayOf(cursorQU.getLong(cursorQU.getColumnIndex(LIST_PRODUCT_QUANTITY)).toString()))
+        val cursorU = db.rawQuery(SELECT_UNIT_NAME_BY_ID, arrayOf(cursorQU.getLong(cursorQU.getColumnIndex(
+            UNIT_ID)).toString()))
         cursorQU.close()
         cursorU.moveToFirst()
         val unit = cursorU.getString(cursorU.getColumnIndex(UNIT_NAME))

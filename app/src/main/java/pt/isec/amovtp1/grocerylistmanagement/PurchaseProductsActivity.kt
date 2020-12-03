@@ -75,20 +75,22 @@ class PurchaseProductsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when {
                     position == 0 -> {
-                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap()
+                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap(String.CASE_INSENSITIVE_ORDER)
                         setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
-                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap()
+                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap(String.CASE_INSENSITIVE_ORDER)
                         setupScrollViews(this@PurchaseProductsActivity.boughtProducts, false)
                     }
                     position == 1 -> {
-                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap(compareByDescending { it })
+                        allProducts = this@PurchaseProductsActivity.allProducts.toSortedMap(compareByDescending(String.CASE_INSENSITIVE_ORDER, { it }))
                         setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
-                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap(compareByDescending { it })
+                        boughtProducts = this@PurchaseProductsActivity.boughtProducts.toSortedMap(compareByDescending(String.CASE_INSENSITIVE_ORDER, { it }))
                         setupScrollViews(this@PurchaseProductsActivity.boughtProducts, false)
                     }
                     position > 2 -> {
-                        setupScrollViews(this@PurchaseProductsActivity.allProducts.filterValues { it[0] == orderList[position] } as MutableMap<String, ArrayList<String>>, true)
-                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts.filterValues { it[0] == orderList[position] } as MutableMap<String, ArrayList<String>>, false)
+                        setupScrollViews(this@PurchaseProductsActivity.allProducts.filterValues {
+                            it[0].equals(orderList[position], ignoreCase = true) } as MutableMap<String, ArrayList<String>>, true)
+                        setupScrollViews(this@PurchaseProductsActivity.boughtProducts.filterValues {
+                            it[0].equals(orderList[position], ignoreCase = true) } as MutableMap<String, ArrayList<String>>, false)
                     }
                     else -> {
                         setupScrollViews(this@PurchaseProductsActivity.allProducts, true)
@@ -283,8 +285,8 @@ class PurchaseProductsActivity : AppCompatActivity() {
             else {
                 dialog.dismiss()
                 if(sOrderCategories.selectedItemId > 2) {
-                    setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
-                    setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+                    setupScrollViews(allProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, true)
+                    setupScrollViews(boughtProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, false)
                 } else {
                     setupScrollViews(boughtProducts, false)
                     setupScrollViews(allProducts, true)
@@ -412,7 +414,15 @@ class PurchaseProductsActivity : AppCompatActivity() {
                 // Create the Add Button
                 button.layoutParams = param
                 button.tag = "btnBuy$key"
-                button.background = getDrawable(R.drawable.add_btn)
+
+                val drawable = getDrawable(R.drawable.add_btn)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_yelow), BlendMode.SRC_IN)
+                } else {
+                    drawable!!.setColorFilter(resources.getColor(R.color.theme_yelow), PorterDuff.Mode.SRC_IN)
+                }
+                button.background = drawable
+
                 // Edit Product
                 button.setOnClickListener {
                     val etQnt = linearLayout.getChildAt(1) as EditText
@@ -475,27 +485,6 @@ class PurchaseProductsActivity : AppCompatActivity() {
                     true
                 }
                 //-----------------------
-
-                /*
-                param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-                param.weight = 0.20f
-
-                // Create the Remove Button
-                button.layoutParams = param
-                button.tag = "btnRemove$key"
-                val drawable = getDrawable(R.drawable.remove_btn)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    drawable!!.colorFilter = BlendModeColorFilter(Color.RED, BlendMode.SRC_IN)
-                } else {
-                    drawable!!.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN)
-                }
-                button.background = drawable
-
-                // Edit Product
-                button.setOnClickListener {
-                    removeProduct(key, productInfo)
-                }
-                */
                 linearLayout.addView(tvQuantity)
                 linearLayout.addView(tvPrice)
             }
@@ -507,31 +496,33 @@ class PurchaseProductsActivity : AppCompatActivity() {
     }
 
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
+        var price = 0.0
         if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
             etPrice.error = getString(R.string.pp_et_price_error)
         } else if (etPrice.text.isEmpty() && productInfo!!.size == 3) {
             productInfo.removeAt(1)
             productInfo.add(1, quantity)
-            val price = productInfo[2].split(" ")[0]
+            val priceAux = productInfo[2].split(" ")[0]
             productInfo.removeAt(2)
-            productInfo.add(price)
+            price = priceAux.toDouble()
+            productInfo.add(priceAux)
             boughtProducts[productName] = productInfo
             allProducts.remove(productName)
         } else if(etPrice.text.isNotEmpty()) {
             productInfo!!.removeAt(1)
             productInfo.add(1, quantity)
             productInfo.add(etPrice.text.toString())
+            price = etPrice.text.toString().toDouble()
             boughtProducts[productName] = productInfo
             allProducts.remove(productName)
         }
 
-        val q = quantity.split(" ")
         val tvTotal = findViewById<TextView>(R.id.tvTotal)
-        tvTotal.text = (tvTotal.text.toString().toDouble() + q[0].toDouble()).toString()
+        tvTotal.text = (tvTotal.text.toString().toDouble() + price).toString()
 
         if(sOrderCategories.selectedItemId > 2) {
-            setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
-            setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+            setupScrollViews(allProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, true)
+            setupScrollViews(boughtProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, false)
         } else {
             setupScrollViews(boughtProducts, false)
             setupScrollViews(allProducts, true)
@@ -542,7 +533,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
     }
 
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
-        val qnt = productInfo[1].split(" ")
+        val price = productInfo[2]
         if(productInfo.size == 4) {
             // Reset the quantity value
             val quantity = db.getProductQuantityAndUnit(listName, productName)
@@ -560,7 +551,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
 
         val tvTotal = findViewById<TextView>(R.id.tvTotal)
-        tvTotal.text = (tvTotal.text.toString().toDouble() - qnt[0].toDouble()).toString()
+        tvTotal.text = (tvTotal.text.toString().toDouble() - price.toDouble()).toString()
         if(tvTotal.text.toString() < "0")
             tvTotal.text = "0.0"
 
@@ -568,8 +559,8 @@ class PurchaseProductsActivity : AppCompatActivity() {
         boughtProducts.remove(productName)
 
         if(sOrderCategories.selectedItemId > 2) {
-            setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
-            setupScrollViews(boughtProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, false)
+            setupScrollViews(allProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, true)
+            setupScrollViews(boughtProducts.filterValues { it[0].equals(sOrderCategories.selectedItem.toString(), ignoreCase = true) } as MutableMap<String, ArrayList<String>>, false)
         } else {
             setupScrollViews(boughtProducts, false)
             setupScrollViews(allProducts, true)

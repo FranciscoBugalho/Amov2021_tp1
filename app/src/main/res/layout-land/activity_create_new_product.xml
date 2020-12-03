@@ -53,7 +53,7 @@
                     android:id="@+id/sProductCategory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.9"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:textSize="@dimen/cnpl_et_name_text_size"
@@ -64,23 +64,24 @@
                     android:id="@+id/btnAddNewCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.15"
                     android:layout_gravity="center_vertical"
                     android:padding="@dimen/cnpl_spinner_padding"
                     android:background="@android:color/transparent"/>
+                <EditText
+                    android:id="@+id/etProductBrand"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.9"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/cnpl_et_layout_margin"
+                    android:ems="10"
+                    android:hint="@string/insert_product_brand_placeholder"
+                    android:inputType="text"
+                    android:textSize="@dimen/cnpl_et_name_text_size"
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/etProductBrand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/cnpl_et_layout_margin"
-                android:ems="10"
-                android:hint="@string/insert_product_brand_placeholder"
-                android:inputType="text"
-                android:textSize="@dimen/cnpl_et_name_text_size"
-                android:importantForAutofill="no" />
 
             <LinearLayout
                 android:layout_width="match_parent"
