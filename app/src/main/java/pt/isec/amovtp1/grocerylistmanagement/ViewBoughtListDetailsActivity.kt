@@ -22,6 +22,10 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * onCreate
+     * 1. Sets the view to "activity_view_bought_list_details"
+     * 2. Connects the context to the Database
+     * 3. Sets the name of the list to show
+     * 4. Sets an action bar on the top of the screen
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,10 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * getAllProductsInformation
+     * 1. Gets the products on the respective list
+     * 2. For each product in the list gets it's category, quantity, unit last price and date and adds them to an arrayList of strings
+     * 3. Adds the array list to a mutableMapOf<String, ArrayList<String>>, where the key is the product's name and the value is the product's data
+     * 4. Returns the MutableMap
      */
     fun getAllProductsInformation(): MutableMap<String, ArrayList<String>> {
         val products = db.productsInThisList(listName)
@@ -70,6 +78,13 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * displayAllProductInfo
+     * 1. Gets a "LinearLayout"o f purchased products (id: llAllBoughtProducts)
+     * 2. Sets the "tvTitleBoughtList" text to the product list's name (kotlin extensions allows the access to this Text View)
+     * 3. Sets the "tvBoughtDate" text to the date of creation of the list (gets this date from de database)
+     * 4. For each bought product creates a "linearLayout", sets it's params, creates 4 Text Views ("tvProductName" & "tvCategory" & "tvQuantity" & "tvPrice"), sets it's params
+     * and adds them to the "linearLayout"
+     * 5. Adds the "linearLayout" to the "llAllBoughtProducts" LinearLayout
+     * 6. Creates another LinearLayout, "llPrice" and a Text View, "tvTotalPrice" (word "price" and the total cost of the products), and adds them to the "llAllBoughtProducts" LinearLayout
      */
     fun displayAllProductInfo() {
         val llPurchasedProducts = findViewById<LinearLayout>(R.id.llAllBoughtProducts)
@@ -184,6 +199,8 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * onOptionsItemSelected
+     * 1. Verifies if the button clicked was the 'back arrow' (id : home) on the supportActionBar
+     * 2. If true, redirects to the "ViewPurchaseHistoryActivity"
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
@@ -200,6 +217,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * onResume
+     * 1. Calls "displayAllProductInfo" method
      */
     override fun onResume() {
         super.onResume()
@@ -209,6 +227,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * onSaveInstanceState
+     * 1. Saves "listName" & "totalPrice"
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -220,6 +239,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     /**
      * onRestoreInstanceState
+     * 1. Restores "listName" & "totalPrice"
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)

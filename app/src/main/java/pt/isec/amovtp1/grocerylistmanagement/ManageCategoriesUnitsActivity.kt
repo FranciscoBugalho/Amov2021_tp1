@@ -269,6 +269,8 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "ManageProductsActivity"
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
@@ -286,6 +288,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * onSaveInstanceState
+     * 1. Saves "isCategories"
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -295,6 +298,8 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * onRestoreInstanceState
+     * 1. Restores "isCategories"
+     * 2. Calls the "addInformationToScrollView" method passing the return of the "getInformation" mathod
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)

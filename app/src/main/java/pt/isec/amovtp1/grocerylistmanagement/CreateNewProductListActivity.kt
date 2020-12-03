@@ -533,6 +533,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 et.error = getString(R.string.unit_already_exists_error)
             else {
                 addUnitsOnSpinner(dialog)
+                dialog.findViewById<Spinner>(R.id.sUnit).setSelection(getUnitPositionOnSpinner(et.text.toString()))
                 et.visibility = View.GONE
                 et.text.clear()
                 dialog.findViewById<Button>(R.id.btnAddUnit).visibility = View.GONE
@@ -540,6 +541,17 @@ class CreateNewProductListActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    /**
+     * getUnitPositionOnSpinner
+     */
+    private fun getUnitPositionOnSpinner(unit: String): Int {
+        val units = db.getAllUnitsNames()
+        for(i in units.indices)
+            if(units[i] == unit)
+                return i
+        return 0
     }
 
     /**
@@ -602,6 +614,8 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     /**
      * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "ManageProductListsActivity"
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
@@ -618,6 +632,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     /**
      * onSaveInstanceState
+     * 1. Saves "etListName" text, "selectedProducts" & "listId" if not null
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -630,6 +645,8 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     /**
      * onRestoreInstanceState
+     * 1. Restores "listName", "selectedProducts", "listId" & "etListName" text
+     * 2. Calls the "addProductsToScrollView" method
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)

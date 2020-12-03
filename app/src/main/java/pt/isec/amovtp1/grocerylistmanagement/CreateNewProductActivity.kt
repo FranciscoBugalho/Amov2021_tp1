@@ -346,6 +346,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "CreateNewProductListActivity",
+     * passing as arguments the list's name, the title (edit or create) and the selected product list. Also pases a flag to verify if the operation was 'create' or 'edit'
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
@@ -373,6 +376,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * onSaveInstanceState
+     * 1. Saves "filePath", "productId", "isManageProducts", "etProductName" text, "sProductCategory" text, "etProductBrand" text & "etProductBrand" text
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -390,6 +394,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * onRestoreInstanceState
+     * 1. Restores "filePath", "productId", "isManageProducts", "etProductName" text, "sProductCategory" text, "etProductBrand" text & "etProductBrand" text
+     * 2. If the product image's file path is the 'no img file path', calls teh "setImgFromAsset" method from the "Utils" file
+     * 3. If not, calls the "setPic" method from the "Utils" file
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
