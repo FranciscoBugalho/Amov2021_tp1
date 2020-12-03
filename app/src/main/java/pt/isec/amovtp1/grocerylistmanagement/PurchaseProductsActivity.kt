@@ -9,6 +9,7 @@ import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MenuItem
@@ -525,27 +526,29 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * purchaseProduct
      */
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
+        var price = 0.0
         if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
             etPrice.error = getString(R.string.pp_et_price_error)
         } else if (etPrice.text.isEmpty() && productInfo!!.size == 3) {
             productInfo.removeAt(1)
             productInfo.add(1, quantity)
-            val price = productInfo[2].split(" ")[0]
+            val priceAux = productInfo[2].split(" ")[0]
             productInfo.removeAt(2)
-            productInfo.add(price)
+            price = priceAux.toDouble()
+            productInfo.add(priceAux)
             boughtProducts[productName] = productInfo
             allProducts.remove(productName)
         } else if(etPrice.text.isNotEmpty()) {
             productInfo!!.removeAt(1)
             productInfo.add(1, quantity)
             productInfo.add(etPrice.text.toString())
+            price = etPrice.text.toString().toDouble()
             boughtProducts[productName] = productInfo
             allProducts.remove(productName)
         }
 
-        val q = quantity.split(" ")
         val tvTotal = findViewById<TextView>(R.id.tvTotal)
-        tvTotal.text = (tvTotal.text.toString().toDouble() + q[0].toDouble()).toString()
+        tvTotal.text = (tvTotal.text.toString().toDouble() + price).toString()
 
         if(sOrderCategories.selectedItemId > 2) {
             setupScrollViews(allProducts.filterValues { it[0] == sOrderCategories.selectedItem } as MutableMap<String, ArrayList<String>>, true)
@@ -563,7 +566,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * removeProduct
      */
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
-        val qnt = productInfo[1].split(" ")
+        val price = productInfo[2]
         if(productInfo.size == 4) {
             // Reset the quantity value
             val quantity = db.getProductQuantityAndUnit(listName, productName)
@@ -581,7 +584,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
 
         val tvTotal = findViewById<TextView>(R.id.tvTotal)
-        tvTotal.text = (tvTotal.text.toString().toDouble() - qnt[0].toDouble()).toString()
+        tvTotal.text = (tvTotal.text.toString().toDouble() - price.toDouble()).toString()
         if(tvTotal.text.toString() < "0")
             tvTotal.text = "0.0"
 

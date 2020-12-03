@@ -935,7 +935,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
             return "N/A"
         }
 
-        val cursorU = db.rawQuery(SELECT_UNIT_NAME_BY_ID, arrayOf(cursorQU.getLong(cursorQU.getColumnIndex(LIST_PRODUCT_QUANTITY)).toString()))
+        val cursorU = db.rawQuery(SELECT_UNIT_NAME_BY_ID, arrayOf(cursorQU.getLong(cursorQU.getColumnIndex(UNIT_ID)).toString()))
         cursorQU.close()
         cursorU.moveToFirst()
         val unit = cursorU.getString(cursorU.getColumnIndex(UNIT_NAME))

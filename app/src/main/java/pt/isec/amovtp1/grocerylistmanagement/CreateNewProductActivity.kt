@@ -6,7 +6,12 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -14,9 +19,11 @@ import android.os.StrictMode
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -158,6 +165,18 @@ class CreateNewProductActivity : AppCompatActivity() {
             dispatchTakePictureIntent()
         }
 
+
+        canRemoveImage()
+    }
+
+    private fun canRemoveImage() {
+        val iv = findViewById<ImageView>(R.id.ivPreview)
+        if(filePath != ASSET_IMAGE_PATH_NO_IMG) {
+            iv.setOnLongClickListener {
+                openDialogDeleteImage(iv)
+                return@setOnLongClickListener true
+            }
+        } else iv.setOnLongClickListener(null)
     }
 
     /**
@@ -235,6 +254,26 @@ class CreateNewProductActivity : AppCompatActivity() {
     }
 
     /**
+     * openDialogDeleteImage
+     */
+    private fun openDialogDeleteImage(ivPreview: ImageView) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.delete_product_image_dialog)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+
+        val btnNo = dialog.findViewById(R.id.btnNo) as Button
+        val btnYes = dialog.findViewById(R.id.btnYes) as Button
+
+        btnYes.setOnClickListener {
+            filePath = ASSET_IMAGE_PATH_NO_IMG
+            Utils.setImgFromAsset(ivPreview, filePath)
+            dialog.dismiss()
+        }
+        btnNo.setOnClickListener { dialog.dismiss() }
+    }
+
+    /**
      * createImageFile
      */
     @SuppressLint("SimpleDateFormat")
@@ -293,11 +332,13 @@ class CreateNewProductActivity : AppCompatActivity() {
                     filePath = cursor.getString(0)
             }
             Utils.setPic(ivPreview, filePath)
+            canRemoveImage()
             return
         }
         // Camera
         else if (requestCode == Constants.REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             Utils.setPic(ivPreview, filePath)
+            canRemoveImage()
             return
         }
         super.onActivityResult(requestCode, resultCode, info)

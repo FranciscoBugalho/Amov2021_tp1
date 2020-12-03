@@ -92,4 +92,7 @@
     <string name="you_dont_have_any_purchase_history_text">Não tem nenhum histórico de compras</string>
     <string name="list_details_title">Detalhes da lista</string>
     <string name="avbld_tv_bought_date_text">Data de Compra:</string>
+    <string name="are_you_sure_that_you_want_to_delete_the_product_image_title">Tem a certeza que pretende remover a imagem do produto?</string>
+    <string name="dpi_dialog_btn_text_no">Não</string>
+    <string name="dpi_dialog_btn_text_yes">Sim</string>
 </resources>
