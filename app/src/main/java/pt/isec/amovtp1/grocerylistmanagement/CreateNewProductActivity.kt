@@ -51,6 +51,14 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * onCreate
+     * 1. Sets the acitvity's Content View as "activity_create_new_product"
+     * 2. Connects to the database
+     * 3. Sets a "supportActionBar" and sets it's properties according to the purpose of the activity at the moment (Create New Product List || Edit Product List || Create a new List from an existing one)
+     * 4. Sets the products image if it has one
+     * 5. Calls the "addCategoriesOnSpinner" method
+     * 6. If its a "Poduct edition" operation, gets the "productId" from the database (using the product's name for the query)
+     * 7. Asks for the device's Camera access permissions
+     * 8. Gets "btnAddNewList", "btnGaleria" and "btnAddNewCategory" buttons, set their properties and "onClickListeners"
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,6 +188,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * canRemoveImage
+     * 1. On a "LongClick" on an Image, calls the "openDialogDeleteImage" method to allow the user to delete it
      */
     private fun canRemoveImage() {
         val iv = findViewById<ImageView>(R.id.ivPreview)
@@ -193,6 +202,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * completeProductFields
+     * 1. Gets the data of a product form the database
+     * 2. Sets the "etProductName" text to the product's name
+     * 3. Sets other fields such as Brand, Image, which are not mandatory
      */
     private fun completeProductFields(productName: String) {
         val productInfo = db.getProductInfoByName(productName)
@@ -214,6 +226,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * getCategoryPositionOnSpinner
+     * 1. Gets a categorie's position on the spinner (dropdown)
      */
     private fun getCategoryPositionOnSpinner(productCategory: String): Int {
         val categories = db.getAllCategoryNames()
@@ -225,6 +238,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * addCategoriesOnSpinner
+     * 1. Adds categories to the spinner after getting them from the database (if there are no categories, adds an error message)
      */
     private fun addCategoriesOnSpinner() {
         val categories = db.getAllCategoryNames()
@@ -238,6 +252,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * addNewCategory
+     * 1. Creates a new "dialog", sets it's content view as the "set_quantity_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "etDialog" EditText as "editText" from the "dialog" and sets it's text
+     * 3. Gets the "btnCancel" and "btnSave" buttons from the "dialog" and sets it's "onClickListener"
      */
     fun addNewCategory() {
         val dialog = Dialog(this)
@@ -267,6 +284,8 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * openDialogDeleteImage
+     * 1. Creates a new "dialog", sets it's content view as the "set_quantity_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "btnNo" and "btnYes" buttons from the "dialog" and sets it's "onClickListener"
      */
     private fun openDialogDeleteImage(ivPreview: ImageView) {
         val dialog = Dialog(this)
@@ -287,6 +306,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * createImageFile
+     * 1. Saves a picture just taken from the device's camera
      */
     @SuppressLint("SimpleDateFormat")
     private fun createImageFile(): File {
@@ -305,6 +325,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * dispatchTakePictureIntent
+     * 1. Code that allows the use of the device's Camera and takes a picture
      */
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -333,6 +354,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     /**
      * onActivityResult
+     * 1. Gets an image's path from the device's Gallery or the picture just take on the device's Camera and passes it as the "Utils.setPic" method is called
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, info: Intent?) {
         // Gallery
@@ -354,7 +376,6 @@ class CreateNewProductActivity : AppCompatActivity() {
             return
         }
         super.onActivityResult(requestCode, resultCode, info)
-
     }
 
     /**

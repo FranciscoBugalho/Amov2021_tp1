@@ -33,6 +33,14 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * onCreate
+     * 1. Sets the content view to the "activity_purchase_products" LinearLayout
+     * 2. Connects to the database
+     * 3. Sets a "supportActionBar"
+     * 4. Sets the "tvTitleListPurchase" TextView's text as the "listName" passed to this Activity through an Intent
+     * 5. If the "savedInstanceState" is null (this activity is created), call the method "setupScrollViews"
+     * 6. Sets a "onClickListener" for the "btnSettings" button
+     * 7. Gets the spinner (dropdown) "sOrderCategories", defines it's options and "onItemSelectedListener"
+     * 8. Sets the "btnFinishListPurchase" onClickListener
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +116,13 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * finishPurchase
+     * 1. Creates a new "dialog", sets it's content view as the "insert_new_unit_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "llPurchasedProducts" LinearLayout and the "tvPurchaseListName" TextView from the dialog
+     * 3. For each bought product creates a "linearLayout" and 3 TextView: tvQuantity, tvQuantity and tvPrice, sets their properties and adds the TextViews to the "linearLayout"
+     * 4. Adds the "linearLayout" to the "llPurchasedProducts" LinearLayout
+     * 5. Creates a LinearLayout, "llPrice", and a TextView, "tvTotalPrice", sets their properties and adds "tvTotalPrice" to "llPrice" and "llPrice" to "llPurchasedProducts"
+     * 6. Sets a 'onClickListener' for the "btnFinishPurchase" that operates along the list and it's products and redirects to the "MainActivity" dismissing the "dialog"
+     * 7. Sets a 'onClickListener' for the "btnCancel" that dismisses the "dialog"
      */
     private fun finishPurchase(totalPrice: String) {
         // Create the Dialog
@@ -256,6 +271,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * getProductQuantity
+     * 1. Returns a "hashMap" for all the products and their quantities
      */
     private fun getProductQuantity(boughtProducts: MutableMap<String, ArrayList<String>>): HashMap<String, String?> {
         val productAndQuantities = hashMapOf<String, String?>()
@@ -268,6 +284,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * insertNewUnit
+     * 1. Creates a new "dialog", sets it's content view as the "insert_new_unit_dialog" layout, sets it's properties and shows it
+     * 2. Gets the buttons "btnCancel", "btnSave" and the edit text "etDialogNewUnit"
+     * 3. Sets a 'onClickListener' for the "btnSave" that has multiple behaviours depending on the "etDialogNewUnit" data.
+     * 4. When the "dialog" is dismissed by clicking "btnSave", updates the scrollViews calling "setupScrollViews"
+     * 5. Sets a 'onClickListener' for the "btnCancel" that dismisses the "dialog"
      */
     private fun insertNewUnit() {
         // Create the Dialog
@@ -303,6 +324,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * setupScrollViews
+     * 1. Gets either the "llAllProducts" (all products) or "llBoughtProducts" (bought products) LinearLayouts as "llScrollView" and removes all it's views
+     * 2. For each  product to add to the "llScrollView" creates a "linearLayout", a "TextView" (tvProductName) and a button (add to list button), and adds these components to the "linearLayout"
+     * 3. Adds more data and components to the "llScrollView", but these components ant their data differ if the "llScrollView" is correspondent to a view for all products or only for bought products
      */
     private fun setupScrollViews(productsToView: MutableMap<String, ArrayList<String>>, isAllProductView: Boolean) {
         val llScrollView: LinearLayout = if(isAllProductView)
@@ -504,6 +528,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * purchaseProduct
+     * 1. If the the price on the 'etPrice' edit text is empty and the 'productInfo' has no price : error
+     * 2. If the the price on the 'etPrice' edit text is empty but the 'productInfo' has a price : sets the price as the product's price on 'productInfo'
+     * 3. If the the price on the 'etPrice' edit text isn't empty : sets the price as the product's price on 'etPrice'
+     * 4. Gets the "tvTotal" TextView and sets the new total price
+     * 5. Updates the scrollViews calling "setupScrollViews"
      */
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
         var price = 0.0
@@ -544,6 +573,10 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     /**
      * removeProduct
+     * 1. If 'productInfo' of a product equals 4 (has more than 1 price associated) or, equals 3 and it's 'LastProductPrice' is null, sets the quantity and removes the last price
+     * 2. Gets the "tvTotal" TextView and sets the new total price
+     * 3. Updates the product on the "allProducts" global variable and removes the product from the "boughtProducts" global variable
+     * 4. Updates the scrollViews calling "setupScrollViews"
      */
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
         val price = productInfo[2]

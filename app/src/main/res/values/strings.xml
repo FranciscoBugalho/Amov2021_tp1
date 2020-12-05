@@ -76,7 +76,7 @@
     <string name="no_prices_set_for_this_product">No prices set for this product.</string>
     <string name="pp_et_price_placeholder">Price</string>
     <string name="pp_et_quantity_error">You have to insert a quantity!</string>
-    <string name="pp_et_price_error">Have to insert a price!</string>
+    <string name="pp_et_price_error">Please insert a price!</string>
     <string name="total_start_number" translatable="false">0.0</string>
     <string name="pp_tv_total_text">Total:</string>
     <string name="inu_dialog_tv_title">Add New Unit</string>

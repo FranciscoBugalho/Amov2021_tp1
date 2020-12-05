@@ -25,6 +25,12 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * onCreate
+     * 1. Sets the acitvity's Content View as "activity_manage_categories_units"
+     * 2. Connects to the database
+     * 3. Sets a "supportActionBar" with a "home" button
+     * 4. Calls the "setTitle" method
+     * 5. Calls "addInformationToScrollView"
+     * 6. Gets the "btnAddNewCategoryUnit" button, sets it's properties and "onClickListener"
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +90,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * getInformation
+     * 1. Returns either the data of the categories or the units
      */
     private fun getInformation(): List<String> {
         if(isCategories) {
@@ -106,6 +113,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * addInformationToScrollView
+     * 1. Gets the "llShowAllCategoriesUnits" LinearLayout as "llInformation" and removes all it's views
+     * 2. For each "information" (either units or categories) cretes a "linearLayout", a TextView (tvName) and a "button" and adds "button" and "tvName" to the "linearLayout"
+     * 3. Adds "linearLayout" to "llInformation"
      */
     private fun addInformationToScrollView(information: List<String>) {
         val llInformation = findViewById<LinearLayout>(R.id.llShowAllCategoriesUnits)
@@ -163,6 +173,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * showDialogUnit
+     * 1. Creates a new "dialog", sets it's content view as the "add_category_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "etDialog" EditText from "dialog" and sets it's text
+     * 3. Gets the "btnCancel" and the "btnSave" buttons from the "dialog" and sets it's listeners
      */
     private fun showDialogUnit(unitName: String?) {
         val dialog = Dialog(this)
@@ -207,6 +220,9 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * showDialogCategory
+     * 1. Creates a new "dialog", sets it's content view as the "add_category_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "etDialog" EditText from "dialog" and sets it's text
+     * 3. Gets the "btnCancel" and the "btnSave" buttons from the "dialog" and sets it's listeners
      */
     private fun showDialogCategory(categoryName: String?) {
         val dialog = Dialog(this)
@@ -251,6 +267,10 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * presentError
+     * 1. Creates a "linearLayout" and sets it's properties
+     * 2. Creates a "textView" and sets it's properties
+     * 3. Adds the "textView" to "linearLayout"
+     * 4. Adds the "linearLayout" to "llShowAllCategoriesUnits"
      */
     private fun presentError(error: String) {
         val linearLayout = LinearLayout(this)
@@ -275,6 +295,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
 
     /**
      * setTitle
+     * 1. Sets the "supportActionBar" title
      */
     private fun setTitle() {
         // Define title

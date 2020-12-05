@@ -39,7 +39,12 @@ class CreateNewListActivity : AppCompatActivity() {
     private lateinit var db : GMLDatabase
 
     /**
-     *  onCreate
+     * onCreate
+     * 1. Sets the acitvity's Content View as "activity_create_new_product_list"
+     * 2. Connects to the database
+     * 3. Sets a "supportActionBar" and sets it's properties according to the purpose of the activity at the moment (Create New Product List || Edit Product List || Create a new List from an existing one)
+     * 4. Calls "addProductsToScrollView"
+     * 5. Gets "btnNewProduct", "btnFinishList" and "btnSearchCategory" buttons and sets their "onClickListener"
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,6 +173,12 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * addProductsToScrollView
+     * 1. Gets the "llProductCheckBoxes" as "llProducts" and removes all it's views
+     * 2. If there are no products in the database, presents an error message on "llProducts"
+     * 3. If not, gets the products to show from the database
+     * 4. For each product creates a "linearLayout"
+     * 5. For each product creates a "checkBox", a "textView" and 2 buttons ("button" and "buttonQuantity") and adds all the components to "linearLayout"
+     * 6.Adda "linearLayout" to "llProducts"
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun addProductsToScrollView(toShow: String) {
@@ -348,6 +359,11 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * showProductObservations
+     * 1. Creates a new "dialog", sets it's content view as the "set_quantity_dialog" layout, sets it's properties and shows it
+     * 2. Gets the "llShowObservations" LinearLayout from "dialog" as "linearLayoutObservations"
+     * 3. Gets all the observations of a product from the database as "productObservations"
+     * 4. Sets the data and the content of "linearLayoutObservations" (this content varies according to the "productObservations" content - empty or not),
+     * this includes the creation of a "linearLayout", a "textView" and the addition of the "textView" to the "linearLayout" and the "linearLayout" to the "linearLayoutObservations"
      */
     @SuppressLint("SetTextI18n")
     private fun showProductObservations(productName: String) {
@@ -461,6 +477,11 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * setProductQuantity
+     * 1. Creates a new "dialog", sets it's content view as the "set_quantity_dialog" layout, sets it's properties and shows it
+     * 2. Calls the "addUnitsOnSpinner" method passing "dialog" as argument
+     * 3. Gets the "etProductQuantity" as "editText" from "dialog" and sets it's text
+     * 4. Gets "btnCancel" and "btnConfirm" buttons from the dialog and sets their "onClickListener"
+     * 5. Gets "addNewUnity" TextView and "btnAddUnit" Button from the dialog and sets their properties
      */
     @SuppressLint("CutPasteId")
     fun setProductQuantity(productName: String) {
@@ -557,6 +578,7 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * getUnitPositionOnSpinner
+     * 1. Returns a unit's position on the spinner (dropdown)
      */
     private fun getUnitPositionOnSpinner(unit: String): Int {
         val units = db.getAllUnitsNames()
@@ -568,6 +590,7 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * addUnitsOnSpinner
+     * 1. Creates a dialog (it's content depends on the number of units - 0 or > 0)
      */
     private fun addUnitsOnSpinner(dialog: Dialog) {
         val units = db.getAllUnitsNames()
@@ -590,6 +613,9 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * presentError
+     * 1. Creates a "linearLayout" and sets it's properties (params)
+     * 2. Creates a "textView", sets it's properties and adds it to the "linearLayout"
+     * 3. Adds the "linearLayout" to the "llProducts" LinearLayout
      */
     private fun presentError(llProducts: LinearLayout, error: String) {
         val linearLayout = LinearLayout(this)
@@ -614,10 +640,13 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * completeFields
+     * 1. Gets the selected products of a list from the database
+     * 2. If in edit mode, clears the list Id
+     * 3. Calls the "addProductsToScrollView" method
      */
     private fun completeFields(isEdit: Int) {
         selectedProducts = db.getListInformation(listId)
-        // If is not edit mode clear de listId
+        // If is not edit mode, clear the listId
         if(isEdit == 2)
             listId = null
 

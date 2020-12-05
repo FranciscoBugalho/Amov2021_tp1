@@ -2,7 +2,6 @@
 <resources>
 
     <!--  Theme Colors  -->
-
     <color name="theme_blue">#00AEEF</color>
     <color name="theme_light_blue">#4DBEDC</color>
     <color name="theme_orange">#ff7e55</color>
@@ -10,43 +9,22 @@
     <color name="theme_yelow">#fcf876</color>
 
     <!-- Black and White -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="theme_grey_400">#BBBBBB</color>
     <color name="theme_grey_500">#6C6C6C</color>
     <color name="dark_grey">#A9A9A9</color>
     <color name="Theme_grey_200">#e8e8e8</color>
-
-    <!--
-
-    fff3e2 claro
-    f8d49d escuro
-    https://encycolorpedia.pt/f8d49c
-    -->
-    <!--  Shades  0297d1  008ec2    -COM PRETO 14afde -->
-    <color name="theme_shade_yelow">#e8e8e8</color>
-
-    <!-- Background Colors -->
-    <color name="super_light_orange">#FFDAB9</color>
-
-    <color name="almost_orange">#73D0B1</color>
+    <color name="semi_white">#FBF6F0</color>
 
     <!-- Activity Main Layout Resources -->
     <color name="ac_buttons_border_color">#E0BCDD</color>
 
-
-    <!-- ______________________________ -->
-
     <!-- Activity Manage Product ProductLists Resources -->
-    <color name="semi_white">#FBF6F0</color>
     <color name="light_golden">#FFDA77</color>
-    <color name="dark_yellow">#DABA66</color> <!-- in use to old listsd -->
+    <color name="dark_yellow">#DABA66</color>
+    <color name="dark_blue">#0000FF</color>
     <color name="orange">#FF6F00</color>
     <color name="rounded_btn_yellow">#FFC107</color>
-    <color name="light_grey">#E0E0E0</color>
-    <color name="dark_blue">#0000FF</color>
     <color name="green">#008000</color>
-
-    <!-- ______________________________ -->
-
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 </resources>
