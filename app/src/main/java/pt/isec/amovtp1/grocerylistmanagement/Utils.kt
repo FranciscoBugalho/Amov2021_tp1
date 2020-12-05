@@ -14,6 +14,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Utils {
+
+    /**
+     * setPic
+     */
     fun setPic(view: View, path: String) {
         /*val targetW = view.width
         val targetH = view.height
@@ -34,6 +38,9 @@ object Utils {
         }
     }
 
+    /**
+     * setImgFromAsset
+     */
     fun setImgFromAsset(mImageView: ImageView, strName: String) {
         val assetManager = mImageView.context.assets
         try {
@@ -45,21 +52,33 @@ object Utils {
         }
     }
 
+    /**
+     * convertDateToDatetime
+     */
     @SuppressLint("SimpleDateFormat")
     fun convertDateToDatetime(date: Date) : String {
         return SimpleDateFormat(DATE_FORMAT_TO_DB).format(Date(date.time))
     }
 
+    /**
+     * convertToDate
+     */
     @SuppressLint("SimpleDateFormat")
     fun convertToDate(date: String) : Date {
         return SimpleDateFormat(DATE_FORMAT_TO_DB).parse(date)!!
     }
 
+    /**
+     * convertDateToStrCard
+     */
     @SuppressLint("SimpleDateFormat")
     fun convertDateToStrCard(date: Date) : String {
         return SimpleDateFormat(DATE_FORMAT_TO_CARD).format(Date(date.time))
     }
 
+    /**
+     * convertTimeToStrCard
+     */
     @SuppressLint("SimpleDateFormat")
     fun convertTimeToStrCard(date: Date) : String {
         return SimpleDateFormat(TIME_FORMAT_TO_CARD).format(Date(date.time))

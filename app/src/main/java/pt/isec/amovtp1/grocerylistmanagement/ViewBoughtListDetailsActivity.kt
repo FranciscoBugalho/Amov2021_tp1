@@ -20,6 +20,13 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
     private lateinit var listName: String
     private var totalPrice: Double = 0.0
 
+    /**
+     * onCreate
+     * 1. Sets the view to "activity_view_bought_list_details"
+     * 2. Connects the context to the Database
+     * 3. Sets the name of the list to show
+     * 4. Sets an action bar on the top of the screen
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_bought_list_details)
@@ -38,6 +45,13 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.list_details_title)
     }
 
+    /**
+     * getAllProductsInformation
+     * 1. Gets the products on the respective list
+     * 2. For each product in the list gets it's category, quantity, unit last price and date and adds them to an arrayList of strings
+     * 3. Adds the array list to a mutableMapOf<String, ArrayList<String>>, where the key is the product's name and the value is the product's data
+     * 4. Returns the MutableMap
+     */
     fun getAllProductsInformation(): MutableMap<String, ArrayList<String>> {
         val products = db.productsInThisList(listName)
         val boughtProducts = mutableMapOf<String, ArrayList<String>>()
@@ -62,11 +76,28 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         return boughtProducts
     }
 
+    /**
+     * displayAllProductInfo
+     * 1. Gets a "LinearLayout" of purchased products (id: llAllBoughtProducts)
+     * 2. Sets the "tvTitleBoughtList" text to the product list's name (kotlin extensions allows the access to this Text View)
+     * 3. Sets the "tvBoughtDate" text to the date of creation of the list (gets this date from de database)
+     * 4. For each bought product creates a "linearLayout", sets it's params, creates 4 Text Views ("tvProductName" & "tvCategory" & "tvQuantity" & "tvPrice"), sets it's params
+     * and adds them to the "linearLayout"
+     * 5. Adds the "linearLayout" to the "llAllBoughtProducts" LinearLayout
+     * 6. Creates another LinearLayout, "llPrice" and a Text View, "tvTotalPrice" (word "price" and the total cost of the products), and adds them to the "llAllBoughtProducts" LinearLayout
+     */
     fun displayAllProductInfo() {
         val llPurchasedProducts = findViewById<LinearLayout>(R.id.llAllBoughtProducts)
 
-        tvTitleBoughtList.text = listName
-        findViewById<TextView>(R.id.tvBoughtDate).text = db.getListDate(listName)
+        val listDate = db.getListDate(listName)
+        val auxDate = listDate.split(" ")
+        findViewById<TextView>(R.id.tvBoughtDate).text = auxDate[0] + "   " + auxDate[1]
+
+        val name = if(listName.contains(listDate.substring(0, 8) + "_" + listDate.substring(9, 14)))
+            listName.dropLast(14)
+        else listName
+
+        tvTitleBoughtList.text = name
 
         val boughtProducts = getAllProductsInformation()
 
@@ -92,13 +123,13 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
             tvProductName.setTextColor(Color.BLACK)
             tvProductName.gravity = Gravity.START
             tvProductName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tvProductName.maxLines = 1
+            tvProductName.maxLines = 2
             //-----------------------
 
             val productInfo = boughtProducts[key]
 
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.30f
+            param.weight = 0.40f
 
             // Create the TextView
             val tvCategory = TextView(this)
@@ -114,7 +145,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
             param.weight = 0.40f
 
-            // Create the TextView
+            // Create the TextView Quantity
             val tvQuantity = TextView(this)
             tvQuantity.layoutParams = param
             tvQuantity.tag = "tvQnt$key"
@@ -125,9 +156,9 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
             //-----------------------
 
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.40f
+            param.weight = 0.30f
 
-            // Create the TextView
+            // Create the TextView Price
             val tvPrice = TextView(this)
             tvPrice.layoutParams = param
             tvPrice.tag = "tvPrice$key"
@@ -148,16 +179,16 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         param.gravity = Gravity.END
-        param.setMargins(0, 5, 0, 0)
+        param.setMargins(0, 20 , 0, 0)
 
-        // Create the LinearLayout
+        // Create the LinearLayout Price
         val llPrice = LinearLayout(this)
         llPrice.layoutParams = param
         llPrice.orientation = LinearLayout.HORIZONTAL
         llPrice.tag = "llPrice"
         llPrice.setPadding(5, 5, 5, 5)
 
-        // Create the TextView
+        // Create the TextView Price
         val tvTotalPrice = TextView(this)
         tvTotalPrice.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -166,16 +197,21 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         tvTotalPrice.tag = "tvTotalPrice"
         tvTotalPrice.text = getString(R.string.pp_tv_total_text) + " " + totalPrice + getString(R.string.price_sign)
         tvTotalPrice.setTextColor(Color.BLACK)
-        tvTotalPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+        tvTotalPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
         tvTotalPrice.maxLines = 1
         //-----------------------
         llPrice.addView(tvTotalPrice)
         llPurchasedProducts.addView(llPrice)
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Verifies if the button clicked was the 'back arrow' (id : home) on the supportActionBar
+     * 2. If true, redirects to the "ViewHistoryActivity"
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
-            Intent(this, ViewPurchaseHistoryActivity::class.java)
+            Intent(this, ViewHistoryActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .also {
                     startActivity(it)
@@ -186,12 +222,20 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onResume
+     * 1. Calls "displayAllProductInfo" method
+     */
     override fun onResume() {
         super.onResume()
 
         displayAllProductInfo()
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "listName" & "totalPrice"
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -200,6 +244,10 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "listName" & "totalPrice"
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

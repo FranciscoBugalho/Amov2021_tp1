@@ -31,6 +31,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
     private var boughtProducts = mutableMapOf<String, ArrayList<String>>()
     private lateinit var db : GMLDatabase
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_purchase_products)
@@ -111,6 +114,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * finishPurchase
+     */
     private fun finishPurchase(totalPrice: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -256,6 +262,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * getProductQuantity
+     */
     private fun getProductQuantity(boughtProducts: MutableMap<String, ArrayList<String>>): HashMap<String, String?> {
         val productAndQuantities = hashMapOf<String, String?>()
 
@@ -265,6 +274,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return productAndQuantities
     }
 
+    /**
+     * insertNewUnit
+     */
     private fun insertNewUnit() {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -297,6 +309,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * setupScrollViews
+     */
     private fun setupScrollViews(productsToView: MutableMap<String, ArrayList<String>>, isAllProductView: Boolean) {
         val llScrollView: LinearLayout = if(isAllProductView)
             findViewById(R.id.llAllProducts)
@@ -329,7 +344,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
             tvProductName.setTextColor(Color.BLACK)
             tvProductName.gravity = Gravity.START
             tvProductName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tvProductName.maxLines = 1
+            tvProductName.maxLines = 2
             //-----------------------
             linearLayout.addView(tvProductName)
 
@@ -345,7 +360,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
                 }
 
                 param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-                param.weight = 0.30f
+                param.weight = 0.25f
 
                 // Create the EditText for the product quantity
                 val etQuantity = EditText(this)
@@ -417,9 +432,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
                 val drawable = getDrawable(R.drawable.add_btn)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_yelow), BlendMode.SRC_IN)
+                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_blue), BlendMode.SRC_IN)
                 } else {
-                    drawable!!.setColorFilter(resources.getColor(R.color.theme_yelow), PorterDuff.Mode.SRC_IN)
+                    drawable!!.setColorFilter(resources.getColor(R.color.theme_blue), PorterDuff.Mode.SRC_IN)
                 }
                 button.background = drawable
 
@@ -495,6 +510,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * purchaseProduct
+     */
     private fun purchaseProduct(productName: String, productInfo: ArrayList<String>?, quantity: String, etPrice: EditText) {
         var price = 0.0
         if (etPrice.text.isEmpty() && productInfo!!.size == 2) {
@@ -532,6 +550,9 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
+    /**
+     * removeProduct
+     */
     private fun removeProduct(productName: String, productInfo: ArrayList<String>) {
         val price = productInfo[2]
         if(productInfo.size == 4) {
@@ -570,6 +591,14 @@ class PurchaseProductsActivity : AppCompatActivity() {
         btnFinishListPurchase.isEnabled = tvTotal.text.toString() != getString(R.string.total_start_number) && boughtProducts.isNotEmpty()
     }
 
+    /**
+     * showPriceHistory
+     * 1. Creates a "Dialog" to insert the price history & sets it's params and text
+     * 2. Gets the "llPriceHistory" LinearLayout
+     * 3. Gets the prices of the selected product from the database
+     * 4. If the product has no previous prices, creates a "linearLayout" and a "textView" with an indicative text and add the "textView" to the "linearLayout"
+     * 5. If the product has precious prices does the same process but for each price
+     */
     private fun showPriceHistory(productName: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -641,6 +670,10 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * getUnitPositionOnSpinner
+     * 1. For each product returns it's index
+     */
     private fun getUnitPositionOnSpinner(unitName: String): Int {
         val units = db.getAllUnitsNames()
         for(i in units.indices)
@@ -649,6 +682,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return 0
     }
 
+    /**
+     * getAllProductsInformation
+     * 1. Gets all products of the list from the database
+     * 2. For each product gets it's data into an ArrayList<String> and adds it to the global variable "allProducts" mutableMapOf<String, ArrayList<String>>, being the key the name of the product
+     */
     fun getAllProductsInformation() {
         val products = db.productsInThisList(listName)
 
@@ -671,6 +709,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "ManageShoppingListsActivity"
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             Intent(this, ManageShoppingListsActivity::class.java)
@@ -684,6 +727,10 @@ class PurchaseProductsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "allProducts" & "boughtProducts"
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -692,6 +739,11 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "allProducts" & "boughtProducts"
+     * 2. Calls the "setupScrollViews" for both refered variables
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

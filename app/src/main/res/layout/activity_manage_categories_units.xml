@@ -43,7 +43,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scrollview_background"
+        android:elevation="@dimen/sv_elevation"
         tools:ignore="UselessParent">
 
         <LinearLayout
@@ -51,6 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@drawable/scrollview_invisible_container"
+            android:elevation="@dimen/sv_elevation"
             android:paddingStart="@dimen/amp_ll_sv_padding_start"
             android:paddingTop="@dimen/amp_ll_sv_padding"
             android:paddingEnd="@dimen/amp_ll_sv_padding"

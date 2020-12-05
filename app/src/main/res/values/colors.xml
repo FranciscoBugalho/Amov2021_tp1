@@ -10,10 +10,19 @@
     <color name="theme_yelow">#fcf876</color>
 
     <!-- Black and White -->
-    <color name="theme_gray400">#BBBBBB</color>
-    <color name="theme_gray500">#6C6C6C</color>
+    <color name="theme_grey_400">#BBBBBB</color>
+    <color name="theme_grey_500">#6C6C6C</color>
     <color name="dark_grey">#A9A9A9</color>
+    <color name="Theme_grey_200">#e8e8e8</color>
 
+    <!--
+
+    fff3e2 claro
+    f8d49d escuro
+    https://encycolorpedia.pt/f8d49c
+    -->
+    <!--  Shades  0297d1  008ec2    -COM PRETO 14afde -->
+    <color name="theme_shade_yelow">#e8e8e8</color>
 
     <!-- Background Colors -->
     <color name="super_light_orange">#FFDAB9</color>

@@ -30,7 +30,7 @@
     <dimen name="cnpl_tv_padding_bottom">4dp</dimen>
     <dimen name="cnpl_tv_titulo_padding">4dp</dimen>
     <dimen name="cnpl_btn_padding_vertical">8dp</dimen>
-    <dimen name="cnpl_ll_padding">8dp</dimen>
+    <dimen name="cnpl_ll_padding">16dp</dimen>
     <dimen name="cnpl_et_category_search_padding_start">8dp</dimen>
     <dimen name="cnpl_ll_new_product_padding">8dp</dimen>
     <dimen name="cnpl_spinner_padding">4dp</dimen>
@@ -71,7 +71,7 @@
     <!-- ______________________________ -->
 
     <!-- Purchase Products Activity -->
-    <dimen name="app_sv_margins">4dp</dimen>
+    <dimen name="app_sv_margins">10dp</dimen>
     <dimen name="app_ll_search_margin_top">8dp</dimen>
     <dimen name="app_tv_title_text_size">18sp</dimen>
     <dimen name="app_tv_padding">6dp</dimen>
@@ -82,7 +82,7 @@
     <!-- ______________________________ -->
 
     <!-- Manage Products Activity -->
-    <dimen name="amp_ll_sv_padding">6dp</dimen>
+    <dimen name="amp_ll_sv_padding">12dp</dimen>
 
     <!-- ______________________________ -->
     <dimen name="vbld_tv_title_size">22dp</dimen>
@@ -93,9 +93,23 @@
 
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
-    <dimen name="amp_ll_sv_padding_start">12dp</dimen>
+    <dimen name="amp_ll_sv_padding_start">28dp</dimen>
     <dimen name="amp_ll_sv_padding_start_land">24dp</dimen>
     <dimen name="cnpl_et_category_search_padding_end_land">26dp</dimen>
     <dimen name="pl_rv_ll_content_padding">6dp</dimen>
     <dimen name="cnpl_btn_padding_horizontal">16dp</dimen>
+    <dimen name="sv_background_radius">30dp</dimen>
+    <dimen name="sv_elevation">20dp</dimen>
+    <dimen name="amp_sv_vertical_padding">12dp</dimen>
+    <dimen name="amp_spinner_margin">2dp</dimen>
+    <dimen name="vbld_tv_date_size">14sp</dimen>
+    <dimen name="vbld_tv_date_padding">4dp</dimen>
+    <dimen name="vbld_ll_date_margin">5dp</dimen>
+    <dimen name="cnp_sv_margin_bottom">15dp</dimen>
+    <dimen name="cnp_ll_padding_start">18dp</dimen>
+    <dimen name="pp_ll_totalcost_margin_end">30dp</dimen>
+    <dimen name="et_shape_standard_padding">8dp</dimen>
+    <dimen name="cnpl_et_padding">10dp</dimen>
+    <dimen name="cnpl_et_name_paddingHorizontal">16dp</dimen>
+    <dimen name="cnpl_et_name_paddingVertical">10dp</dimen>
 </resources>

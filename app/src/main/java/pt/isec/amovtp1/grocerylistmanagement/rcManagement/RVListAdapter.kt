@@ -29,13 +29,13 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
             if(isShopping == 0) {
                 // Add the onLongClickListener
                 productListInformation.setOnLongClickListener{
-                    (context as ManageProductListsActivity).createDialogToCopyOrDelete(listName.text.toString())
+                    (context as ManageListsActivity).createDialogToCopyOrDelete(listName.text.toString())
                     return@setOnLongClickListener true
                 }
 
                 if(!isBought)
                     productListInformation.setOnClickListener {
-                        (context as ManageProductListsActivity).onEdit(listName.text.toString())
+                        (context as ManageListsActivity).onEdit(listName.text.toString())
                         return@setOnClickListener
                     }
             } else if(isShopping == 1) {
@@ -45,7 +45,7 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
                 }
             } else {
                 productListInformation.setOnClickListener {
-                    (context as ViewPurchaseHistoryActivity).onSelectingList(listName.text.toString())
+                    (context as ViewHistoryActivity).onSelectingList(listName.text.toString())
                     return@setOnClickListener
                 }
             }
@@ -57,8 +57,8 @@ class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isSho
             createProductList(productNames)
             if(isBought) {
                 productListInformation.setBackgroundColor(context.resources.getColor(R.color.dark_yellow))
-                listName.setBackgroundColor(context.resources.getColor(R.color.theme_gray400))
-                listName.setTextColor(context.resources.getColor(R.color.theme_gray500))
+                listName.setBackgroundColor(context.resources.getColor(R.color.theme_grey_400))
+                listName.setTextColor(context.resources.getColor(R.color.theme_grey_500))
             }
         }
 

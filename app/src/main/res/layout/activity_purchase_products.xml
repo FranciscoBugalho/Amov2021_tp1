@@ -35,7 +35,7 @@
             android:id="@+id/sOrderCategories"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textSize="@dimen/cnpl_et_name_text_size"
@@ -48,7 +48,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:layout_gravity="center_vertical"
-            android:padding="@dimen/cnpl_spinner_padding" />
+            android:padding="@dimen/cnpl_spinner_padding"
+            android:layout_marginEnd="15dp"/>
+
+        <Button
+            android:id="@+id/btnFinishListPurchase"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/purchase"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ac_btn_text_size"
+            android:background="@drawable/btns_ripple_main_activity"
+            android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
+            android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
+            />
 
     </LinearLayout>
 
@@ -56,15 +71,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
+        android:background="@drawable/scrollview_background"
+        android:elevation="@dimen/sv_elevation"
+        android:paddingVertical="@dimen/amp_sv_vertical_padding"
         android:layout_marginTop="@dimen/app_sv_margins"
         android:layout_marginBottom="@dimen/app_sv_margins"
-        android:padding="@dimen/cnpl_ll_padding" >
+        >
 
         <LinearLayout
             android:id="@+id/llBoughtProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/scrollview_invisible_container"
+            android:elevation="@dimen/sv_elevation"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             tools:ignore="UselessLeaf">
 
 
@@ -76,7 +98,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/pp_ll_totalcost_margin_end">
 
         <TextView
             android:id="@+id/tvTotalText"
@@ -116,43 +139,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
+        android:background="@drawable/scrollview_background"
+        android:elevation="@dimen/sv_elevation"
+        android:paddingVertical="@dimen/amp_sv_vertical_padding"
         android:layout_marginTop="@dimen/app_sv_margins"
-        android:layout_marginBottom="@dimen/app_sv_margins"
-        android:padding="@dimen/cnpl_ll_padding" >
+        android:layout_marginBottom="@dimen/app_sv_margins" >
 
         <LinearLayout
             android:id="@+id/llAllProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/scrollview_invisible_container"
+            android:elevation="@dimen/sv_elevation"
+            android:paddingStart="14dp"
+            android:paddingEnd="8dp"
             tools:ignore="UselessLeaf">
 
 
         </LinearLayout>
 
     </ScrollView>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false"
-        android:layout_gravity="end">
-
-        <Button
-            android:id="@+id/btnFinishListPurchase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/purchase"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/ac_btn_text_size"
-            android:background="@drawable/btns_ripple_main_activity"
-            android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
-            android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
-        />
-
-    </LinearLayout>
 
 </LinearLayout>

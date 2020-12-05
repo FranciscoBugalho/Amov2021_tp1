@@ -21,13 +21,13 @@
         android:theme="@style/Theme.GroceryListManagement">
         <activity android:name=".ViewBoughtListDetailsActivity" />
         <activity android:name=".ManageCategoriesUnitsActivity" />
-        <activity android:name=".ViewPurchaseHistoryActivity" />
+        <activity android:name=".ViewHistoryActivity" />
         <activity android:name=".ManageProductsActivity" />
         <activity android:name=".PurchaseProductsActivity" />
         <activity android:name=".CreateNewProductActivity" />
-        <activity android:name=".CreateNewProductListActivity" />
+        <activity android:name=".CreateNewListActivity" />
         <activity android:name=".ManageShoppingListsActivity" />
-        <activity android:name=".ManageProductListsActivity" />
+        <activity android:name=".ManageListsActivity" />
         <activity
             android:exported="true"
             android:screenOrientation="portrait"

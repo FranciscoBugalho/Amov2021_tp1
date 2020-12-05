@@ -1,13 +1,9 @@
 package pt.isec.amovtp1.grocerylistmanagement
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         //Utils.setPic(findViewById<ImageView>(R.id.ivMainLogo),"images/logo/logo nome sup.png")
 
         findViewById<Button>(R.id.btnPurchaseHistory).setOnClickListener {
-            Intent(this, ViewPurchaseHistoryActivity::class.java).also {
+            Intent(this, ViewHistoryActivity::class.java).also {
                 startActivity(it)
             }
         }
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnProductsLists).setOnClickListener {
-            Intent(this, ManageProductListsActivity::class.java).also {
+            Intent(this, ManageListsActivity::class.java).also {
                 startActivity(it)
             }
         }

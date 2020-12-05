@@ -20,10 +20,17 @@ import pt.isec.amovtp1.grocerylistmanagement.rcManagement.ListInfo
 import pt.isec.amovtp1.grocerylistmanagement.rcManagement.RVListAdapter
 import pt.isec.amovtp1.grocerylistmanagement.rcManagement.listInfo
 
-class ViewPurchaseHistoryActivity : AppCompatActivity() {
+class ViewHistoryActivity : AppCompatActivity() {
     private lateinit var db : GMLDatabase
     private var listOrder = hashMapOf<String, String?>()
 
+    /**
+     * onCreate
+     * 1. Sets the view to "activity_view_purchase_history"
+     * 2. Connects the context to the Database
+     * 3. Sets the order of the list of "previously purchased lists" (Alphabetical Ascendant)
+     * 4. Sets an action bar on the top of the screen
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_purchase_history)
@@ -40,6 +47,13 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.purchase_history_btn_txt)
     }
 
+    /**
+     * onSelectingList
+     * 1. Clears the list of "previously purchased lists"
+     * 2. Closes the Database connection
+     * 3. Redirects to "ViewBoughtListDetailsActivity", with "listName" as argument and uses "FLAG_ACTIVITY_NEW_TASK"
+     * to indicate that if the new activity is already crated it will be reused instead fo creating another
+     */
     fun onSelectingList(listName: String) {
         // Clear the information in the list to rebuild later
         listInfo.clear()
@@ -52,6 +66,14 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * fillRecycleView
+     * 1. Gets the list of "previously purchased lists" from the Database
+     * 2. If the list is empty, adds to the "clShoppedLists" layout (which is in the "activity_view_purchase_history") an informative textView
+     * 3. If the list isn't empty, fill a recycle view with every "previously purchased list"
+     * 4. The recycle view re-uses every component that's correspondent to a "previously purchased list"
+     * that is scrolled out of the screen to fill with a new "previously purchased list" that is now on the screen
+     */
     private fun fillRecycleView() {
         val lists = db.getAllBoughtLists(listOrder)
 
@@ -82,16 +104,28 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onCreateOptionsMenu
+     * 1. Creates "order_menu"
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.order_menu, menu)
         return true
     }
 
+    /**
+     * onPrepareOptionsMenu
+     * 1. Removes the option "Bought" from the "order_menu"
+     */
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.removeItem(R.id.isBought)
         return super.onPrepareOptionsMenu(menu)
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar", including the "order_menu" dropdown and the "home" arrow component
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -159,6 +193,10 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onResume
+     * 1. Calls "fillRecycleView" method
+     */
     override fun onResume() {
         super.onResume()
         // Fill the RecycleView if it's empty
@@ -166,6 +204,10 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
             fillRecycleView()
     }
 
+    /**
+     * onPause
+     * 1. Clears "listInfo"
+     */
     override fun onPause() {
         super.onPause()
         // Fill the RecycleView if it's empty
@@ -173,12 +215,21 @@ class ViewPurchaseHistoryActivity : AppCompatActivity() {
             listInfo.clear()
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "listOrder"
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putSerializable(Constants.SaveDataConstants.LIST_ORDER_STR, listOrder)
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "listOrder"
+     * 2. Clears "listInfo"
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

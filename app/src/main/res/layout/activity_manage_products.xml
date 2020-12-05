@@ -28,7 +28,7 @@
             android:gravity="center"
             android:textSize="@dimen/cnpl_et_name_text_size"
             android:padding="@dimen/cnpl_spinner_padding"
-            android:layout_margin="2dp"/>
+            android:layout_margin="@dimen/amp_spinner_margin"/>
 
         <Button
             android:id="@+id/btnAddNewProduct"
@@ -43,7 +43,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scrollview_background"
+        android:elevation="@dimen/sv_elevation"
+        android:paddingVertical="@dimen/amp_sv_vertical_padding"
         tools:ignore="UselessParent">
 
         <LinearLayout
@@ -51,10 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="@drawable/scrollview_invisible_container"
+            android:elevation="@dimen/sv_elevation"
             android:paddingStart="@dimen/amp_ll_sv_padding_start"
-            android:paddingTop="@dimen/amp_ll_sv_padding"
             android:paddingEnd="@dimen/amp_ll_sv_padding"
-            android:paddingBottom="@dimen/amp_ll_sv_padding"
             tools:ignore="ScrollViewSize">
 
 

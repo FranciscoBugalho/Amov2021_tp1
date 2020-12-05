@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ViewPurchaseHistoryActivity"
+    tools:context=".ViewHistoryActivity"
     android:background="@drawable/linearlayout_background"
     android:id="@+id/clShoppedLists">
 

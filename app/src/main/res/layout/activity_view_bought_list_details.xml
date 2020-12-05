@@ -27,24 +27,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginVertical="@dimen/vbld_ll_date_margin"
         android:layout_gravity="end">
 
         <TextView
-            android:padding="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/vbld_tv_boughtdate_size"
-            android:text="@string/avbld_tv_bought_date_text"
-            android:textColor="@color/black"
-            android:elevation="@dimen/ac_tv_elevation"
-            android:layout_gravity="end"/>
-
-        <TextView
             android:id="@+id/tvBoughtDate"
-            android:padding="4dp"
+            android:padding="@dimen/vbld_tv_date_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/app_tv_title_text_size"
+            android:textSize="@dimen/vbld_tv_date_size"
             android:textColor="@color/black"
             android:elevation="@dimen/ac_tv_elevation"
             android:layout_gravity="end"/>
@@ -53,17 +44,20 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scrollview_background"
+        android:elevation="@dimen/sv_elevation"
         android:layout_marginTop="@dimen/app_sv_margins"
         android:layout_marginBottom="@dimen/app_sv_margins"
-        android:padding="@dimen/cnpl_ll_padding" >
+        android:padding="@dimen/cnpl_ll_padding">
 
         <LinearLayout
             android:id="@+id/llAllBoughtProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/scrollview_invisible_container"
+            android:elevation="@dimen/sv_elevation"
             tools:ignore="UselessLeaf">
 
 

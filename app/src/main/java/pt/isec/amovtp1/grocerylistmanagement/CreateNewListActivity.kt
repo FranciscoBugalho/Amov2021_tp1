@@ -30,12 +30,15 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LI
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.SELECTED_PRODUCTS_STR
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
 
-class CreateNewProductListActivity : AppCompatActivity() {
+class CreateNewListActivity : AppCompatActivity() {
     private lateinit var listName: String
     private var selectedProducts = hashMapOf<String, String?>()
     private var listId: Long? = null
     private lateinit var db : GMLDatabase
 
+    /**
+     *  onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product_list)
@@ -56,7 +59,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
             // Update title on actionbar and on the textview
             val title = intent.getStringExtra(IntentConstants.MANAGE_PRODUCTS_TITLE)!!
-            tvTitle!!.text = title
+            //tvTitle!!.text = title
 
             if(title == getString(R.string.create_new_list_title)) {
                 listId = null
@@ -69,7 +72,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
         if(opt == 1) {
             // Update title on actionbar and on the textview
             supportActionBar?.title = getString(R.string.edit_product_list_title)
-            tvTitle!!.text = getString(R.string.edit_product_list_title)
+            //tvTitle!!.text = getString(R.string.edit_product_list_title)
 
             listName = intent.getStringExtra(IntentConstants.LIST_NAME_TO_EDIT)!!
             etListName.setText(listName)
@@ -82,7 +85,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
         } else if (opt == 2) {
             // Update title on actionbar and on the textview
             supportActionBar?.title = getString(R.string.create_list_from_existing_one_title)
-            tvTitle!!.text = getString(R.string.create_list_from_existing_one_title)
+            //tvTitle!!.text = getString(R.string.create_list_from_existing_one_title)
 
             listName = intent.getStringExtra(IntentConstants.LIST_NAME_TO_EDIT)!!
             etListName.setText(listName)
@@ -103,7 +106,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
             Intent(this, CreateNewProductActivity::class.java)
                     .putExtra(IntentConstants.LIST_NAME, listName)
                     .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
-                    .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
+                    ////.putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
                 .also {
                 startActivity(it)
             }
@@ -138,7 +141,7 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
             db.closeDB()
 
-            Intent(this, ManageProductListsActivity::class.java)
+            Intent(this, ManageListsActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .also {
                 startActivity(it)
@@ -163,6 +166,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * addProductsToScrollView
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun addProductsToScrollView(toShow: String) {
         val llProducts = findViewById<LinearLayout>(R.id.llProductCheckBoxes)
@@ -321,10 +327,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
                         .putExtra(IntentConstants.IS_EDIT_PRODUCT, 1)
                         .putExtra(IntentConstants.PRODUCT_NAME_TO_EDIT, key)
                         .putExtra(IntentConstants.LIST_NAME, listName)
-                        .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
+                        //.putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
                         .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
                     .also {
-                    startActivity(it)
+                         startActivity(it)
                 }
             }
             //------------------------------------
@@ -340,6 +346,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * showProductObservations
+     */
     @SuppressLint("SetTextI18n")
     private fun showProductObservations(productName: String) {
         // Create the Dialog
@@ -450,6 +459,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * setProductQuantity
+     */
     @SuppressLint("CutPasteId")
     fun setProductQuantity(productName: String) {
         // Create the Dialog
@@ -516,9 +528,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
                 btnConfirm.isClickable = false
                 val drawable = getDrawable(R.drawable.btns_ripple_main_activity)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_gray500), BlendMode.SRC_IN)
+                    drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_grey_500), BlendMode.SRC_IN)
                 } else {
-                    drawable!!.setColorFilter(resources.getColor(R.color.theme_gray500), PorterDuff.Mode.SRC_IN)
+                    drawable!!.setColorFilter(resources.getColor(R.color.theme_grey_500), PorterDuff.Mode.SRC_IN)
                 }
                 btnConfirm.background = drawable
             }
@@ -545,7 +557,6 @@ class CreateNewProductListActivity : AppCompatActivity() {
 
     /**
      * getUnitPositionOnSpinner
-     *
      */
     private fun getUnitPositionOnSpinner(unit: String): Int {
         val units = db.getAllUnitsNames()
@@ -555,6 +566,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         return 0
     }
 
+    /**
+     * addUnitsOnSpinner
+     */
     private fun addUnitsOnSpinner(dialog: Dialog) {
         val units = db.getAllUnitsNames()
 
@@ -576,6 +590,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
             )
     }
 
+    /**
+     * presentError
+     */
     private fun presentError(llProducts: LinearLayout, error: String) {
         val linearLayout = LinearLayout(this)
         linearLayout.gravity = Gravity.CENTER
@@ -597,6 +614,9 @@ class CreateNewProductListActivity : AppCompatActivity() {
         return
     }
 
+    /**
+     * completeFields
+     */
     private fun completeFields(isEdit: Int) {
         selectedProducts = db.getListInformation(listId)
         // If is not edit mode clear de listId
@@ -606,9 +626,14 @@ class CreateNewProductListActivity : AppCompatActivity() {
         addProductsToScrollView(SHOW_ALL_PRODUCTS)
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "ManageListsActivity"
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
-            Intent(this, ManageProductListsActivity::class.java)
+            Intent(this, ManageListsActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .also {
                     startActivity(it)
@@ -619,6 +644,10 @@ class CreateNewProductListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "etListName" text, "selectedProducts" & "listId" if not null
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -628,6 +657,11 @@ class CreateNewProductListActivity : AppCompatActivity() {
         outState.putString(LIST_ID_EDIT_MODE, listId?.toString())
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "listName", "selectedProducts", "listId" & "etListName" text
+     * 2. Calls the "addProductsToScrollView" method
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 

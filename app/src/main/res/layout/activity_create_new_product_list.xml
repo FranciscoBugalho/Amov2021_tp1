@@ -4,36 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewProductListActivity"
+    tools:context=".CreateNewListActivity"
     android:background="@drawable/linearlayout_background"
     android:padding="@dimen/default_padding"
     android:orientation="vertical"
     android:focusableInTouchMode="true">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:padding="@dimen/default_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/ac_title_text_size"
-        android:typeface="serif"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:text="@string/create_new_list_title"
-        android:background="@drawable/rounded_corners_textviews"
-        android:elevation="@dimen/ac_tv_elevation" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <EditText
             android:id="@+id/etListName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/cnpl_et_layout_margin"
+            android:background="@drawable/edit_text_shape"
+            android:paddingVertical="@dimen/cnpl_et_name_paddingVertical"
+            android:paddingHorizontal="@dimen/cnpl_et_name_paddingHorizontal"
             android:ems="10"
             android:hint="@string/insert_list_name_placeholder"
             android:importantForAutofill="no"
@@ -45,18 +36,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="@dimen/cnpl_et_category_search_padding_start"
-            tools:ignore="RtlSymmetry">
+            tools:ignore="RtlSymmetry"
+            android:background="@drawable/edit_text_shape"
+            android:layout_marginHorizontal="@dimen/et_shape_standard_padding"
+            >
 
             <EditText
                 android:id="@+id/etCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:paddingStart="@dimen/et_shape_standard_padding"
                 android:ems="10"
                 android:hint="@string/insert_a_category_to_search_placeholder"
                 android:inputType="text"
                 android:textSize="@dimen/cnpl_et_name_text_size"
-                android:importantForAutofill="no"  />
+                android:importantForAutofill="no"
+                android:background="@color/Theme_grey_200"
+                android:layout_gravity="center_vertical"/>
 
             <Button
                 android:id="@+id/btnSearchCategory"
@@ -64,9 +61,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/black"
                 android:background="@drawable/search_btn"
-                android:elevation="2dp" />
+                android:elevation="2dp"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                />
 
         </LinearLayout>
 
@@ -74,13 +74,21 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:padding="@dimen/cnpl_ll_padding" >
+            android:background="@drawable/scrollview_background"
+            android:elevation="@dimen/sv_elevation"
+            android:paddingVertical="@dimen/amp_sv_vertical_padding"
+            android:layout_marginBottom="@dimen/cnp_sv_margin_bottom"
+            android:layout_marginTop="@dimen/et_shape_standard_padding">
 
             <LinearLayout
                 android:id="@+id/llProductCheckBoxes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="@drawable/scrollview_invisible_container"
+                android:elevation="@dimen/sv_elevation"
+                android:paddingStart="@dimen/cnp_ll_padding_start"
+                android:paddingEnd="@dimen/amp_ll_sv_padding"
                 tools:ignore="UselessLeaf">
 
 
@@ -92,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            >
 
             <LinearLayout
                 android:layout_width="0dp"

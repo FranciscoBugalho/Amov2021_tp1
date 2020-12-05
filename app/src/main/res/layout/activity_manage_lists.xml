@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/linearlayout_background"
-    tools:context=".ManageProductListsActivity"
+    tools:context=".ManageListsActivity"
     android:id="@+id/clManageProductLists">
 
     <androidx.recyclerview.widget.RecyclerView

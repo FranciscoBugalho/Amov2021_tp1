@@ -16,7 +16,6 @@ import android.os.Environment
 import android.os.StrictMode
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -50,6 +49,9 @@ class CreateNewProductActivity : AppCompatActivity() {
     private var productId: Long? = null
     private var isManageProducts: Boolean = false
 
+    /**
+     * onCreate
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product)
@@ -131,7 +133,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
             db.closeDB()
             if(!isManageProducts)
-                Intent(this, CreateNewProductListActivity::class.java)
+                Intent(this, CreateNewListActivity::class.java)
                             .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
                             .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
                             .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
@@ -176,7 +178,7 @@ class CreateNewProductActivity : AppCompatActivity() {
     }
 
     /**
-     * completeProductFields
+     * canRemoveImage
      */
     private fun canRemoveImage() {
         val iv = findViewById<ImageView>(R.id.ivPreview)
@@ -188,6 +190,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         } else iv.setOnLongClickListener(null)
     }
 
+    /**
+     * completeProductFields
+     */
     private fun completeProductFields(productName: String) {
         val productInfo = db.getProductInfoByName(productName)
 
@@ -206,6 +211,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         sProductCategory.setSelection(getCategoryPositionOnSpinner(productInfo[2].toString()))
     }
 
+    /**
+     * getCategoryPositionOnSpinner
+     */
     private fun getCategoryPositionOnSpinner(productCategory: String): Int {
         val categories = db.getAllCategoryNames()
         for(i in categories.indices)
@@ -214,6 +222,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         return 0
     }
 
+    /**
+     * addCategoriesOnSpinner
+     */
     private fun addCategoriesOnSpinner() {
         val categories = db.getAllCategoryNames()
 
@@ -224,6 +235,9 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * addNewCategory
+     */
     fun addNewCategory() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_dialog)
@@ -270,6 +284,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         btnNo.setOnClickListener { dialog.dismiss() }
     }
 
+    /**
+     * createImageFile
+     */
     @SuppressLint("SimpleDateFormat")
     private fun createImageFile(): File {
         // Create an image file name
@@ -285,6 +302,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * dispatchTakePictureIntent
+     */
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -310,6 +330,9 @@ class CreateNewProductActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * onActivityResult
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, info: Intent?) {
         // Gallery
         if (requestCode == Constants.REQUEST_CODE_GALLERY && resultCode == Activity.RESULT_OK && info != null) {
@@ -333,10 +356,16 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onOptionsItemSelected
+     * 1. Listens to all the operations on the "supportActionBar"
+     * 2. If the "home" button was selected, redirects to the "CreateNewListActivity",
+     * passing as arguments the list's name, the title (edit or create) and the selected product list. Also pases a flag to verify if the operation was 'create' or 'edit'
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home) {
             if(!isManageProducts)
-                Intent(this, CreateNewProductListActivity::class.java)
+                Intent(this, CreateNewListActivity::class.java)
                         .putExtra(Constants.IntentConstants.IS_NEW_PRODUCT, 1)
                         .putExtra(Constants.IntentConstants.LIST_NAME, intent.getStringExtra(Constants.IntentConstants.LIST_NAME))
                         .putExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE, intent.getStringExtra(Constants.IntentConstants.MANAGE_PRODUCTS_TITLE))
@@ -357,6 +386,10 @@ class CreateNewProductActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * onSaveInstanceState
+     * 1. Saves "filePath", "productId", "isManageProducts", "etProductName" text, "sProductCategory" text, "etProductBrand" text & "etProductBrand" text
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -371,6 +404,12 @@ class CreateNewProductActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * onRestoreInstanceState
+     * 1. Restores "filePath", "productId", "isManageProducts", "etProductName" text, "sProductCategory" text, "etProductBrand" text & "etProductBrand" text
+     * 2. If the product image's file path is the 'no img file path', calls teh "setImgFromAsset" method from the "Utils" file
+     * 3. If not, calls the "setPic" method from the "Utils" file
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
