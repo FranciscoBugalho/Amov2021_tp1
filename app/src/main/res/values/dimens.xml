@@ -125,4 +125,5 @@
 
     <dimen name="default_padding">16dp</dimen>
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="app_btn_settings_margin_horizontal">5dp</dimen>
 </resources>

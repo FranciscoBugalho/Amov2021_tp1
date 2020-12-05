@@ -39,11 +39,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         if(savedInstanceState == null)
             isCategories = intent.getBooleanExtra(Constants.IntentConstants.SHOW_CATEGORIES, false)
 
-        if(isCategories)
-            // Define title
-            supportActionBar?.title = getString(R.string.manage_categories_title)
-        else
-            supportActionBar?.title = getString(R.string.manage_units_title)
+        setTitle()
 
         // Add information to the Spinner
         val order = arrayListOf("-------------------------", getString(R.string.alphabetical_order_asc_text), getString(R.string.alphabetical_order_desc_text))
@@ -278,6 +274,17 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
     }
 
     /**
+     * setTitle
+     */
+    private fun setTitle() {
+        // Define title
+        if(isCategories)
+            supportActionBar?.title = getString(R.string.manage_categories_title)
+        else
+            supportActionBar?.title = getString(R.string.manage_units_title)
+    }
+
+    /**
      * onOptionsItemSelected
      * 1. Listens to all the operations on the "supportActionBar"
      * 2. If the "home" button was selected, redirects to the "ManageProductsActivity"
@@ -314,6 +321,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         isCategories = savedInstanceState.getBoolean(IS_CATEGORIES)
+        setTitle()
         addInformationToScrollView(getInformation())
     }
 }

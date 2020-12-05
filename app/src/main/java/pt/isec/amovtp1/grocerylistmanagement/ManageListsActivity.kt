@@ -77,9 +77,10 @@ class ManageListsActivity : AppCompatActivity() {
         if(lists.isEmpty()) {
             // Create a TextView
             val cl = findViewById<ConstraintLayout>(R.id.clManageProductLists)
-            cl.removeViewAt(0) //remove lists
+            cl.removeViewAt(0) // Remove lists
+            cl.setPadding(10, 0, 10, 0)
             val textView = TextView(this)
-            textView.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+            textView.layoutParams =  ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
             textView.tag = "tvNoLists"
             textView.text = getString(R.string.you_have_no_lists_created_click_on_the_plus_button)
             textView.setTextColor(Color.BLACK)
@@ -87,6 +88,7 @@ class ManageListsActivity : AppCompatActivity() {
             textView.gravity = Gravity.CENTER
             cl.addView(textView)
         } else {
+            findViewById<ConstraintLayout>(R.id.clManageProductLists).setPadding(0, 0, 0, 0)
             repeat(lists.size) {
                 val item = ListInfo(lists[it].listName, lists[it].date, lists[it].isBought, db.productsInThisList(lists[it].listName))
                 listInfo.add(item)

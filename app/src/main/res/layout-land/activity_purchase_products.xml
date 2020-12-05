@@ -39,6 +39,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center"
+            android:background="@drawable/spinner_shape"
             android:textSize="@dimen/cnpl_et_name_text_size"
             android:padding="@dimen/cnpl_spinner_padding"
             android:layout_margin="2dp"/>
@@ -46,11 +47,14 @@
         <Button
             android:id="@+id/btnSettings"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:layout_gravity="center_vertical"
-            android:padding="@dimen/cnpl_spinner_padding"
-            android:layout_marginEnd="@dimen/ac_btn_margin"/>
+            android:background="@mipmap/ic_settings_foreground"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:layout_marginHorizontal="@dimen/app_btn_settings_margin_horizontal"/>
+
         <Button
             android:id="@+id/btnFinishListPurchase"
             android:layout_width="wrap_content"

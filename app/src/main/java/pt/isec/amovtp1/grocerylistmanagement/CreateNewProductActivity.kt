@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNewProductActivity : AppCompatActivity() {
-    private lateinit var filePath: String
+    private var filePath: String = ""
     private lateinit var db : GMLDatabase
     private var productId: Long? = null
     private var isManageProducts: Boolean = false

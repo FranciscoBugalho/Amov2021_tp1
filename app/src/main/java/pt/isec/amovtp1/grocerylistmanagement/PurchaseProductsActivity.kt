@@ -55,15 +55,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
             setupScrollViews(allProducts, true)
         }
 
-        val button = findViewById<Button>(R.id.btnSettings)
-        val drawable = getDrawable(R.drawable.settings_btn)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            drawable!!.colorFilter = BlendModeColorFilter(Color.DKGRAY, BlendMode.SRC_IN)
-        } else {
-            drawable!!.setColorFilter(Color.DKGRAY, PorterDuff.Mode.SRC_IN)
-        }
-        button.background = drawable
-        button.setOnClickListener {
+        findViewById<Button>(R.id.btnSettings).setOnClickListener {
             insertNewUnit()
             return@setOnClickListener
         }

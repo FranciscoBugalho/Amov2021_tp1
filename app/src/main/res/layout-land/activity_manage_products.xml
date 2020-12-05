@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center"
+            android:background="@drawable/spinner_shape"
             android:textSize="@dimen/cnpl_et_name_text_size"
             android:padding="@dimen/cnpl_spinner_padding"
             android:layout_margin="@dimen/amp_spinner_margin"/>

@@ -51,7 +51,7 @@
     <string name="add_unit_btn_text">Add unit</string>
     <string name="this_field_must_be_filled">This field must be filled!</string>
     <string name="unit_already_exists_error">Unit already exists!</string>
-    <string name="you_have_to_select_at_least_one_product">You have to select at least one product</string>
+    <string name="you_have_to_select_at_least_one_product">You have to select at least one product.</string>
     <string name="list_name_already_exists">List name already exists</string>
     <string name="no_observations_set_for_this_product_yet">No observations set for this product yet.</string>
     <string name="alphabetical_order_menu_text">Alphabetical Order</string>
