@@ -75,6 +75,7 @@
     <dimen name="app_sv_margins">10dp</dimen>
     <dimen name="app_ll_search_margin_top">8dp</dimen>
     <dimen name="app_tv_title_text_size">18sp</dimen>
+    <dimen name="app_tv_title_margin_end">8dp</dimen>
     <dimen name="app_tv_padding">6dp</dimen>
     <dimen name="pp_ll_totalcost_margin_end">30dp</dimen>
 

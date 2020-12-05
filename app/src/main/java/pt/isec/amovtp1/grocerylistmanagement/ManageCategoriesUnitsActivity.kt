@@ -188,9 +188,10 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         dialog.show()
 
         val editText = dialog.findViewById<EditText>(R.id.etDialog)
-        if(unitName == null)
+        if(unitName == null) {
+            dialog.findViewById<TextView>(R.id.tvDialogTitle).text = getString(R.string.insert_a_unit_prompt)
             editText.hint = getString(R.string.insert_a_unit_prompt)
-        else {
+        } else {
             dialog.findViewById<TextView>(R.id.tvDialogTitle).text = getString(R.string.aud_tv_edit_unit_text)
             editText.setText(unitName)
         }

@@ -24,13 +24,13 @@ class ManageProductsActivity : AppCompatActivity() {
      * 1. Sets the view to "activity_manage_products"
      * 2. Connects the context to the Database
      * 3. Sets an action bar on the top of the screen
-     * 4. If the number of products is 0, calls "presentError" method and outs this method
-     * 5. If the number of products is > 0
-     * 6. Sets a spinner (a dropdown, sOrderProducts) with the order options of the product's list
-     * 7. Gets all the products of a certain category (or every product if one isn't selected - default) from the Database
-     * 8. Orders the product's list order according to the option selected on the spinner
-     * 9. Displays products
-     * 10. Sets "btnAddNewProduct", a button that when is clicked redirects to "CreateNewProductActivity"
+     * 4. Sets "btnAddNewProduct", a button that when is clicked redirects to "CreateNewProductActivity"
+     * 5. If the number of products is 0, calls "presentError" method and outs this method
+     * 6. If the number of products is > 0
+     * 7. Sets a spinner (a dropdown, sOrderProducts) with the order options of the product's list
+     * 8. Gets all the products of a certain category (or every product if one isn't selected - default) from the Database
+     * 9. Orders the product's list order according to the option selected on the spinner
+     * 10. Displays products
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +44,25 @@ class ManageProductsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         // Define title
         supportActionBar?.title = getString(R.string.manage_all_products_title)
+
+        val addBtn = findViewById<Button>(R.id.btnAddNewProduct)
+        val drawable = getDrawable(R.drawable.add_btn)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_orange), BlendMode.SRC_IN)
+        }
+        else{
+            drawable!!.setColorFilter(resources.getColor(R.color.theme_orange),PorterDuff.Mode.SRC_IN )
+        }
+        addBtn.background = drawable
+        addBtn.setOnClickListener {
+            db.closeDB()
+            Intent(this, CreateNewProductActivity::class.java)
+                    .putExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, true)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .also {
+                        startActivity(it)
+                    }
+        }
 
         // If there are no products in the database
         if(db.countDbProducts() == 0) {
@@ -84,25 +103,6 @@ class ManageProductsActivity : AppCompatActivity() {
         }
 
         displayAllProducts(products)
-
-        val addBtn = findViewById<Button>(R.id.btnAddNewProduct)
-        val drawable = getDrawable(R.drawable.add_btn)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            drawable!!.colorFilter = BlendModeColorFilter(resources.getColor(R.color.theme_orange), BlendMode.SRC_IN)
-        }
-        else{
-            drawable!!.setColorFilter(resources.getColor(R.color.theme_orange),PorterDuff.Mode.SRC_IN )
-        }
-        addBtn.background = drawable
-        addBtn.setOnClickListener {
-            db.closeDB()
-            Intent(this, CreateNewProductActivity::class.java)
-                .putExtra(Constants.IntentConstants.IS_VIEW_PRODUCTS, true)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .also {
-                    startActivity(it)
-                }
-        }
     }
 
     /**

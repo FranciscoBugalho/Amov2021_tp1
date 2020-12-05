@@ -29,6 +29,7 @@
             android:background="@drawable/rounded_corners_textviews"
             android:elevation="@dimen/ac_tv_elevation"
             android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/app_tv_title_margin_end"
             android:maxLines="1"/>
 
         <Spinner

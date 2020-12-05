@@ -109,7 +109,8 @@ class PurchaseProductsActivity : AppCompatActivity() {
         }
 
         // By default the button is disabled
-        btnFinishListPurchase.isEnabled = false
+        if(savedInstanceState == null)
+            btnFinishListPurchase.isEnabled = false
         btnFinishListPurchase.setOnClickListener {
             finishPurchase(tvTotal.text.toString())
         }
@@ -185,7 +186,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
             //-----------------------
 
             param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.weight = 0.10f
+            param.weight = 0.20f
 
             // Create the TextView
             val tvPrice = TextView(this)
@@ -687,7 +688,8 @@ class PurchaseProductsActivity : AppCompatActivity() {
             val textView = TextView(this)
             textView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             textView.tag = "tvPrice${allPrices[i]}"
-            textView.text = allPrices[i]
+            val txt = allPrices[i].split(" ")
+            textView.text = txt[0] + resources.getString(R.string.price_sign) + "     (" + txt[1] + " " + txt[2] + ")"
             textView.setTextColor(Color.BLACK)
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
             textView.gravity = Gravity.START
@@ -765,7 +767,6 @@ class PurchaseProductsActivity : AppCompatActivity() {
 
         outState.putSerializable(ALL_PRODCUTS, allProducts as HashMap<String, ArrayList<String>>)
         outState.putSerializable(PRUCHASED_PRODUCTS, boughtProducts as HashMap<String, ArrayList<String>>)
-
     }
 
     /**
