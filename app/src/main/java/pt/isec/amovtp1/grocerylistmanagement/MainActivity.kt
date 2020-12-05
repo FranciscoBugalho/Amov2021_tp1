@@ -11,8 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Utils.setPic(findViewById<ImageView>(R.id.ivMainLogo),"images/logo/logo nome sup.png")
-
         findViewById<Button>(R.id.btnPurchaseHistory).setOnClickListener {
             Intent(this, ViewHistoryActivity::class.java).also {
                 startActivity(it)

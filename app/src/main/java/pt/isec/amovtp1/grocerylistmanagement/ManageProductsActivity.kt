@@ -44,17 +44,17 @@ class ManageProductsActivity : AppCompatActivity() {
         // Define title
         supportActionBar?.title = getString(R.string.manage_all_products_title)
 
-        // Add information to the Spinner
-        var orderProducts = arrayListOf(getString(R.string.alphabetical_order_asc_text), getString(R.string.alphabetical_order_desc_text), "-------------------------")
-        orderProducts = (orderProducts + db.getAllCategoryNames()) as ArrayList<String>
-        sOrderProducts.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, orderProducts)
-        sOrderProducts.setSelection(2)
-
         // If there are no products in the database
         if(db.countDbProducts() == 0) {
             presentError(getString(R.string.you_have_to_add_products_first))
             return
         }
+
+        // Add information to the Spinner
+        var orderProducts = arrayListOf(getString(R.string.alphabetical_order_asc_text), getString(R.string.alphabetical_order_desc_text), "-------------------------")
+        orderProducts = (orderProducts + db.getAllCategoryNames()) as ArrayList<String>
+        sOrderProducts.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, orderProducts)
+        sOrderProducts.setSelection(2)
 
         // Get the products to present on the ScrollView
         val products = db.getAllProductsNameCategory()
@@ -216,25 +216,27 @@ class ManageProductsActivity : AppCompatActivity() {
 
         val productObservations = db.getAllObservations(productName)
 
+        // Set the ImageView
+        val ivProductImage = dialog.findViewById<ImageView>(R.id.ivProductImage)
+        val productFilePath = db.getProductFilePath(productName)
+        if(productFilePath == Constants.ASSET_IMAGE_PATH_NO_IMG)
+            Utils.setImgFromAsset(ivProductImage, Constants.ASSET_IMAGE_PATH_NO_IMG)
+        else
+            Utils.setPic(ivProductImage, productFilePath)
+
+        val tvProductName = dialog.findViewById<TextView>(R.id.tvProductName)
+
+        val productBrand = db.getProductBrand(productName)
+        if(productBrand == null) {
+            // Set the TextView with the product name
+            tvProductName.text = productName
+        } else {
+            // Set the TextView with the product name and its brand
+            tvProductName.text = "$productName ($productBrand)"
+        }
+
+
         if(productObservations.isEmpty()) {
-            val ivProductImage = dialog.findViewById<ImageView>(R.id.ivProductImage)
-            val productFilePath = db.getProductFilePath(productName)
-            if(productFilePath == Constants.ASSET_IMAGE_PATH_NO_IMG)
-                Utils.setImgFromAsset(ivProductImage, Constants.ASSET_IMAGE_PATH_NO_IMG)
-            else
-                Utils.setPic(ivProductImage, productFilePath)
-
-            val tvProductName = dialog.findViewById<TextView>(R.id.tvProductName)
-
-            val productBrand = db.getProductBrand(productName)
-            if(productBrand == null) {
-                // Set the TextView with the product name
-                tvProductName.text = productName
-            } else {
-                // Set the TextView with the product name and its brand
-                tvProductName.text = "$productName ($productBrand)"
-            }
-            //-------------------------------------------------------
 
             // Create a LinearLayout
             val linearLayout = LinearLayout(this)
@@ -261,24 +263,6 @@ class ManageProductsActivity : AppCompatActivity() {
         }
 
         for(i in productObservations.indices) {
-            // Set the ImageView
-            val ivProductImage = dialog.findViewById<ImageView>(R.id.ivProductImage)
-            val productFilePath = db.getProductFilePath(productName)
-            if(productFilePath == Constants.ASSET_IMAGE_PATH_NO_IMG)
-                Utils.setImgFromAsset(ivProductImage, Constants.ASSET_IMAGE_PATH_NO_IMG)
-            else
-                Utils.setPic(ivProductImage, productFilePath)
-
-            val tvProductName = dialog.findViewById<TextView>(R.id.tvProductName)
-
-            val productBrand = db.getProductBrand(productName)
-            if(productBrand == null) {
-                // Set the TextView with the product name
-                tvProductName.text = productName
-            } else {
-                // Set the TextView with the product name and its brand
-                tvProductName.text = "$productName ($productBrand)"
-            }
 
             // Create LinearLayout
             val linearLayout = LinearLayout(this)
@@ -304,7 +288,6 @@ class ManageProductsActivity : AppCompatActivity() {
 
             linearLayoutObservations.addView(linearLayout)
         }
-
     }
 
     /**
