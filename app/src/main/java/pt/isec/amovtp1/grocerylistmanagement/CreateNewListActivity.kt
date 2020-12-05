@@ -28,12 +28,14 @@ import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SHOW_CHECKED_PRODUCT
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LIST_ID_EDIT_MODE
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.LIST_NAME_STR
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.SELECTED_PRODUCTS_STR
+import pt.isec.amovtp1.grocerylistmanagement.data.Constants.SaveDataConstants.TITLE_STR
 import pt.isec.amovtp1.grocerylistmanagement.database.GMLDatabase
 
 class CreateNewListActivity : AppCompatActivity() {
     private lateinit var listName: String
     private var selectedProducts = hashMapOf<String, String?>()
     private var listId: Long? = null
+    private var title: String = ""
     private lateinit var db : GMLDatabase
 
     /**
@@ -50,6 +52,7 @@ class CreateNewListActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         // Define title
         supportActionBar?.title = getString(R.string.create_new_product_list_title)
+        title = getString(R.string.create_new_list_title)
 
         var opt = intent.getIntExtra(IntentConstants.IS_NEW_PRODUCT, 0)
         if(opt == 1) {
@@ -58,8 +61,7 @@ class CreateNewListActivity : AppCompatActivity() {
             selectedProducts = intent.getSerializableExtra(IntentConstants.SELECTED_PRODUCTS_LIST) as HashMap<String, String?>
 
             // Update title on actionbar and on the textview
-            val title = intent.getStringExtra(IntentConstants.MANAGE_PRODUCTS_TITLE)!!
-            //tvTitle!!.text = title
+            title = intent.getStringExtra(IntentConstants.MANAGE_PRODUCTS_TITLE)!!
 
             if(title == getString(R.string.create_new_list_title)) {
                 listId = null
@@ -72,7 +74,6 @@ class CreateNewListActivity : AppCompatActivity() {
         if(opt == 1) {
             // Update title on actionbar and on the textview
             supportActionBar?.title = getString(R.string.edit_product_list_title)
-            //tvTitle!!.text = getString(R.string.edit_product_list_title)
 
             listName = intent.getStringExtra(IntentConstants.LIST_NAME_TO_EDIT)!!
             etListName.setText(listName)
@@ -85,7 +86,6 @@ class CreateNewListActivity : AppCompatActivity() {
         } else if (opt == 2) {
             // Update title on actionbar and on the textview
             supportActionBar?.title = getString(R.string.create_list_from_existing_one_title)
-            //tvTitle!!.text = getString(R.string.create_list_from_existing_one_title)
 
             listName = intent.getStringExtra(IntentConstants.LIST_NAME_TO_EDIT)!!
             etListName.setText(listName)
@@ -106,7 +106,7 @@ class CreateNewListActivity : AppCompatActivity() {
             Intent(this, CreateNewProductActivity::class.java)
                     .putExtra(IntentConstants.LIST_NAME, listName)
                     .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
-                    ////.putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
+                    .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, title)
                 .also {
                 startActivity(it)
             }
@@ -327,7 +327,7 @@ class CreateNewListActivity : AppCompatActivity() {
                         .putExtra(IntentConstants.IS_EDIT_PRODUCT, 1)
                         .putExtra(IntentConstants.PRODUCT_NAME_TO_EDIT, key)
                         .putExtra(IntentConstants.LIST_NAME, listName)
-                        //.putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, tvTitle.text.toString())
+                        .putExtra(IntentConstants.MANAGE_PRODUCTS_TITLE, title)
                         .putExtra(IntentConstants.SELECTED_PRODUCTS_LIST, selectedProducts)
                     .also {
                          startActivity(it)
@@ -572,8 +572,6 @@ class CreateNewListActivity : AppCompatActivity() {
     private fun addUnitsOnSpinner(dialog: Dialog) {
         val units = db.getAllUnitsNames()
 
-
-
         if(units.isEmpty())
             dialog.findViewById<Spinner>(R.id.sUnit).adapter = ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, listOf(
@@ -646,7 +644,7 @@ class CreateNewListActivity : AppCompatActivity() {
 
     /**
      * onSaveInstanceState
-     * 1. Saves "etListName" text, "selectedProducts" & "listId" if not null
+     * 1. Saves "etListName" text, "selectedProducts", "listId" & "title" if not null
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -655,11 +653,12 @@ class CreateNewListActivity : AppCompatActivity() {
         outState.putString(LIST_NAME_STR, etListName.text.toString())
         outState.putSerializable(SELECTED_PRODUCTS_STR, selectedProducts)
         outState.putString(LIST_ID_EDIT_MODE, listId?.toString())
+        outState.putString(TITLE_STR, title)
     }
 
     /**
      * onRestoreInstanceState
-     * 1. Restores "listName", "selectedProducts", "listId" & "etListName" text
+     * 1. Restores "listName", "selectedProducts", "listId", "title" & "etListName" text
      * 2. Calls the "addProductsToScrollView" method
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -670,6 +669,7 @@ class CreateNewListActivity : AppCompatActivity() {
         listName = savedInstanceState.getString(LIST_NAME_STR).toString()
         selectedProducts = savedInstanceState.getSerializable(SELECTED_PRODUCTS_STR) as HashMap<String, String?>
         listId = savedInstanceState.getString(LIST_ID_EDIT_MODE)?.toLong()
+        title = savedInstanceState.getString(TITLE_STR).toString()
 
         // Add all the products to the ScrollView
         addProductsToScrollView(SHOW_ALL_PRODUCTS)

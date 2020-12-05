@@ -95,6 +95,8 @@ object Constants {
 
         const val LIST_ID_EDIT_MODE = "listIdForEditMode"
 
+        const val TITLE_STR = "listActivityTitle"
+
         const val LIST_ORDER_STR = "listOrder"
 
         const val ALL_PRODCUTS = "allProducts"

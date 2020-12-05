@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import pt.isec.amovtp1.grocerylistmanagement.Utils

@@ -39,8 +39,7 @@
             android:textSize="@dimen/aud_btns_text_size"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/aud_btns_margins"
-            tools:ignore="ButtonStyle"
-            />
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnSave"

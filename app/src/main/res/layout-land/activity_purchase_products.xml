@@ -9,8 +9,6 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +81,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
                 android:orientation="vertical"
-                android:layout_marginEnd="@dimen/app_sv_margins">
+                android:layout_marginEnd="@dimen/app_sv_margins"
+                tools:ignore="NestedWeights">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -104,7 +103,6 @@
                         android:background="@drawable/scrollview_invisible_container"
                         android:elevation="@dimen/sv_elevation"
                         android:layout_marginHorizontal="@dimen/app_sv_margins"
-
                         tools:ignore="UselessLeaf">
 
 
@@ -128,8 +126,7 @@
                         android:textSize="@dimen/app_tv_title_text_size"
                         android:text="@string/pp_tv_total_text"
                         android:textColor="@color/black"
-                        android:elevation="@dimen/ac_tv_elevation"
-                        />
+                        android:elevation="@dimen/ac_tv_elevation" />
 
                     <TextView
                         android:id="@+id/tvTotal"
@@ -138,8 +135,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/app_tv_title_text_size"
                         android:text="@string/total_start_number"
-                        android:textColor="@color/black"
-                        />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/tvTotalPriceSign"
@@ -148,8 +144,8 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/app_tv_title_text_size"
                         android:text="@string/price_sign"
-                        android:textColor="@color/black"
-                        />
+                        android:textColor="@color/black" />
+
                 </LinearLayout>
 
             </LinearLayout>

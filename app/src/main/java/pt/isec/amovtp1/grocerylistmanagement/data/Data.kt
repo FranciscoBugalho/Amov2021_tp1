@@ -15,5 +15,4 @@ class Product(var name: String, var category: String, var brand: String?, var fi
     // Price class
     data class Price(var price: Double, var priceDate: Date)
 
-    // TODO: identificador baseado no código de barras do produto -> BONUS
 }

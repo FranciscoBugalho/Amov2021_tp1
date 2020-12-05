@@ -7,11 +7,9 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.activity_view_purchase_history.*
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants

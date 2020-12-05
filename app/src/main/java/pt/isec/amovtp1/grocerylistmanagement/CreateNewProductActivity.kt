@@ -160,6 +160,7 @@ class CreateNewProductActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnCamara).setOnClickListener {
             dispatchTakePictureIntent()
         }
+
         canRemoveImage()
 
         val addBtn = findViewById<Button>(R.id.btnAddNewCategory)

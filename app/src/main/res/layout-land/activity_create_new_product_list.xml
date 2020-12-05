@@ -10,8 +10,6 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +40,7 @@
                     android:hint="@string/insert_list_name_placeholder"
                     android:inputType="text"
                     android:textSize="@dimen/cnpl_et_name_text_size"
-                    android:importantForAutofill="no"  />
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 
@@ -53,7 +51,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_shape"
                 android:layout_marginBottom="@dimen/et_shape_standard_padding"
-                android:paddingStart="@dimen/cnpl_et_name_paddingHorizontal">
+                android:paddingStart="@dimen/cnpl_et_name_paddingHorizontal"
+                tools:ignore="RtlSymmetry">
 
                 <EditText
                     android:id="@+id/etCategory"
@@ -79,8 +78,7 @@
                     android:background="@drawable/search_btn"
                     android:elevation="2dp"
                     android:scaleY="0.6"
-                    android:scaleX="0.6"
-                    />
+                    android:scaleX="0.6" />
 
             </LinearLayout>
 
@@ -108,6 +106,7 @@
 
 
             </LinearLayout>
+
         </ScrollView>
 
         <LinearLayout
@@ -123,6 +122,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_gravity="bottom|start" >
+
                 <Button
                     android:id="@+id/btnNewProduct"
                     android:layout_width="wrap_content"
@@ -133,14 +133,15 @@
                     android:textSize="@dimen/ac_btn_text_size"
                     android:background="@drawable/btns_ripple_main_activity"
                     android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
-                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
-                    />
+                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/btnFinishList"
                     android:layout_width="wrap_content"
@@ -151,8 +152,8 @@
                     android:textSize="@dimen/ac_btn_text_size"
                     android:background="@drawable/btns_ripple_main_activity"
                     android:paddingVertical="@dimen/cnpl_btn_padding_vertical"
-                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal"
-                    />
+                    android:paddingHorizontal="@dimen/cnpl_btn_padding_horizontal" />
+
             </LinearLayout>
 
         </LinearLayout>
