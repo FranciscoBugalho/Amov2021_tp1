@@ -1,5 +1,6 @@
 package pt.isec.amovtp1.grocerylistmanagement
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BlendMode
@@ -32,6 +33,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
      * 5. Calls "addInformationToScrollView"
      * 6. Gets the "btnAddNewCategoryUnit" button, sets it's properties and "onClickListener"
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_categories_units)
@@ -52,6 +54,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
         sOrderCategoriesUnits.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, order)
         sOrderCategoriesUnits.setSelection(0)
         sOrderCategoriesUnits.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            @SuppressLint("DefaultLocale")
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
                     0 -> addInformationToScrollView(getInformation())
@@ -117,6 +120,7 @@ class ManageCategoriesUnitsActivity : AppCompatActivity() {
      * 2. For each "information" (either units or categories) cretes a "linearLayout", a TextView (tvName) and a "button" and adds "button" and "tvName" to the "linearLayout"
      * 3. Adds "linearLayout" to "llInformation"
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun addInformationToScrollView(information: List<String>) {
         val llInformation = findViewById<LinearLayout>(R.id.llShowAllCategoriesUnits)
         llInformation.removeAllViews()

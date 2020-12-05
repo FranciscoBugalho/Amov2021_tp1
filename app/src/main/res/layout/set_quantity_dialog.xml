@@ -55,7 +55,6 @@
         android:layout_marginEnd="@dimen/cnp_et_margin_end" />
 
     <LinearLayout
-        android:id="@+id/llNewUnit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

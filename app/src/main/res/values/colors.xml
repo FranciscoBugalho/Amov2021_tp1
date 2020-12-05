@@ -5,8 +5,6 @@
     <color name="theme_blue">#00AEEF</color>
     <color name="theme_light_blue">#4DBEDC</color>
     <color name="theme_orange">#ff7e55</color>
-    <color name="theme_red">#dd2c00</color>
-    <color name="theme_yelow">#fcf876</color>
 
     <!-- Black and White -->
     <color name="black">#FF000000</color>

@@ -24,8 +24,8 @@ object Utils {
         BitmapFactory.decodeFile(path, bmpOptions)
         bmpOptions.inJustDecodeBounds = false
         val bitmap = BitmapFactory.decodeFile(path, bmpOptions)
-        when {
-            view is ImageView -> (view as ImageView).setImageBitmap(bitmap)
+        when (view) {
+            is ImageView -> view.setImageBitmap(bitmap)
             else -> view.background = BitmapDrawable(view.resources, bitmap)
         }
     }

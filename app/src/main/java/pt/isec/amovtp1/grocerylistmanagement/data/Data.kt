@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package pt.isec.amovtp1.grocerylistmanagement.data
 
 import java.util.*

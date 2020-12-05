@@ -1,5 +1,6 @@
 package pt.isec.amovtp1.grocerylistmanagement
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BlendMode
@@ -124,6 +125,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * 6. Sets a 'onClickListener' for the "btnFinishPurchase" that operates along the list and it's products and redirects to the "MainActivity" dismissing the "dialog"
      * 7. Sets a 'onClickListener' for the "btnCancel" that dismisses the "dialog"
      */
+    @SuppressLint("SetTextI18n")
     private fun finishPurchase(totalPrice: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -328,6 +330,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * 2. For each  product to add to the "llScrollView" creates a "linearLayout", a "TextView" (tvProductName) and a button (add to list button), and adds these components to the "linearLayout"
      * 3. Adds more data and components to the "llScrollView", but these components ant their data differ if the "llScrollView" is correspondent to a view for all products or only for bought products
      */
+    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun setupScrollViews(productsToView: MutableMap<String, ArrayList<String>>, isAllProductView: Boolean) {
         val llScrollView: LinearLayout = if(isAllProductView)
             findViewById(R.id.llAllProducts)
@@ -624,6 +627,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * 4. If the product has no previous prices, creates a "linearLayout" and a "textView" with an indicative text and add the "textView" to the "linearLayout"
      * 5. If the product has precious prices does the same process but for each price
      */
+    @SuppressLint("SetTextI18n")
     private fun showPriceHistory(productName: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -712,7 +716,7 @@ class PurchaseProductsActivity : AppCompatActivity() {
      * 1. Gets all products of the list from the database
      * 2. For each product gets it's data into an ArrayList<String> and adds it to the global variable "allProducts" mutableMapOf<String, ArrayList<String>>, being the key the name of the product
      */
-    fun getAllProductsInformation() {
+    private fun getAllProductsInformation() {
         val products = db.productsInThisList(listName)
 
         var qntPrice = arrayListOf<String>()

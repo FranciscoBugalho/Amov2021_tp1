@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package pt.isec.amovtp1.grocerylistmanagement
 
 import android.annotation.SuppressLint
@@ -60,6 +62,7 @@ class CreateNewProductActivity : AppCompatActivity() {
      * 7. Asks for the device's Camera access permissions
      * 8. Gets "btnAddNewList", "btnGaleria" and "btnAddNewCategory" buttons, set their properties and "onClickListeners"
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_product)
@@ -161,7 +164,7 @@ class CreateNewProductActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnGaleria).setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
-            intent.setType("image/*")
+            intent.type = "image/*"
             startActivityForResult(intent, Constants.REQUEST_CODE_GALLERY)
         }
 
@@ -256,7 +259,7 @@ class CreateNewProductActivity : AppCompatActivity() {
      * 2. Gets the "etDialog" EditText as "editText" from the "dialog" and sets it's text
      * 3. Gets the "btnCancel" and "btnSave" buttons from the "dialog" and sets it's "onClickListener"
      */
-    fun addNewCategory() {
+    private fun addNewCategory() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_category_dialog)
         dialog.setCanceledOnTouchOutside(true)
@@ -356,10 +359,11 @@ class CreateNewProductActivity : AppCompatActivity() {
      * onActivityResult
      * 1. Gets an image's path from the device's Gallery or the picture just take on the device's Camera and passes it as the "Utils.setPic" method is called
      */
+    @SuppressLint("Recycle")
     override fun onActivityResult(requestCode: Int, resultCode: Int, info: Intent?) {
         // Gallery
         if (requestCode == Constants.REQUEST_CODE_GALLERY && resultCode == Activity.RESULT_OK && info != null) {
-            val uri = info.data?.apply {
+            info.data?.apply {
                 val cursor = contentResolver.query(this,
                     arrayOf(MediaStore.Images.ImageColumns.DATA), null, null, null)
                 if (cursor != null && cursor.moveToFirst())

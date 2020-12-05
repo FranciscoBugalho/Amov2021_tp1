@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package pt.isec.amovtp1.grocerylistmanagement.data
 
 import android.provider.BaseColumns
@@ -119,6 +121,5 @@ object Constants {
 
         const val IS_BOUGHT_ORDER = "isBought"
 
-        const val NONE_ORDER = "none"
     }
 }

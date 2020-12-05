@@ -1,13 +1,15 @@
 package pt.isec.amovtp1.grocerylistmanagement.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import pt.isec.amovtp1.grocerylistmanagement.Utils
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToDatetime
+import pt.isec.amovtp1.grocerylistmanagement.Utils.convertDateToStrCard
+import pt.isec.amovtp1.grocerylistmanagement.Utils.convertTimeToStrCard
 import pt.isec.amovtp1.grocerylistmanagement.Utils.convertToDate
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants
 import pt.isec.amovtp1.grocerylistmanagement.data.Constants.ListOrders.ALPHABETICAL_ORDER
@@ -61,7 +63,6 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_NOT_PURCHASED_LISTS_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRICES_BY_PRODUCT_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCTS_ID_IN_LIST_PRODUCT
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_INFO
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_NAME_CATEGORY
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PRODUCT_OBSERVATIONS
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_ALL_PURCHASED_LISTS_ID
@@ -86,7 +87,6 @@ import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQuer
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_IS_BOUGHT_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_NAME_ASC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_INFO_ORDER_BY_NAME_DESC
-import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_LIST_NAME_BY_ID
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_ASC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_DATE_DESC
 import pt.isec.amovtp1.grocerylistmanagement.database.DatabaseQueries.SelectQueries.SELECT_NOT_PURCHASED_LIST_INFO_ORDER_BY_NAME_ASC
@@ -212,6 +212,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return true
     }
 
+    @SuppressLint("Recycle")
     fun getCategoryId(categoryName: String): Long {
         val db = writableDatabase
 
@@ -230,6 +231,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return count != 0
     }
 
+    /*
     fun getAllProducts(): List<Product> {
         if(countDbProducts() == 0)
             return arrayListOf()
@@ -287,6 +289,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
 
         return productList
     }
+     */
 
     fun getAllProductsNameCategory(): HashMap<String, String> {
         if(countDbProducts() == 0)
@@ -452,7 +455,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return count != 0
     }
 
-    fun listNameExists(listName: String): Boolean {
+    private fun listNameExists(listName: String): Boolean {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_LISTS_WITH_SAME_NAME, arrayOf(listName))
         cursor.moveToFirst()
@@ -461,6 +464,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return count != 0
     }
 
+    @SuppressLint("Recycle")
     fun saveList(listName: String, selectedProducts: HashMap<String, String?>): Boolean {
         if(listNameExists(listName))
             return false
@@ -506,6 +510,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return true
     }
 
+    @SuppressLint("Recycle")
     fun getProductInfoByName(productName: String): List<String?> {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_PRODUCT_INFO_BY_NAME, arrayOf(productName))
@@ -529,6 +534,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
             db.close()
     }
 
+    @SuppressLint("Recycle")
     fun getProductIdByName(productName: String): Long {
         val db = writableDatabase
 
@@ -579,6 +585,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return true
     }
 
+    @SuppressLint("Recycle")
     fun getAllObservations(productName: String): List<Product.Observation> {
         val idProduct = getProductIdByName(productName)
 
@@ -781,6 +788,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return listId
     }
 
+    /*
     fun getListNameById(listId: Long): String {
         val db = writableDatabase
         val cursor = db.rawQuery(SELECT_LIST_NAME_BY_ID, arrayOf(listId.toString()))
@@ -789,6 +797,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         cursor.close()
         return listName
     }
+     */
 
     fun getListInformation(listId: Long?): HashMap<String, String?> {
         val db = writableDatabase
@@ -833,6 +842,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return selectedProducts as HashMap<String, String?>
     }
 
+    @SuppressLint("Recycle")
     fun editList(listName: String, selectedProducts: HashMap<String, String?>, listId: Long): Boolean {
         val db = writableDatabase
 
@@ -884,7 +894,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
                 val amount = selectedProducts[key]!!.split(" ")
                 valuesPL.put(LIST_PRODUCT_QUANTITY, amount[0])
 
-                if(amount.size == 2){
+                if(amount.size == 2) {
                     val cursorU = db.rawQuery(SELECT_UNIT_ID_BY_NAME, arrayOf(amount[1]))
                     cursorU.moveToFirst()
                     val unitId = cursorU.getLong(cursorU.getColumnIndex(UNIT_ID))
@@ -1012,6 +1022,7 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
         return categoryName
     }
 
+    @SuppressLint("Recycle")
     fun setListAsBought(listName: String, allProducts: HashMap<String, String?>?) {
         val listId = getListIdByName(listName)
 
@@ -1119,9 +1130,9 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
 
         val cursor = db.rawQuery(SELECT_BOUGHT_DATE_BY_LIST_NAME, arrayOf(listName))
         cursor.moveToFirst()
-        val boughtDate = Utils.convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE)))
+        val boughtDate = convertToDate(cursor.getString(cursor.getColumnIndex(LIST_DATE)))
         cursor.close()
-        return Utils.convertDateToStrCard(boughtDate) + " " + Utils.convertTimeToStrCard(boughtDate)
+        return convertDateToStrCard(boughtDate) + " " + convertTimeToStrCard(boughtDate)
     }
 
     private fun getOrderedLists(listOrder: HashMap<String, String?>, isShopping: Boolean): String {
@@ -1167,23 +1178,21 @@ class GMLDatabase(context: Context) : SQLiteOpenHelper(
     }
 
     private fun getOrderedBoughtLists(listOrder: HashMap<String, String?>): String {
-        val query: String
-        when {
+        return when {
             listOrder.keys.contains(ALPHABETICAL_ORDER) -> {
-                query = if (listOrder[ALPHABETICAL_ORDER] == ORDER_ASC)
+                if (listOrder[ALPHABETICAL_ORDER] == ORDER_ASC)
                     SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
                 else
                     SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_DESC
             }
             listOrder.keys.contains(CREATED_DATE_ORDER) -> {
-                query = if (listOrder[CREATED_DATE_ORDER] == ORDER_ASC)
+                if (listOrder[CREATED_DATE_ORDER] == ORDER_ASC)
                     SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_ASC
                 else
                     SELECT_BOUGHT_LIST_INFO_ORDER_BY_DATE_DESC
             }
-            else -> query = SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
+            else -> SELECT_BOUGHT_LIST_INFO_ORDER_BY_NAME_ASC
         }
-        return query
     }
 
 }

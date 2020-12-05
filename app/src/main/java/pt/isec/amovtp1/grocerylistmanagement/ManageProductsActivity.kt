@@ -32,6 +32,7 @@ class ManageProductsActivity : AppCompatActivity() {
      * 9. Displays products
      * 10. Sets "btnAddNewProduct", a button that when is clicked redirects to "CreateNewProductActivity"
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_products)
@@ -111,6 +112,7 @@ class ManageProductsActivity : AppCompatActivity() {
      * 3. For each LinearLayout, adds 2 TextViews and a Button (product's name, product's category, edit button)
      * 4. Adds to the view's LinearLayout every product's LinearLayout
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun displayAllProducts(products: MutableMap<String, String>) {
         val llProducts = findViewById<LinearLayout>(R.id.llShowAllProducts)
         llProducts.removeAllViews()

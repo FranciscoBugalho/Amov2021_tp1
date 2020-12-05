@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package pt.isec.amovtp1.grocerylistmanagement
 
 import android.annotation.SuppressLint
@@ -483,7 +485,7 @@ class CreateNewListActivity : AppCompatActivity() {
      * 4. Gets "btnCancel" and "btnConfirm" buttons from the dialog and sets their "onClickListener"
      * 5. Gets "addNewUnity" TextView and "btnAddUnit" Button from the dialog and sets their properties
      */
-    @SuppressLint("CutPasteId")
+    @SuppressLint("CutPasteId", "UseCompatLoadingForDrawables")
     fun setProductQuantity(productName: String) {
         // Create the Dialog
         val dialog = Dialog(this)
@@ -533,7 +535,7 @@ class CreateNewListActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { dialog.dismiss() }
 
         // New unit events
-        val textView = dialog.findViewById<TextView>(R.id.addNewUnity).setOnClickListener {
+        dialog.findViewById<TextView>(R.id.addNewUnity).setOnClickListener {
             val et = dialog.findViewById<EditText>(R.id.etNewUnit)
             val btn = dialog.findViewById<Button>(R.id.btnAddUnit)
 
@@ -557,7 +559,7 @@ class CreateNewListActivity : AppCompatActivity() {
             }
         }
 
-        val btnAdd = dialog.findViewById<Button>(R.id.btnAddUnit).setOnClickListener {
+        dialog.findViewById<Button>(R.id.btnAddUnit).setOnClickListener {
             val et = dialog.findViewById<EditText>(R.id.etNewUnit)
             if(et.text.isEmpty()) {
                 et.error = getString(R.string.this_field_must_be_filled)

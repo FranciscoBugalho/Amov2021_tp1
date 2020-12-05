@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="pt.isec.amovtp1.grocerylistmanagement">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <queries>
         <intent>
@@ -18,7 +20,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_app_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GroceryListManagement">
+        android:theme="@style/Theme.GroceryListManagement"
+        tools:ignore="AllowBackup">
         <activity android:name=".ViewBoughtListDetailsActivity" />
         <activity android:name=".ManageCategoriesUnitsActivity" />
         <activity android:name=".ViewHistoryActivity" />

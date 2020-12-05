@@ -1,5 +1,6 @@
 package pt.isec.amovtp1.grocerylistmanagement
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -52,7 +53,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
      * 3. Adds the array list to a mutableMapOf<String, ArrayList<String>>, where the key is the product's name and the value is the product's data
      * 4. Returns the MutableMap
      */
-    fun getAllProductsInformation(): MutableMap<String, ArrayList<String>> {
+    private fun getAllProductsInformation(): MutableMap<String, ArrayList<String>> {
         val products = db.productsInThisList(listName)
         val boughtProducts = mutableMapOf<String, ArrayList<String>>()
 
@@ -86,6 +87,7 @@ class ViewBoughtListDetailsActivity : AppCompatActivity() {
      * 5. Adds the "linearLayout" to the "llAllBoughtProducts" LinearLayout
      * 6. Creates another LinearLayout, "llPrice" and a Text View, "tvTotalPrice" (word "price" and the total cost of the products), and adds them to the "llAllBoughtProducts" LinearLayout
      */
+    @SuppressLint("SetTextI18n")
     fun displayAllProductInfo() {
         val llPurchasedProducts = findViewById<LinearLayout>(R.id.llAllBoughtProducts)
 

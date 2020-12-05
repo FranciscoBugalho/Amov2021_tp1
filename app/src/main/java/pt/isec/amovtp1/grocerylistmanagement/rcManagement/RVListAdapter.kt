@@ -21,9 +21,9 @@ val listInfo = arrayListOf<ListInfo>()
 class RVListAdapter(private val listInfo: ArrayList<ListInfo>, private val isShopping: Int) : RecyclerView.Adapter<RVListAdapter.RVViewHolder>() {
     class RVViewHolder(view: View, val context: Context) : RecyclerView.ViewHolder(view) {
         var listName: TextView = view.findViewById(R.id.listName)
-        var listDate: TextView = view.findViewById(R.id.tvDate)
-        var listTime: TextView = view.findViewById(R.id.tvTime)
-        var productListInformation: LinearLayout = view.findViewById(R.id.productList)
+        private var listDate: TextView = view.findViewById(R.id.tvDate)
+        private var listTime: TextView = view.findViewById(R.id.tvTime)
+        private var productListInformation: LinearLayout = view.findViewById(R.id.productList)
 
         fun update(lnStr: String, ldStr: String, ltStr: String, isBought: Boolean, productNames: List<String>, isShopping: Int) {
             if(isShopping == 0) {

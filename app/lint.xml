@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDuplicatesConfig">
+        <ignore path="src/main/res/drawable-v24/logo_glm.png" />
+        <ignore path="src/main/res/drawable-xhdpi/logo_glm.png" />
+        <ignore path="src/main/res/drawable/logo_glm.png" />
+    </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/logo_glm.png" />
+    </issue>
+</lint>
